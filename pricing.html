@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VERA — Pricing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0A0A08;color:#FAFAF7;min-height:100vh}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:48px;border-bottom:1px solid rgba(255,255,255,0.07)}
+.logo{font-family:'Playfair Display',serif;font-size:18px;color:#FAFAF7;text-decoration:none}
+.back{font-size:12px;color:rgba(255,255,255,0.4);text-decoration:none}
+.back:hover{color:#C4972A}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <a href="index.html" class="logo">VERA</a>
+  <a href="index.html" class="back">← Back to tool</a>
+</div>
+<div style="padding:60px 24px;border-bottom:1px solid rgba(255,255,255,0.07);background:#0D0D0B">
+  <div style="max-width:780px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:40px">
+      <div style="font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#C4972A;margin-bottom:12px">Plans</div>
+      <div style="font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,36px);color:#FAFAF7;margin-bottom:10px">Simple, transparent pricing</div>
+      <div style="font-size:14px;color:rgba(255,255,255,0.42)">Start free. Upgrade when you're ready.</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start">
+
+      <!-- FREE -->
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:24px">
+        <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.35);margin-bottom:10px">Free</div>
+        <div style="font-family:'Playfair Display',serif;font-size:32px;color:#FAFAF7;margin-bottom:4px">$0</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:20px">No credit card required</div>
+        <button onclick="document.getElementById('tool').scrollIntoView({behavior:'smooth'})" style="width:100%;padding:10px;background:transparent;border:1px solid rgba(255,255,255,0.2);border-radius:8px;color:#FAFAF7;font-size:13px;font-weight:500;cursor:pointer;font-family:Inter,sans-serif;margin-bottom:20px">Try it now</button>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.55)"><span style="color:#3A8B5F">✓</span>3 free analyses</div>
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.55)"><span style="color:#3A8B5F">✓</span>Cap rate, cash flow, ROI</div>
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.55)"><span style="color:#3A8B5F">✓</span>Saint John market defaults</div>
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.28)"><span>✗</span>Analysis history saved</div>
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.28)"><span>✗</span>Scenario analysis</div>
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.28)"><span>✗</span>Anne's mortgage guidance</div>
+        </div>
+      </div>
+
+      <!-- FREE ACCOUNT — FEATURED -->
+      <div style="background:rgba(196,151,42,0.06);border:2px solid rgba(196,151,42,0.4);border-radius:14px;padding:24px;position:relative">
+        <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#C4972A;color:#0A0A08;font-size:10px;font-weight:700;padding:3px 12px;border-radius:20px;white-space:nowrap;letter-spacing:.06em">MOST POPULAR</div>
+        <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:#C4972A;margin-bottom:10px">VERA Account</div>
+        <div style="font-family:'Playfair Display',serif;font-size:32px;color:#FAFAF7;margin-bottom:4px">$0</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:20px">Free · email required</div>
+        <button onclick="showCreateAccount()" style="width:100%;padding:10px;background:#C4972A;border:none;border-radius:8px;color:#0A0A08;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;margin-bottom:20px">Create free account →</button>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.7)"><span style="color:#C4972A">✓</span>10 analyses</div>
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.7)"><span style="color:#C4972A">✓</span>Cap rate, cash flow, ROI</div>
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.7)"><span style="color:#C4972A">✓</span>Analysis history saved</div>
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.7)"><span style="color:#C4972A">✓</span>Track across markets</div>
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.7)"><span style="color:#C4972A">✓</span>Request missing data from realtor</div>
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.28)"><span>✗</span>Scenario analysis</div>
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.28)"><span>✗</span>Anne's mortgage guidance</div>
+        </div>
+      </div>
+
+      <!-- PRO WITH ANNE -->
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:24px">
+        <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.35);margin-bottom:10px">With Anne</div>
+        <div style="font-family:'Playfair Display',serif;font-size:32px;color:#FAFAF7;margin-bottom:4px">Let's talk</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:20px">Book a free 20-min call</div>
+        <a href="https://calendly.com/anne-chauvin-8twelve/15min" target="_blank" style="display:block;width:100%;padding:10px;background:transparent;border:1px solid rgba(255,255,255,0.2);border-radius:8px;color:#FAFAF7;font-size:13px;font-weight:500;cursor:pointer;font-family:Inter,sans-serif;margin-bottom:20px;text-align:center;text-decoration:none">Book a call →</a>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.55)"><span style="color:#3A8B5F">✓</span>Everything in VERA Account</div>
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.55)"><span style="color:#3A8B5F">✓</span>Unlimited analyses</div>
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.55)"><span style="color:#3A8B5F">✓</span>Scenario analysis (BRRRR, price reduction, owner-occupied)</div>
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.55)"><span style="color:#3A8B5F">✓</span>Full Google Sheet access</div>
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.55)"><span style="color:#3A8B5F">✓</span>Anne's mortgage expertise</div>
+          <div style="display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,0.55)"><span style="color:#3A8B5F">✓</span>Financing strategy for your deal</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div style="padding:40px 24px;text-align:center;border-top:1px solid rgba(255,255,255,0.07)">
+  <div style="font-size:12px;color:rgba(255,255,255,0.25)">© 2026 · Anne Chauvin · Licensed Mortgage Agent · 8Twelve Mortgage · FSRA #M25000164</div>
+</div>
+</body>
+</html>

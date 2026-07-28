@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VERA — Your Virtual Real Estate Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0A0A08;color:#FAFAF7;min-height:100vh}
+.hdr{padding:0 24px;height:52px;display:flex;align-items:center;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(10,10,8,0.97);position:sticky;top:0;z-index:100}
+.logo{font-family:'Playfair Display',serif;font-size:17px;color:#FAFAF7}
+.lsub{font-size:10px;font-weight:500;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:.1em;margin-left:10px;padding-left:10px;border-left:1px solid rgba(255,255,255,0.1);font-family:'Inter',sans-serif}
+.body{max-width:640px;margin:0 auto;padding:40px 24px 80px}
+.title{font-family:'Playfair Display',serif;font-size:30px;font-weight:400;letter-spacing:-.02em;margin-bottom:8px}
+.sub{font-size:13px;color:rgba(255,255,255,0.38);line-height:1.7;margin-bottom:24px;max-width:500px}
+.hint{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:9px;padding:11px 15px;margin-bottom:16px;font-size:12px;color:rgba(255,255,255,0.38);line-height:1.7}
+.hint-t{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.22);margin-bottom:5px}
+textarea{width:100%;min-height:160px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px 16px;color:#FAFAF7;font-family:'Inter',sans-serif;font-size:13px;line-height:1.65;resize:vertical;outline:none;transition:border-color .15s}
+textarea:focus{border-color:rgba(196,151,42,0.5)}
+textarea::placeholder{color:rgba(255,255,255,0.18)}
+.btn{width:100%;padding:13px;background:#C4972A;border:none;border-radius:10px;color:#0A0A08;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;margin-top:12px;transition:opacity .15s}
+.btn:hover{opacity:.88}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-green{width:100%;padding:13px;background:#2A6B4A;border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;margin-top:12px;transition:opacity .15s}
+.btn-green:hover{opacity:.88}
+.btn-green:disabled{opacity:.4;cursor:not-allowed}
+.sh{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.22);margin-bottom:10px;margin-top:24px;padding-bottom:7px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.ex-box{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;overflow:hidden;margin-bottom:14px}
+.erow{display:flex;justify-content:space-between;align-items:center;padding:7px 14px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px}
+.erow:last-child{border-bottom:none}
+.erl{color:rgba(255,255,255,0.38)}
+.erv{font-family:'DM Mono',monospace;font-weight:500}
+.miss{background:rgba(180,50,50,0.07);border:1px solid rgba(180,50,50,0.2);border-radius:9px;padding:12px 14px;margin-bottom:14px}
+.miss-t{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#E05252;margin-bottom:5px}
+.miss-i{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.9}
+.verd{border-radius:12px;padding:16px 20px;margin-bottom:14px;border:1px solid}
+.verd-t{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;margin-bottom:5px}
+.verd-tt{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin-bottom:8px}
+.verd-r{font-size:12px;line-height:1.9;color:rgba(255,255,255,0.55)}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:8px}
+.kpi{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:12px 14px}
+.kv{font-family:'DM Mono',monospace;font-size:18px;font-weight:500;margin-bottom:3px}
+.kl{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,0.28)}
+.tbl{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.trow{display:flex;justify-content:space-between;padding:8px 14px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px}
+.trow:last-child{border-bottom:none}
+.trl{color:rgba(255,255,255,0.4)}
+.trv{font-family:'DM Mono',monospace;font-weight:500}
+.cta{background:rgba(196,151,42,0.07);border:1px solid rgba(196,151,42,0.2);border-radius:12px;padding:20px;margin-top:20px}
+.cta-t{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;color:#FAFAF7;margin-bottom:6px}
+.cta-s{font-size:12px;color:rgba(255,255,255,0.42);line-height:1.7;margin-bottom:14px}
+.cta-b{padding:9px 20px;background:#C4972A;border:none;border-radius:8px;font-size:12px;font-weight:700;color:#0A0A08;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .15s}
+.cta-b:hover{opacity:.88}
+.load{display:flex;gap:5px;align-items:center;padding:16px 0}
+.dot{width:7px;height:7px;border-radius:50%;background:#C4972A;animation:bob .9s infinite}
+.load-t{font-size:12px;color:rgba(255,255,255,0.3);margin-left:8px}
+.err{background:rgba(180,50,50,0.08);border:1px solid rgba(180,50,50,0.2);border-radius:9px;padding:12px 14px;margin-top:12px}
+.err-t{font-size:10px;font-weight:600;text-transform:uppercase;color:#E05252;margin-bottom:4px}
+.err-s{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.65}
+.sheet-link{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:8px;text-decoration:none;font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:6px}
+.sheet-link:hover{border-color:rgba(255,255,255,0.2)}
+@keyframes bob{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-6px);opacity:1}}
+</style>
+<style>
+body { background:#0A0A08; }
+.hdr { justify-content:space-between; background:transparent; position:absolute; top:0; left:0; right:0; z-index:100; border-bottom:none; }
+.logo { color:#FAFAF7; }
+.lsub { display:none; }
+.body { max-width:100%; padding:0; background:transparent; }
+.title { color:#FAFAF7 !important; }
+.sub { color:rgba(255,255,255,0.45) !important; }
+</style>
+</head>
+<body style="margin:0;padding:0;background:#0A0A08">
+
+<!-- TOPBAR -->
+<div class="hdr">
+  <div class="logo">VERA</div>
+  <div id="account-bar" style="display:flex;align-items:center;gap:10px"></div>
+</div>
+
+<!-- USAGE GATE -->
+<div id="usage-gate" style="display:none;position:fixed;inset:0;background:rgba(10,10,8,0.9);z-index:500;align-items:center;justify-content:center">
+  <div style="background:#111109;border:1px solid rgba(196,151,42,0.3);border-radius:16px;padding:36px 32px;max-width:420px;width:90%;text-align:center">
+    <div style="font-family:'Playfair Display',serif;font-size:22px;color:#FAFAF7;margin-bottom:10px" id="gate-title">Create your free VERA account</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7;margin-bottom:22px" id="gate-sub">Save your history, track properties, and get 10 free analyses.</div>
+    <input type="email" id="gate-email-signup" placeholder="your@email.com" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:11px 14px;color:#FAFAF7;font-family:Inter,sans-serif;font-size:13px;outline:none;margin-bottom:10px">
+    <button id="gate-btn" onclick="createAccount()" style="width:100%;padding:12px;background:#C4972A;border:none;border-radius:8px;color:#0A0A08;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;margin-bottom:8px">Create my free account →</button>
+    <div id="gate-err" style="font-size:11px;color:#E05252;min-height:16px;margin-bottom:6px"></div>
+    <button onclick="document.getElementById('usage-gate').style.display='none'" style="font-size:11px;color:rgba(255,255,255,0.25);background:none;border:none;cursor:pointer;font-family:Inter,sans-serif">Maybe later</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<div style="background:linear-gradient(135deg,#1a0a2e 0%,#2d1b4e 15%,#1a2a4a 30%,#0f3d2e 50%,#2a1f0a 70%,#1a0a2e 100%);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:80px 24px 60px;position:relative;overflow:hidden" id="tool">
+  <div style="position:absolute;top:-10%;left:20%;width:500px;height:500px;background:radial-gradient(circle,rgba(196,151,42,0.12) 0%,transparent 70%);pointer-events:none"></div>
+  <div style="position:absolute;top:5%;right:15%;width:400px;height:400px;background:radial-gradient(circle,rgba(58,139,95,0.1) 0%,transparent 70%);pointer-events:none"></div>
+  <div style="text-align:center;max-width:600px;margin-bottom:36px;position:relative">
+    <div style="display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:16px">
+      <span style="width:6px;height:6px;border-radius:50%;background:#C4972A;flex-shrink:0"></span>
+      Your virtual real estate analyst · Free
+    </div>
+    <h1 style="font-family:'Playfair Display',serif;font-size:clamp(30px,4.5vw,50px);font-weight:400;line-height:1.1;letter-spacing:-.02em;color:#FAFAF7;margin-bottom:12px">Know if a property<br>makes money —<br><em style="background:linear-gradient(90deg,#D4A543,#40916C);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">before you make an offer.</em></h1>
+    <p style="font-size:15px;color:rgba(255,255,255,0.45);line-height:1.7;max-width:460px;margin:0 auto">Paste any listing. VERA tells you the cash flow, ROI, and 5-year wealth plan in 60 seconds.</p>
+  </div>
+  <!-- Tool card -->
+  <div style="width:100%;max-width:680px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.5)">
+    <div style="display:flex;align-items:center;gap:6px;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02)">
+      <div style="width:10px;height:10px;border-radius:50%;background:rgba(255,80,80,0.4)"></div>
+      <div style="width:10px;height:10px;border-radius:50%;background:rgba(255,180,0,0.4)"></div>
+      <div style="width:10px;height:10px;border-radius:50%;background:rgba(40,200,80,0.4)"></div>
+      <div style="margin-left:8px;font-size:11px;color:rgba(255,255,255,0.2);font-family:monospace">VERA · Rental Property Validator</div>
+    </div>
+    <div class="body">
+  <div class="title">Validate your property</div>
+  <div class="sub">Paste the listing and confirmed numbers from your realtor. VERA extracts the data, sends it to the calculator, and returns your real numbers.</div>
+
+  <div id="step-paste">
+    <div class="hint">
+      <div class="hint-t">What to paste</div>
+      The listing from Realtor.ca + confirmed numbers from your realtor: rents per unit, annual property tax, insurance, and your financing terms (rate, down payment, amortization).
+    </div>
+    <textarea id="paste-area" placeholder="Example:&#10;&#10;44 Albert St, Saint John NB — $290,000&#10;Triplex · 3 units&#10;Unit 1: 3-bed — $1,200/mo (confirmed)&#10;Unit 2: 3-bed — $1,100/mo (confirmed)&#10;Unit 3: 3-bed — $1,100/mo (confirmed)&#10;Annual property tax: $3,189&#10;Insurance: $2,400/yr&#10;Financing: 20% down | 5% rate | 25yr amort"></textarea>
+    <button class="btn" id="read-btn" onclick="readListing()">Read this listing →</button>
+  </div>
+
+  <div id="load-area" style="display:none">
+    <div class="load">
+      <div class="dot" style="animation-delay:0ms"></div>
+      <div class="dot" style="animation-delay:150ms"></div>
+      <div class="dot" style="animation-delay:300ms"></div>
+      <span class="load-t" id="load-msg">Reading your listing…</span>
+    </div>
+  </div>
+
+  <div id="err-area" style="display:none">
+    <div class="err"><div class="err-t">⚠ Error</div><div class="err-s" id="err-msg"></div></div>
+    <button onclick="resetAll()" style="width:100%;margin-top:10px;padding:11px;background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:rgba(255,255,255,0.45);font-size:13px;font-weight:500;cursor:pointer;font-family:Inter,sans-serif;">← Start over with a new listing</button>
+  </div>
+
+  <div id="step-confirm" style="display:none">
+    <div class="sh">What VERA found</div><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:12px"><span style="color:#3A8B5F">✓ confirmed from listing</span> &nbsp;·&nbsp; <span style="color:#C4972A">~ assumed by VERA — editable</span></div>
+    <div class="miss" id="miss-box" style="display:none">
+      <div class="miss-t">⚠ These fields were not found — VERA will use defaults</div>
+      <div class="miss-i" id="miss-list"></div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.28);margin-top:7px;line-height:1.65">You can edit the assumed values below before sending, or re-paste with more details.</div>
+    </div>
+    <div class="ex-box" id="extracted-box"></div>
+    <div style="margin-top:8px">
+      <button onclick="togglePayload()" style="font-size:10px;color:rgba(255,255,255,0.3);background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;padding:0">▶ Show full payload sent to Google Sheet</button>
+      <pre id="payload-box" style="display:none;font-size:10px;font-family:monospace;color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:10px;margin-top:6px;overflow-x:auto;white-space:pre-wrap;max-height:300px;overflow-y:auto"></pre>
+    </div>
+    <div id="confidence-bar" style="margin:12px 0 6px"></div>
+    <div id="financing-note" style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:10px;line-height:1.6"></div>
+    <button class="btn-green" id="run-btn" onclick="runNumbers()">Send to calculator & run analysis →</button>
+  </div>
+
+  <div id="step-results" style="display:none">
+    <div class="verd" id="verd-box">
+      <div class="verd-t" id="verd-type"></div>
+      <div class="verd-tt" id="verd-title"></div>
+      <div class="verd-r" id="verd-reasons"></div>
+    </div>
+    <div class="sh">Key metrics</div>
+    <div class="kgrid" id="kpi-grid"></div>
+    <div class="sh">Cash required to close</div>
+    <div class="tbl" id="cash-tbl"></div>
+    <div class="sh">ROI breakdown</div>
+    <div class="tbl" id="roi-tbl"></div>
+  
+    <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1LVEdltKDfDO3mN3Ibr8QZ3BAYQ7FQKZ0X-ZK3xQWjP0/edit" target="_blank">📊 Open full Google Sheet ↗</a>
+    <div class="cta">
+      <div class="cta-t" id="cta-title"></div>
+      <div class="cta-s" id="cta-sub"></div>
+      <button class="cta-b" id="cta-btn"></button>
+    </div>
+    <button onclick="resetAll()" style="width:100%;margin-top:12px;padding:12px;background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:rgba(255,255,255,0.45);font-size:13px;font-weight:500;cursor:pointer;font-family:Inter,sans-serif;">← Analyse another property</button>
+  </div>
+</div>
+  </div>
+</div>
+
+<!-- MEET VERA -->
+<div style="min-height:100vh;background:linear-gradient(180deg,#0A0A08 0%,#0f1a2e 40%,#0a1a14 70%,#0A0A08 100%);display:flex;align-items:center;padding:80px 48px;border-top:1px solid rgba(255,255,255,0.07)">
+  <div style="max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
+    <div>
+      <div style="font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#C4972A;margin-bottom:16px">Meet VERA</div>
+      <div style="font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,44px);color:#FAFAF7;line-height:1.12;margin-bottom:16px">Your virtual<br>real estate analyst.</div>
+      <div style="font-size:15px;color:rgba(255,255,255,0.45);line-height:1.75;margin-bottom:20px">No math. No spreadsheets. No finance degree. VERA gives you clear answers so you can make confident decisions on every property.</div>
+      <p style="font-size:12px;color:rgba(255,255,255,0.28);font-style:italic;border-left:3px solid #C4972A;padding-left:14px;line-height:1.7;margin-bottom:32px">Designed by an engineer, mortgage agent, and rental property investor — built for people who want answers, not formulas.</p>
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;gap:16px;align-items:flex-start">
+          <div style="width:34px;height:34px;border-radius:8px;background:rgba(196,151,42,0.12);border:1px solid rgba(196,151,42,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#C4972A;flex-shrink:0">01</div>
+          <div><div style="font-size:14px;font-weight:600;color:#FAFAF7;margin-bottom:4px">Paste the listing</div><div style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6">Copy any listing from Realtor.ca. Messy is fine.</div></div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start">
+          <div style="width:34px;height:34px;border-radius:8px;background:rgba(196,151,42,0.12);border:1px solid rgba(196,151,42,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#C4972A;flex-shrink:0">02</div>
+          <div><div style="font-size:14px;font-weight:600;color:#FAFAF7;margin-bottom:4px">VERA reads it</div><div style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6">AI extracts data, fills market defaults, flags what to confirm.</div></div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start">
+          <div style="width:34px;height:34px;border-radius:8px;background:rgba(64,145,108,0.12);border:1px solid rgba(64,145,108,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#40916C;flex-shrink:0">03</div>
+          <div><div style="font-size:14px;font-weight:600;color:#FAFAF7;margin-bottom:4px">Get your numbers</div><div style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6">Cash flow · ROI · 5-year wealth plan. In 60 seconds.</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:20px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 40px 80px rgba(0,0,0,0.5)">
+      <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:40px 40px"></div>
+      <div style="text-align:center;position:relative;z-index:1">
+        <div style="width:64px;height:64px;border-radius:50%;background:rgba(196,151,42,0.15);border:2px solid rgba(196,151,42,0.4);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;cursor:pointer">
+          <div style="width:0;height:0;border-top:11px solid transparent;border-bottom:11px solid transparent;border-left:20px solid #C4972A;margin-left:5px"></div>
+        </div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);font-weight:500">Watch VERA in action</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.22);margin-top:4px">Demo coming soon</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT YOU GET -->
+<div style="padding:96px 48px;background:#0A0A08;border-top:1px solid rgba(255,255,255,0.07)">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:52px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:12px">What you get</div>
+      <div style="font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,42px);color:#FAFAF7;margin-bottom:12px">Three answers that matter.</div>
+      <div style="font-size:15px;color:rgba(255,255,255,0.38);max-width:400px;margin:0 auto;line-height:1.7">Everything else is noise. VERA cuts straight to what you need to decide.</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-bottom:48px">
+      <div style="background:rgba(64,145,108,0.06);border:1px solid rgba(64,145,108,0.2);border-radius:20px;padding:32px 26px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#40916C,#2D6A4F)"></div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#40916C;margin-bottom:14px">01 — Cash flow</div>
+        <div style="font-family:'Playfair Display',serif;font-size:46px;color:#40916C;line-height:1;margin-bottom:6px">+$613</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.25);margin-bottom:18px">per month · after all expenses</div>
+        <div style="height:1px;background:rgba(64,145,108,0.2);margin-bottom:18px"></div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.8">Know exactly how much profit lands in your bank account every month after paying the mortgage and all expenses.</div>
+      </div>
+      <div style="background:rgba(196,151,42,0.06);border:1px solid rgba(196,151,42,0.2);border-radius:20px;padding:32px 26px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#D4A543,#C4972A)"></div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#C4972A;margin-bottom:14px">02 — Return on investment</div>
+        <div style="font-family:'Playfair Display',serif;font-size:46px;color:#C4972A;line-height:1;margin-bottom:6px">11.8%</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.25);margin-bottom:18px">cash on cash · year 1</div>
+        <div style="height:1px;background:rgba(196,151,42,0.2);margin-bottom:18px"></div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.8">Know exactly how much you're earning on the money you put in — and whether this property beats other options.</div>
+      </div>
+      <div style="background:rgba(124,92,191,0.06);border:1px solid rgba(124,92,191,0.2);border-radius:20px;padding:32px 26px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#7c5cbf,#5b3fa0)"></div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#9b7fe8;margin-bottom:14px">03 — Your 5-year wealth plan</div>
+        <div style="font-family:'Playfair Display',serif;font-size:46px;color:#9b7fe8;line-height:1;margin-bottom:6px">28.8%</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.25);margin-bottom:18px">total ROI · equity + CF + appreciation</div>
+        <div style="height:1px;background:rgba(124,92,191,0.2);margin-bottom:18px"></div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.8">Know exactly how much wealth this property builds over 5 years through equity, cash flow, and appreciation.</div>
+      </div>
+    </div>
+    <div style="text-align:center">
+      <button onclick="document.getElementById('tool').scrollIntoView({behavior:'smooth'})" style="padding:13px 32px;background:#C4972A;border:none;border-radius:10px;color:#0A0A08;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif">Analyse your first property →</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="background:linear-gradient(180deg,#0A0A08 0%,#1a0a2e 40%,#0f3d2e 70%,#0A0A08 100%);border-top:1px solid rgba(255,255,255,0.07);padding:72px 48px 40px">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px">
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:26px;color:#FAFAF7;margin-bottom:10px">VERA</div>
+        <div style="font-size:13px;color:#C4972A;margin-bottom:12px">Your virtual real estate analyst</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.35);line-height:1.75;margin-bottom:16px;max-width:260px">Helping Canadian investors analyze rental properties and secure the right financing.</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.18)">FSRA Licence #M25000164 · 8Twelve Mortgage</div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.25);margin-bottom:14px">Tool</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <a href="#tool" style="font-size:13px;color:rgba(255,255,255,0.42);text-decoration:none">Analyse a property</a>
+          <a href="vera-account.html" style="font-size:13px;color:rgba(255,255,255,0.42);text-decoration:none">My VERA account</a>
+          <a href="pricing.html" target="_blank" style="font-size:13px;color:rgba(255,255,255,0.42);text-decoration:none">Pricing</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.25);margin-bottom:14px">Anne Chauvin</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <a href="mailto:anne.chauvin@8twelve.mortgage" style="font-size:13px;color:rgba(255,255,255,0.42);text-decoration:none">anne.chauvin@8twelve.mortgage</a>
+          <a href="tel:4162749419" style="font-size:13px;color:rgba(255,255,255,0.42);text-decoration:none">416-274-9419</a>
+          <a href="https://www.instagram.com/anne.chauvin.mortgages" target="_blank" style="font-size:13px;color:rgba(255,255,255,0.42);text-decoration:none">@anne.chauvin.mortgages</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.25);margin-bottom:14px">Work with Anne</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.35);line-height:1.65;margin-bottom:14px">Ready to move forward? Book a free 20-min call.</div>
+        <a href="https://calendly.com/anne-chauvin-8twelve/15min" target="_blank" style="display:inline-block;padding:9px 18px;background:rgba(196,151,42,0.15);border:1px solid rgba(196,151,42,0.35);border-radius:7px;color:#C4972A;font-size:13px;font-weight:500;text-decoration:none">Book a call →</a>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.07);padding-top:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <div style="font-size:12px;color:rgba(255,255,255,0.2)">© 2026 Anne Chauvin · Licensed Mortgage Agent · Ontario</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.2)">Built with VERA</div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+// ── ACCOUNT HELPERS ──
+const FREE_LIMIT    = 3;
+const ACCOUNT_LIMIT = 10;
+function getEmail()   { return localStorage.getItem('vera_email'); }
+function getCount()   { return parseInt(localStorage.getItem('vera_count')||'0'); }
+function incCount()   { localStorage.setItem('vera_count', getCount()+1); }
+function isLoggedIn() { return !!getEmail(); }
+function getLimit()   { return isLoggedIn() ? ACCOUNT_LIMIT : FREE_LIMIT; }
+function updateAccountBar() {
+  const bar = document.getElementById('account-bar');
+  if (!bar) return;
+  // Sales page always shows Sign in + Free sign up
+  // If already logged in, also show My account link
+  const email = getEmail();
+  if (email) {
+    bar.innerHTML = `<button onclick="showSignIn()" style="font-size:12px;color:rgba(255,255,255,0.45);background:none;border:none;cursor:pointer;font-family:Inter,sans-serif">Sign in</button>
+      <a href="vera-account.html" style="font-size:12px;font-weight:600;padding:6px 14px;background:#C4972A;color:#0A0A08;border-radius:6px;text-decoration:none;font-family:Inter,sans-serif">My account →</a>`;
+  } else {
+    bar.innerHTML = `<button onclick="showSignIn()" style="font-size:12px;color:rgba(255,255,255,0.45);background:none;border:none;cursor:pointer;font-family:Inter,sans-serif">Sign in</button>
+      <button onclick="showCreateAccount()" style="font-size:12px;font-weight:600;padding:6px 14px;background:#C4972A;color:#0A0A08;border:none;border-radius:6px;cursor:pointer;font-family:Inter,sans-serif">Free sign up</button>`;
+  }
+}
+function showGate(title, sub, btnLabel) {
+  document.getElementById('gate-title').textContent = title;
+  document.getElementById('gate-sub').textContent = sub;
+  document.getElementById('gate-btn').textContent = btnLabel;
+  document.getElementById('gate-email-signup').value = '';
+  document.getElementById('gate-err').textContent = '';
+  document.getElementById('usage-gate').style.display = 'flex';
+}
+function showSignIn() {
+  const email = getEmail();
+  if (email) {
+    // Already logged in — go straight to account
+    window.location.href = 'vera-account.html';
+    return;
+  }
+  showGate('Sign in to VERA', 'Enter your email to access your analysis history.', 'Sign in →');
+}
+function showCreateAccount() {
+  showGate('Create your free VERA account', 'Save your history, track properties, and get 10 free analyses.', 'Create my free account →');
+}
+function createAccount() {
+  const email = document.getElementById('gate-email-signup').value.trim();
+  const err = document.getElementById('gate-err');
+  if (!email || !email.includes('@')) { err.textContent = 'Please enter a valid email.'; return; }
+  err.textContent = '';
+  localStorage.setItem('vera_email', email);
+  fetch('https://formspree.io/f/xpwzgdjv', {
+    method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({email, source:'VERA signup', count:getCount()})
+  }).catch(()=>{});
+  document.getElementById('usage-gate').style.display = 'none';
+  updateAccountBar();
+  window.location.href = 'vera-account.html';
+}
+function saveAnalysis(inputs, results) {
+  const email = getEmail();
+  if (!email) return;
+  const capRate = parseFloat(results.capRate) || 0;
+  const key = 'vera_analyses_' + email;
+  const existing = JSON.parse(localStorage.getItem(key)||'[]');
+  existing.unshift({
+    id: Date.now(),
+    date: new Date().toLocaleDateString('en-CA',{month:'short',day:'numeric',year:'numeric'}),
+    addr: inputs.PropertyAddress||'Unknown',
+    city: (inputs.PropertyAddress||'').toLowerCase().includes('saint john')?'Saint John':'Unknown',
+    neighbourhood: inputs.PropertyNeighborhood||'',
+    province: 'NB',
+    units: inputs.NumberofUnits||1,
+    type: inputs.NumberofUnits===1?'Single':inputs.NumberofUnits===2?'Duplex':inputs.NumberofUnits===3?'Triplex':'Fourplex',
+    asking: inputs.PropertyAskingPrice||0,
+    capRate: capRate,
+    cashflow: parseFloat(results.monthlyCashflow)||0,
+    coc: parseFloat(results.roi?.cashOnCash)||0,
+    totalROI: parseFloat(results.roi?.totalROI)||0,
+    cashToClose: parseFloat(results.cashRequired?.totalCashRequired)||0,
+    confidence: Math.round((Object.keys(inputs).filter(k=>inputs[k]!=null).length/20)*100),
+    verdict: capRate>=5?'turnkey':capRate>=3?'brrrr':'nogo',
+    missing:[]
+  });
+  localStorage.setItem(key, JSON.stringify(existing.slice(0,50)));
+}
+
+// ── USAGE GATE INTERCEPT (wraps original readListing) ──
+
+
+const PROXY_URL    = 'https://vera-proxy.onrender.com/analyze';
+const SHEET_URL    = 'https://docs.google.com/spreadsheets/d/1LVEdltKDfDO3mN3Ibr8QZ3BAYQ7FQKZ0X-ZK3xQWjP0/edit';
+
+
+const REQUIRED = [
+  {key:'PropertyAddress',       label:'Property address'},
+  {key:'PropertyAskingPrice',   label:'Asking price'},
+  {key:'NumberofUnits',         label:'Number of units'},
+];
+
+const fmt$ = n => n!=null&&!isNaN(n) ? (n<0?'-$':'$')+Math.abs(Math.round(n)).toLocaleString() : '—';
+const fmtP = n => n!=null&&!isNaN(n) ? (Math.abs(n)<1?(n*100).toFixed(2):(+n).toFixed(2))+'%' : '—';
+
+let extractedData = null;
+
+function show(id){document.getElementById(id).style.display='block';}
+function hide(id){document.getElementById(id).style.display='none';}
+function setLoad(msg){document.getElementById('load-msg').textContent=msg;}
+function showErr(msg){document.getElementById('err-msg').textContent=msg;show('err-area');}
+function hideErr(){hide('err-area');}
+
+
+function applyAssumptions(d) {
+  const units   = Number(d.NumberofUnits) || 1;
+  const asking  = Number(d.PropertyAskingPrice) || 0;
+  const isOwner = (d.PropertyUsage || '').toLowerCase().includes('owner');
+  const reno    = Number(d.RenovationEstimate) || 0;
+  const desc    = (d.ListingDescription || '').toLowerCase();
+
+  // 1. Purchase price defaults to asking price
+  if (!d.PropertyPuchasePrice) d.PropertyPuchasePrice = asking;
+
+  // 2. Usage default
+  if (!d.PropertyUsage) d.PropertyUsage = 'Full rental';
+
+  // 3. Financing defaults — sheet expects WHOLE NUMBERS (5 for 5%, 20 for 20%)
+  if (!d.InterestRate)           d.InterestRate           = 5;
+  if (!d.AmortizationPeriod)    d.AmortizationPeriod     = 25;
+  if (!d.ClosingCostsRate)      d.ClosingCostsRate       = 1.5;
+  if (!d.DownpaymentPercentage) d.DownpaymentPercentage  = isOwner ? 5 : 20;
+  if (!d.CMHCInsurancePremium)  d.CMHCInsurancePremium   = 0;
+
+  // 4. Vacancy — 2% for 1-2 units, 3% for 3+
+  if (!d.VacancyRate) d.VacancyRate = units <= 2 ? 2 : 3;
+
+  // 5. Repairs — infer from listing description and reno budget
+  if (!d.RepairsAndMaintenanceRate) {
+    const isTurnkey = /turnkey|renovated|updated|move.in|heat pump|vinyl plank|new roof|freshly/.test(desc);
+    if (isTurnkey)          d.RepairsAndMaintenanceRate = 3;
+    else if (reno >= 15000) d.RepairsAndMaintenanceRate = 4;
+    else                    d.RepairsAndMaintenanceRate = 5;
+  }
+
+  // 6. Property management — 7%
+  if (!d.PropertyManagementRate) d.PropertyManagementRate = 7;
+
+  // 7. Lawn & snow — $1,200
+  if (!d.LawnAndSnowMaintenance) d.LawnAndSnowMaintenance = 1200;
+
+  // 8. Insurance — $1,500 default
+  if (!d.Insurance) d.Insurance = 1500;
+
+  // 9. Utilities — heat & electricity tenant-paid by default
+  if (d.Utilities_Electricity == null) d.Utilities_Electricity = 0;
+  if (d.Utilities_Heat == null)        d.Utilities_Heat = 0;
+  if (!d.Rentals_WaterTanks_HeatPumps) d.Rentals_WaterTanks_HeatPumps = 0;
+  if (!d.PestControl)                  d.PestControl = 0;
+  if (!d.OtherExpenses)                d.OtherExpenses = 0;
+  if (!d.OtherMonthlyIncome)           d.OtherMonthlyIncome = 0;
+  if (!d.RenovationEstimate)           d.RenovationEstimate = 0;
+
+  // 10. Water — Saint John schedule $1,446/unit/yr
+  if (!d.Utilities_Water) {
+    const schedule = [0, 1446, 2892, 4338, 5784, 7230];
+    d.Utilities_Water = units <= 5 ? schedule[units] : 7230 + (units - 5) * 1446;
+  }
+
+  // 11. Rents — Saint John defaults by unit type if not confirmed
+  const hood  = (d.PropertyNeighborhood || '').toLowerCase();
+  const tier  = hood.includes('uptown') ? 'uptown' : 'city';
+  const isTurnkey2 = /turnkey|renovated|updated|move.in|heat pump|new roof|freshly/.test(desc);
+  const hasUnder   = /below market|long.term tenant|as.is|fixer|estate|needs work|potential|savvy/.test(desc);
+  const level = (isTurnkey2 && !hasUnder) ? 'MARKET' : 'UNDER';
+
+  const RENTS = {
+    city:   { UNDER: {s:950,b1:1000,b2:1200,b3:1350,b4:1500}, MARKET: {s:1200,b1:1150,b2:1400,b3:1570,b4:1730} },
+    uptown: { UNDER: {s:1000,b1:1050,b2:1250,b3:1450,b4:1600}, MARKET: {s:1150,b1:1200,b2:1500,b3:1650,b4:1850} }
+  };
+  function rentForBeds(beds) {
+    const t = RENTS[tier][level];
+    if (!beds || beds <= 0) return t.s;
+    if (beds === 1) return t.b1; if (beds === 2) return t.b2;
+    if (beds === 3) return t.b3; return t.b4;
+  }
+  function bedsFromType(type) {
+    if (!type) return 2;
+    const m = type.match(/(\d+)/);
+    return m ? parseInt(m[1]) : 2;
+  }
+  const cap = Math.min(units, 4);
+  if (!d.AsIsRent1) d.AsIsRent1 = rentForBeds(bedsFromType(d.Unit1Type));
+  if (cap >= 2 && !d.AsIsRent2) d.AsIsRent2 = rentForBeds(bedsFromType(d.Unit2Type));
+  if (cap >= 3 && !d.AsIsRent3) d.AsIsRent3 = rentForBeds(bedsFromType(d.Unit3Type));
+  if (cap >= 4 && !d.AsIsRent4) d.AsIsRent4 = rentForBeds(bedsFromType(d.Unit4Type));
+  if (cap < 4) d.AsIsRent4 = 0;
+  if (cap < 3) d.AsIsRent3 = 0;
+  if (cap < 2) d.AsIsRent2 = 0;
+
+  // Unit types default
+  if (!d.Unit1Type) d.Unit1Type = '2-bed';
+  if (units >= 2 && !d.Unit2Type) d.Unit2Type = '2-bed';
+  if (units >= 3 && !d.Unit3Type) d.Unit3Type = '2-bed';
+  if (units >= 4 && !d.Unit4Type) d.Unit4Type = '2-bed';
+
+  // Growth & appreciation defaults
+  for (let i = 1; i <= 5; i++) {
+    if (!d['GrowthYOYPercentageYr'+i])    d['GrowthYOYPercentageYr'+i]    = 2;
+    if (!d['AppreciationPercentageYr'+i]) d['AppreciationPercentageYr'+i] = 3;
+  }
+
+  return d;
+}
+
+
+async function readListing() {
+  const paste = document.getElementById('paste-area').value.trim();
+  if(!paste) return;
+  editedAssumptions = {};
+  withAssumptions = {};
+  hideErr();
+  hide('step-confirm');
+  hide('step-results');
+  show('load-area');
+  setLoad('Reading your listing… (first request may take up to 60 seconds while the server wakes up)');
+  document.getElementById('read-btn').disabled = true;
+
+  try {
+    // Timeout after 90 seconds — Render free tier can take up to 60s to wake
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 90000);
+    let res;
+    try {
+      res = await fetch('https://vera-proxy.onrender.com/extract', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({text: paste}),
+        signal: controller.signal
+      });
+    } catch(fetchErr) {
+      clearTimeout(timeout);
+      if (fetchErr.name === 'AbortError') {
+        throw new Error('Request timed out — the server took too long to wake up. Please try again in a few seconds.');
+      }
+      throw fetchErr;
+    }
+    clearTimeout(timeout);
+
+    if(!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error || 'Proxy error ' + res.status);
+    }
+
+    extractedData = await res.json();
+    if(extractedData.error) throw new Error(extractedData.error);
+
+    // Post-extraction fallbacks — things the AI sometimes misses
+    const pasteL = paste.toLowerCase();
+    if (!extractedData.NumberofUnits) {
+      if (/single[\s-]family|single unit|1[\s-]unit|one unit/.test(pasteL)) extractedData.NumberofUnits = 1;
+      else if (/duplex|2[\s-]unit|two unit/.test(pasteL)) extractedData.NumberofUnits = 2;
+      else if (/triplex|3[\s-]unit|three unit/.test(pasteL)) extractedData.NumberofUnits = 3;
+      else if (/fourplex|quadplex|4[\s-]unit|four unit/.test(pasteL)) extractedData.NumberofUnits = 4;
+    }
+    // Default usage if missing
+    if (!extractedData.PropertyUsage) extractedData.PropertyUsage = 'Full rental';
+
+    // Show extracted data
+    // Apply assumptions so user can see everything before sending
+    withAssumptions = applyAssumptions(Object.assign({}, extractedData));
+    const raw = extractedData;
+
+    // confirmed = came from listing, assumed = applied by VERA
+    function isConfirmed(key) {
+      const v = raw[key];
+      return v !== null && v !== undefined && v !== '';
+    }
+
+    function row(label, value, confirmed, editKey, editType) {
+      const isEditable = !confirmed && editKey;
+      const color = confirmed ? '#3A8B5F' : '#C4972A';
+      const tag = confirmed ? '' : '~ assumed';
+      // Extract unit suffix from value for display next to input
+      let unit = '';
+      let rawVal = value;
+      if (isEditable) {
+        if (value.includes('%'))   { unit = '%';   rawVal = value.replace('%','').trim(); }
+        else if (value.includes('/mo')) { unit = '/mo'; rawVal = value.replace('/mo','').replace('$','').replace(/,/g,'').trim(); }
+        else if (value.includes('/yr')) { unit = '/yr'; rawVal = value.replace('/yr','').replace('$','').replace(/,/g,'').trim(); }
+        else if (value.includes('yrs')) { unit = 'yrs'; rawVal = value.replace('yrs','').trim(); }
+        else if (value.includes('$'))   { unit = '$';   rawVal = value.replace('$','').replace(/,/g,'').trim(); }
+        else { rawVal = value.replace('$','').replace(/,/g,'').trim(); }
+      }
+      const valueHtml = (isEditable) 
+        ? `${unit === '$' ? '<span style="font-size:11px;color:#C4972A">$</span>' : ''}<input type="${editType||'text'}" 
+            id="edit_${editKey}" 
+            value="${rawVal}"
+            onchange="updateAssumption('${editKey}', this.value)"
+            style="background:rgba(196,151,42,0.1);border:1px solid rgba(196,151,42,0.4);border-radius:5px;padding:3px 7px;color:#C4972A;font-family:monospace;font-size:12px;width:80px;text-align:right;outline:none">${unit && unit !== '$' ? `<span style="font-size:11px;color:#C4972A">${unit}</span>` : ''}`
+        : `<span class="erv" style="color:${color}">${value}</span>`;
+      return `<div class="erow">
+        <span class="erl">${label}</span>
+        <span style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:9px;color:${color};text-transform:uppercase;letter-spacing:.06em">${tag}</span>
+          ${valueHtml}
+        </span>
+      </div>`;
+    }
+
+    const units = Number(withAssumptions.NumberofUnits) || 1;
+    function secHdr(title) {
+      return `<div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.22);padding:10px 14px 5px;border-top:1px solid rgba(255,255,255,0.06);margin-top:4px">${title}</div>`;
+    }
+    let html = '';
+
+    // PROPERTY
+    html += secHdr('Property');
+    html += row('Address',      withAssumptions.PropertyAddress,           isConfirmed('PropertyAddress'));
+    if (withAssumptions.PropertyNeighborhood) html += row('Neighbourhood', withAssumptions.PropertyNeighborhood, isConfirmed('PropertyNeighborhood'));
+    html += row('Asking price', fmt$(withAssumptions.PropertyAskingPrice),  isConfirmed('PropertyAskingPrice'));
+    html += row('Offer price',  fmt$(withAssumptions.PropertyPuchasePrice), false, 'PropertyPuchasePrice', 'number');
+    html += row('Units',        withAssumptions.NumberofUnits,              isConfirmed('NumberofUnits'));
+    html += row('Usage',         withAssumptions.PropertyUsage,              false, 'PropertyUsage', 'text');
+
+    // INCOME
+    html += secHdr('Income');
+    html += row('Unit 1 — '+(withAssumptions.Unit1Type||'?'),  fmt$(withAssumptions.AsIsRent1)+'/mo',  isConfirmed('AsIsRent1'), 'AsIsRent1', 'number');
+    if (units >= 2) html += row('Unit 2 — '+(withAssumptions.Unit2Type||'?'), fmt$(withAssumptions.AsIsRent2)+'/mo', isConfirmed('AsIsRent2'), 'AsIsRent2', 'number');
+    if (units >= 3) html += row('Unit 3 — '+(withAssumptions.Unit3Type||'?'), fmt$(withAssumptions.AsIsRent3)+'/mo', isConfirmed('AsIsRent3'), 'AsIsRent3', 'number');
+    if (units >= 4) html += row('Unit 4 — '+(withAssumptions.Unit4Type||'?'), fmt$(withAssumptions.AsIsRent4)+'/mo', isConfirmed('AsIsRent4'), 'AsIsRent4', 'number');
+    html += row('Other income', withAssumptions.OtherMonthlyIncome > 0 ? fmt$(withAssumptions.OtherMonthlyIncome)+'/mo' : '$0', isConfirmed('OtherMonthlyIncome'), 'OtherMonthlyIncome', 'number');
+    html += row('Vacancy',      dispPct(withAssumptions.VacancyRate), isConfirmed('VacancyRate'), 'VacancyRate', 'number');
+
+    // EXPENSES
+    html += secHdr('Operating expenses');
+    html += row('Property tax', fmt$(withAssumptions.PropertyTax)+'/yr',   isConfirmed('PropertyTax'), 'PropertyTax', 'number');
+    html += row('Insurance',    fmt$(withAssumptions.Insurance)+'/yr',     isConfirmed('Insurance'), 'Insurance', 'number');
+    // Display helper
+    function dispPct(v) { return v != null ? v + '%' : '—'; }
+    html += row('Water',         fmt$(withAssumptions.Utilities_Water)+'/yr', isConfirmed('Utilities_Water'), 'Utilities_Water', 'number');
+    html += row('Electricity',   withAssumptions.Utilities_Electricity > 0 ? fmt$(withAssumptions.Utilities_Electricity)+'/yr' : '$0/yr', isConfirmed('Utilities_Electricity') && raw.Utilities_Electricity > 0, 'Utilities_Electricity', 'number');
+    html += row('Heat',          withAssumptions.Utilities_Heat > 0 ? fmt$(withAssumptions.Utilities_Heat)+'/yr' : '$0/yr', isConfirmed('Utilities_Heat') && raw.Utilities_Heat > 0, 'Utilities_Heat', 'number');
+    html += row('Rentals',       withAssumptions.Rentals_WaterTanks_HeatPumps > 0 ? fmt$(withAssumptions.Rentals_WaterTanks_HeatPumps)+'/yr' : '$0', isConfirmed('Rentals_WaterTanks_HeatPumps'), 'Rentals_WaterTanks_HeatPumps', 'number');
+    html += row('Repairs & maint', dispPct(withAssumptions.RepairsAndMaintenanceRate), isConfirmed('RepairsAndMaintenanceRate'), 'RepairsAndMaintenanceRate', 'number');
+    html += row('Prop. mgmt',    dispPct(withAssumptions.PropertyManagementRate), isConfirmed('PropertyManagementRate'), 'PropertyManagementRate', 'number');
+    html += row('Lawn & snow',   fmt$(withAssumptions.LawnAndSnowMaintenance)+'/yr', isConfirmed('LawnAndSnowMaintenance'), 'LawnAndSnowMaintenance', 'number');
+    html += row('Pest control',  withAssumptions.PestControl > 0 ? fmt$(withAssumptions.PestControl)+'/yr' : '$0', isConfirmed('PestControl'), 'PestControl', 'number');
+    html += row('Other expenses',withAssumptions.OtherExpenses > 0 ? fmt$(withAssumptions.OtherExpenses)+'/yr' : '$0', isConfirmed('OtherExpenses'), 'OtherExpenses', 'number');
+
+    // FINANCING
+    html += secHdr('Financing');
+    html += row('Down payment',  dispPct(withAssumptions.DownpaymentPercentage), isConfirmed('DownpaymentPercentage'), 'DownpaymentPercentage', 'number');
+    html += row('Interest rate', dispPct(withAssumptions.InterestRate), isConfirmed('InterestRate'), 'InterestRate', 'number');
+    html += row('Amortization',  withAssumptions.AmortizationPeriod+' yrs', isConfirmed('AmortizationPeriod'), 'AmortizationPeriod', 'number');
+    html += row('Closing costs', dispPct(withAssumptions.ClosingCostsRate), isConfirmed('ClosingCostsRate'), 'ClosingCostsRate', 'number');
+    html += row('CMHC premium',  withAssumptions.CMHCInsurancePremium > 0 ? fmt$(withAssumptions.CMHCInsurancePremium) : '$0', isConfirmed('CMHCInsurancePremium'), 'CMHCInsurancePremium', 'number');
+
+    // RENOVATION
+    html += secHdr('Renovation');
+    html += row('Renovation budget', fmt$(withAssumptions.RenovationEstimate||0), false, 'RenovationEstimate', 'number');
+
+    document.getElementById('extracted-box').innerHTML = html;
+
+    // Calculate confidence score
+    // Count exactly the fields shown on screen: confirmed vs assumed
+    // confirmed = raw[key] != null (came from listing) OR always-known fixed values
+    // Water is always confirmed (Saint John schedule), offer price always assumed
+    const screenFields = [
+      // Property (5 fields)
+      {key:'PropertyAddress',              confirmed: isConfirmed('PropertyAddress')},
+      {key:'PropertyNeighborhood',         confirmed: isConfirmed('PropertyNeighborhood') && !!withAssumptions.PropertyNeighborhood},
+      {key:'PropertyAskingPrice',          confirmed: isConfirmed('PropertyAskingPrice')},
+      {key:'PropertyPuchasePrice',         confirmed: false},                              // always assumed
+      {key:'NumberofUnits',                confirmed: isConfirmed('NumberofUnits')},
+      {key:'PropertyUsage',                confirmed: false},                              // always assumed
+      // Income
+      {key:'AsIsRent1',                    confirmed: isConfirmed('AsIsRent1')},
+      ...(units >= 2 ? [{key:'AsIsRent2', confirmed: isConfirmed('AsIsRent2')}] : []),
+      ...(units >= 3 ? [{key:'AsIsRent3', confirmed: isConfirmed('AsIsRent3')}] : []),
+      ...(units >= 4 ? [{key:'AsIsRent4', confirmed: isConfirmed('AsIsRent4')}] : []),
+      {key:'OtherMonthlyIncome',           confirmed: isConfirmed('OtherMonthlyIncome')},
+      {key:'VacancyRate',                  confirmed: isConfirmed('VacancyRate')},
+      // Expenses
+      {key:'PropertyTax',                  confirmed: isConfirmed('PropertyTax')},
+      {key:'Insurance',                    confirmed: isConfirmed('Insurance')},
+      {key:'Utilities_Water',              confirmed: isConfirmed('Utilities_Water')},
+      {key:'Utilities_Electricity',        confirmed: isConfirmed('Utilities_Electricity') && raw.Utilities_Electricity > 0},
+      {key:'Utilities_Heat',               confirmed: isConfirmed('Utilities_Heat') && raw.Utilities_Heat > 0},
+      {key:'Rentals_WaterTanks_HeatPumps', confirmed: isConfirmed('Rentals_WaterTanks_HeatPumps')},
+      {key:'RepairsAndMaintenanceRate',    confirmed: isConfirmed('RepairsAndMaintenanceRate')},
+      {key:'PropertyManagementRate',       confirmed: isConfirmed('PropertyManagementRate')},
+      {key:'LawnAndSnowMaintenance',       confirmed: isConfirmed('LawnAndSnowMaintenance')},
+      {key:'PestControl',                  confirmed: isConfirmed('PestControl')},
+      {key:'OtherExpenses',                confirmed: isConfirmed('OtherExpenses')},
+      // Financing
+      {key:'DownpaymentPercentage',        confirmed: isConfirmed('DownpaymentPercentage')},
+      {key:'InterestRate',                 confirmed: isConfirmed('InterestRate')},
+      {key:'AmortizationPeriod',           confirmed: isConfirmed('AmortizationPeriod')},
+      {key:'ClosingCostsRate',             confirmed: isConfirmed('ClosingCostsRate')},
+      {key:'CMHCInsurancePremium',         confirmed: isConfirmed('CMHCInsurancePremium')},
+      // Renovation
+      {key:'RenovationEstimate',           confirmed: false},                              // always assumed
+    ];
+    const relevantFields = screenFields;
+    const confirmedCount = screenFields.filter(f => f.confirmed).length;
+    const totalCount = screenFields.length;
+    // confirmedCount and totalCount set above
+    const pct = Math.round((confirmedCount / totalCount) * 100);
+    const barColor = pct >= 70 ? '#3A8B5F' : pct >= 40 ? '#C4972A' : '#E05252';
+    document.getElementById('confidence-bar').innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.4)">Data confidence</div>
+        <div style="font-size:13px;font-weight:600;color:${barColor}">${pct}%</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.08);border-radius:4px;height:6px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:${barColor};border-radius:4px;transition:width .5s"></div>
+      </div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:5px">${confirmedCount} of ${totalCount} key fields confirmed from listing — ${totalCount - confirmedCount} assumed by VERA</div>
+    `;
+    document.getElementById('financing-note').innerHTML = 
+      '💡 <strong style="color:rgba(255,255,255,0.6)">Financing terms</strong> are assumed based on typical Canadian rates. ' +
+      'For accurate numbers, <a href="mailto:anne.chauvin@8twelve.mortgage" style="color:#C4972A">confirm your pre-approval with Anne</a>.';
+
+    // Check missing
+    const missing = REQUIRED.filter(f=>extractedData[f.key]==null).map(f=>f.label);
+    if(missing.length > 0) {
+      document.getElementById('miss-list').innerHTML = missing.map(m=>`<div>• ${m}</div>`).join('');
+      document.getElementById('miss-box').style.display = 'block';
+    } else {
+      document.getElementById('miss-box').style.display = 'none';
+    }
+    // Never block — always allow sending
+    document.getElementById('run-btn').disabled = false;
+    document.getElementById('run-btn').textContent = 'Send to calculator & run analysis →';
+
+    hide('load-area');
+    show('step-confirm');
+
+  } catch(e) {
+    hide('load-area');
+    showErr('Error reading listing: ' + e.message);
+  }
+  document.getElementById('read-btn').disabled = false;
+}
+
+async function runNumbers() {
+  if(!extractedData) return;
+  hideErr();
+  hide('step-results');
+  show('load-area');
+  setLoad('Sending to your Google Sheet… this may take up to 30 seconds on first use.');
+  document.getElementById('run-btn').disabled = true;
+
+  // Apply all assumptions — send complete payload, no nulls
+  // Always recompute fresh payload with any user edits
+  const baseData = Object.assign({}, extractedData);
+  // Apply edits directly to base data before running assumptions
+  Object.assign(baseData, editedAssumptions);
+  const payload = applyAssumptions(baseData);
+  
+
+
+  try {
+    const resp = await fetch(PROXY_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+
+    if(!resp.ok) {
+      const txt = await resp.text();
+      throw new Error('Proxy error ' + resp.status + ': ' + txt.slice(0,200));
+    }
+
+    const result = await resp.json();
+    if(result.error) throw new Error('Sheet error: ' + result.error);
+
+    renderResults(result);
+    hide('load-area');
+    hide('step-confirm');
+    show('step-results');
+    document.getElementById('step-results').scrollIntoView({behavior:'smooth', block:'start'});
+
+  } catch(e) {
+    hide('load-area');
+    showErr(e.message);
+    document.getElementById('run-btn').disabled = false;
+  }
+}
+
+function renderResults(r) {
+  const units  = Number(extractedData.NumberofUnits)||1;
+  const reno   = Number(extractedData.RenovationEstimate)||0;
+  // Your Apps Script returns: r.capRate, r.monthlyCashflow, r.noi, r.roi.cashOnCash etc.
+  const cap    = r.capRate||r.CapRateOnPurchasePrice||0;
+  const moCF   = r.monthlyCashflow||r.TotalMonthlyCashflowYr1||0;
+  const cfUnit = units>0 ? moCF/units : 0;
+  const coc    = r.roi?.cashOnCash||r.CashOnCashYr1||0;
+  const totROI = r.roi?.totalROI||r.ROIPercentageYr1||0;
+
+  let type,icon,color,bg,border,title,reasons;
+  if(moCF<0 || cap<0.03){
+    type='PASS';icon='✗';color='#E05252';bg='rgba(180,50,50,0.1)';border='rgba(180,50,50,0.3)';
+    title='This deal does not meet the criteria';
+    reasons=[moCF<0&&`Negative cash flow: ${fmt$(moCF)}/mo`,cap<0.03&&`Cap rate too low: ${fmtP(cap)} — minimum 3%`].filter(Boolean);
+  } else if(reno>0){
+    type='BRRRR';icon='⟳';color='#C4972A';bg='rgba(196,151,42,0.08)';border='rgba(196,151,42,0.3)';
+    title='BRRRR candidate — post-reno analysis required';
+    reasons=[`Renovation: ${fmt$(reno)} — get contractor quotes`,`Current cap rate: ${fmtP(cap)} — target 6%+ after reno`,`Cash flow/unit: ${fmt$(cfUnit)}/mo — target $200+ post-reno`];
+  } else {
+    type='TURNKEY';icon='✓';color='#3A8B5F';bg='rgba(42,107,74,0.08)';border='rgba(42,107,74,0.3)';
+    title='Turnkey — meets investment criteria';
+    reasons=[cap>=0.05&&`Cap rate: ${fmtP(cap)} ✓ (target 5%+)`,cfUnit>=200&&`Cash flow/unit: ${fmt$(cfUnit)}/mo ✓ (target $200+)`,coc>=0.07&&`Cash on cash: ${fmtP(coc)} ✓ (target 7%+)`,totROI>=0.20&&`Total ROI: ${fmtP(totROI)} ✓ (target 20%+)`].filter(Boolean);
+  }
+
+  const vb = document.getElementById('verd-box');
+  vb.style.background=bg; vb.style.borderColor=border;
+  document.getElementById('verd-type').style.color=color;
+  document.getElementById('verd-type').textContent=`${icon} ${type}`;
+  document.getElementById('verd-title').style.color=color;
+  document.getElementById('verd-title').textContent=title;
+  document.getElementById('verd-reasons').innerHTML=reasons.map(r=>`<div>• ${r}</div>`).join('');
+
+  // Calculate DSCR from noi and monthly mortgage
+  const monthlyMtg = r.financing?.monthlyMortgageAmount||r.MonthlyMortgageAmount||0;
+  const noi = r.noi||r.AnnualNOI||0;
+  const dscr = monthlyMtg>0 ? (noi/(monthlyMtg*12)) : 0;
+
+  document.getElementById('kpi-grid').innerHTML=[
+    [fmt$(moCF),'Monthly cash flow',moCF>=0?'#3A8B5F':'#E05252'],
+    [fmtP(cap),'Cap rate',cap>=0.05?'#3A8B5F':cap>=0.03?'#C4972A':'#E05252'],
+    [dscr.toFixed(2),'DSCR',dscr>=1.2?'#3A8B5F':dscr>=1.0?'#C4972A':'#E05252'],
+    [fmtP(coc),'Cash on cash',coc>=0.07?'#3A8B5F':'#C4972A'],
+    [fmt$(r.cashRequired?.totalCashRequired||r.TotalCashRequired),'Cash to close',null],
+    [fmt$(r.financing?.monthlyMortgageAmount||r.MonthlyMortgageAmount),'Monthly mortgage',null],
+    [fmt$(noi),'Annual NOI',null],
+    [fmtP(totROI),'Total ROI',null],
+  ].map(([v,l,c])=>
+    `<div class="kpi"><div class="kv" style="color:${c||'#FAFAF7'}">${v}</div><div class="kl">${l}</div></div>`
+  ).join('');
+
+  document.getElementById('cash-tbl').innerHTML=[
+    ['Down payment',        fmt$(r.DownpaymentAmount||r.cashRequired?.downpaymentAmount)],
+    ['Closing costs',       fmt$(r.ClosingCosts||r.cashRequired?.closingCosts)],
+    ['Total cash required', fmt$(r.TotalCashRequired||r.cashRequired?.totalCashRequired)],
+    ['Mortgage amount',     fmt$(r.TotalMortgageAmount||r.financing?.mortgageAmount)],
+    ['Monthly mortgage',    fmt$(r.MonthlyMortgageAmount||r.financing?.monthlyMortgageAmount)],
+    ['LTV',                 fmtP(r.LTV)],
+  ].map(([l,v])=>
+    `<div class="trow"><span class="trl">${l}</span><span class="trv">${v}</span></div>`
+  ).join('');
+
+  document.getElementById('roi-tbl').innerHTML=[
+    ['Cash on cash ROI Yr 1',  fmtP(r.CashOnCashYr1||r.roi?.cashOnCash)],
+    ['Equity ROI Yr 1',        fmtP(r.EquityROIYr1||r.roi?.equityROI)],
+    ['Appreciation ROI Yr 1',  fmtP(r.AppreciationROIYr1||r.roi?.appreciationROI)],
+    ['Total ROI Yr 1',         fmtP(r.ROIPercentageYr1||r.roi?.totalROI)],
+    ['Monthly cash flow Yr 2', fmt$(r.TotalMonthlyCashflowYr2)],
+    ['Monthly cash flow Yr 5', fmt$(r.TotalMonthlyCashflowYr5)],
+  ].map(([l,v])=>
+    `<div class="trow"><span class="trl">${l}</span><span class="trv" style="color:#3A8B5F">${v}</span></div>`
+  ).join('');
+
+
+
+  const ctaMap = {
+    PASS:    ['This property didn\'t pass — but the right one is out there','Before you analyse more properties, make sure you have the right budget, market, and data.','Talk to Anne →'],
+    BRRRR:   ['BRRRR deal — you need the full renovation and refi analysis','A BRRRR deal needs contractor quotes, ARV comps, and a refi simulation before you know if it truly works.','Get the full BRRRR analysis →'],
+    TURNKEY: ['This property passes — ready to move forward?','To move forward you need the right financing in place. Anne specialises in investor mortgages for Canadian multifamily.','Get pre-approved for this property →'],
+  };
+  const [ct,cs,cb] = ctaMap[type];
+  document.getElementById('cta-title').textContent = ct;
+  document.getElementById('cta-sub').textContent = cs;
+  const btn = document.getElementById('cta-btn');
+  btn.textContent = cb;
+  btn.onclick = () => window.open('mailto:anne.chauvin@8twelve.mortgage','_blank');
+}
+
+// Store editable assumptions
+let editedAssumptions = {};
+let withAssumptions = {};
+
+function updateAssumption(key, value) {
+  const num = parseFloat(value);
+  editedAssumptions[key] = isNaN(num) ? value : num;
+  // Update withAssumptions so payload reflects the edit
+  withAssumptions[key] = editedAssumptions[key];
+  // Refresh payload debug if visible
+  const box = document.getElementById('payload-box');
+  if (box && box.style.display !== 'none') {
+    // Always recompute fresh payload with any user edits
+  const baseData = Object.assign({}, extractedData);
+  // Apply edits directly to base data before running assumptions
+  Object.assign(baseData, editedAssumptions);
+  const payload = applyAssumptions(baseData);
+    box.textContent = JSON.stringify(payload, null, 2);
+  }
+}
+
+function togglePayload() {
+  const box = document.getElementById('payload-box');
+  const btn = box.previousElementSibling;
+  if (box.style.display === 'none') {
+    // Always recompute fresh payload with any user edits
+  const baseData = Object.assign({}, extractedData);
+  // Apply edits directly to base data before running assumptions
+  Object.assign(baseData, editedAssumptions);
+  const payload = applyAssumptions(baseData);
+  
+
+    box.textContent = JSON.stringify(payload, null, 2);
+    box.style.display = 'block';
+    btn.textContent = '▼ Hide payload';
+  } else {
+    box.style.display = 'none';
+    btn.textContent = '▶ Show full payload sent to Google Sheet';
+  }
+}
+
+function resetAll() {
+  editedAssumptions = {};
+  extractedData = null;
+  document.getElementById('paste-area').value = '';
+  document.getElementById('step-confirm').style.display = 'none';
+  document.getElementById('step-results').style.display = 'none';
+  document.getElementById('err-area').style.display = 'none';
+  document.getElementById('load-area').style.display = 'none';
+  document.getElementById('step-paste').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+
+
+// Intercept readListing to check usage limit
+const _origReadListing = readListing;
+window.readListing = async function() {
+  if (getCount() >= getLimit()) {
+    showGate(
+      isLoggedIn() ? `You've used all ${getLimit()} free analyses` : `You've used your ${getLimit()} free analyses`,
+      isLoggedIn() ? 'Book a call with Anne to upgrade your plan.' : 'Create your free VERA account to get 10 analyses and save your history.',
+      isLoggedIn() ? 'Book a call →' : 'Create my free account →'
+    );
+    return;
+  }
+  await _origReadListing();
+};
+
+// Save after successful analysis
+const _origRunNumbers = runNumbers;
+window.runNumbers = async function() {
+  await _origRunNumbers();
+  // If results are showing, save to account and increment count
+  const resultsEl = document.getElementById('step-results');
+  if (resultsEl && resultsEl.style.display !== 'none' && resultsEl.innerHTML.length > 100) {
+    incCount();
+    updateAccountBar();
+  }
+};
+
+// Init
+updateAccountBar();
+
+</script>
+</body>
+</html>
