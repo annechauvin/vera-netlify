@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VERA — My Account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- WORKING TOOL CSS (exact from confirmed working file) -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
@@ -15,8 +18,8 @@ body{font-family:'Inter',sans-serif;background:#0A0A08;color:#FAFAF7;min-height:
 .body{max-width:640px;margin:0 auto;padding:40px 24px 80px}
 .title{font-family:'Playfair Display',serif;font-size:30px;font-weight:400;letter-spacing:-.02em;margin-bottom:8px}
 .sub{font-size:13px;color:rgba(255,255,255,0.38);line-height:1.7;margin-bottom:24px;max-width:500px}
-.hint{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:9px;padding:11px 15px;margin-bottom:16px;font-size:12px;color:rgba(255,255,255,0.38);line-height:1.7}
-.hint-t{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.22);margin-bottom:5px}
+.hint{background:rgba(14,14,12,0.03);border:1px solid rgba(14,14,12,0.07);border-radius:9px;padding:11px 15px;margin-bottom:16px;font-size:12px;color:rgba(255,255,255,0.38);line-height:1.7}
+.hint-t{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(14,14,12,0.4);margin-bottom:5px}
 textarea{width:100%;min-height:160px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px 16px;color:#FAFAF7;font-family:'Inter',sans-serif;font-size:13px;line-height:1.65;resize:vertical;outline:none;transition:border-color .15s}
 textarea:focus{border-color:rgba(196,151,42,0.5)}
 textarea::placeholder{color:rgba(255,255,255,0.18)}
@@ -26,60 +29,115 @@ textarea::placeholder{color:rgba(255,255,255,0.18)}
 .btn-green{width:100%;padding:13px;background:#2A6B4A;border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;margin-top:12px;transition:opacity .15s}
 .btn-green:hover{opacity:.88}
 .btn-green:disabled{opacity:.4;cursor:not-allowed}
-.sh{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.22);margin-bottom:10px;margin-top:24px;padding-bottom:7px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.sh{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(14,14,12,0.4)!important;background:rgba(14,14,12,0.03)!important;color:rgba(14,14,12,0.4);margin-bottom:10px;margin-top:24px;padding-bottom:7px;border-bottom:1px solid rgba(255,255,255,0.06)}
 .ex-box{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;overflow:hidden;margin-bottom:14px}
-.erow{display:flex;justify-content:space-between;align-items:center;padding:7px 14px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px}
+.erow{display:flex;justify-content:space-between;align-items:center;padding:7px 14px;border-bottom:1px solid rgba(14,14,12,0.05);font-size:12px}
 .erow:last-child{border-bottom:none}
-.erl{color:rgba(255,255,255,0.38)}
+.erl{color:rgba(14,14,12,0.45)}
 .erv{font-family:'DM Mono',monospace;font-weight:500}
 .miss{background:rgba(180,50,50,0.07);border:1px solid rgba(180,50,50,0.2);border-radius:9px;padding:12px 14px;margin-bottom:14px}
 .miss-t{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#E05252;margin-bottom:5px}
-.miss-i{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.9}
+.miss-i{font-size:12px;color:rgba(14,14,12,0.55);line-height:1.9}
 .verd{border-radius:12px;padding:16px 20px;margin-bottom:14px;border:1px solid}
 .verd-t{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;margin-bottom:5px}
 .verd-tt{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin-bottom:8px}
-.verd-r{font-size:12px;line-height:1.9;color:rgba(255,255,255,0.55)}
+.verd-r{font-size:12px;line-height:1.9;color:rgba(14,14,12,0.6)}
 .kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:8px}
-.kpi{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:12px 14px}
+.kpi{background:white;border:1px solid rgba(14,14,12,0.08);border-radius:10px;padding:12px 14px}
 .kv{font-family:'DM Mono',monospace;font-size:18px;font-weight:500;margin-bottom:3px}
-.kl{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,0.28)}
+.kl{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:rgba(14,14,12,0.28)}
 .tbl{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:9px;overflow:hidden;margin-bottom:14px}
-.trow{display:flex;justify-content:space-between;padding:8px 14px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px}
+.trow{background:white;display:flex;justify-content:space-between;padding:8px 14px;border-bottom:1px solid rgba(14,14,12,0.05);font-size:12px}
 .trow:last-child{border-bottom:none}
-.trl{color:rgba(255,255,255,0.4)}
+.trow.emph{background:var(--paper-2)}
+.trow.emph .trl{color:var(--ink);font-weight:600}
+.trow.emph .trv{font-size:13px}
+.trl{color:rgba(14,14,12,0.45)}
 .trv{font-family:'DM Mono',monospace;font-weight:500}
+.an-card{background:white;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:12px}
+.an-hdr{display:flex;align-items:center;gap:9px;padding:11px 16px;background:var(--paper-2);border-bottom:1px solid var(--border)}
+.an-hdr-ic{width:20px;height:20px;border-radius:50%;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;font-family:'DM Mono',monospace}
+.an-hdr-t{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:rgba(14,14,12,0.55)}
+.an-body{padding:14px 16px 4px}
+.an-big{font-family:'DM Serif Display',serif;font-size:28px;line-height:1;margin-bottom:3px}
+.an-big-lbl{font-size:11px;color:rgba(14,14,12,0.4);margin-bottom:10px}
+.an-foot{padding:10px 16px;background:var(--paper-2);border-top:1px solid var(--border);font-size:10px;color:rgba(14,14,12,0.42);line-height:1.65}
+.an-total-row{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;background:var(--gold-bg);border-top:1px solid var(--gold-bd);font-weight:700;font-size:13px;font-family:'DM Mono',monospace}
+.an-total-row span:first-child{font-family:'Inter',sans-serif;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink)}
+.report-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px;align-items:start}
+@media (max-width:820px){.report-grid{grid-template-columns:1fr}}
+.an-hdr-ic.num{background:var(--gold);color:white;font-family:'DM Mono',monospace;font-weight:700}
+.cf-hero{background:var(--ink);border-radius:12px;padding:20px 22px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.cf-hero-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:rgba(246,243,238,0.4);margin-bottom:6px}
+.cf-hero-num{font-family:'DM Serif Display',serif;font-size:34px;line-height:1;color:var(--paper)}
+.cf-hero-sub{font-size:11px;color:rgba(246,243,238,0.4);margin-top:6px}
+.an-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.an-topbar-t{font-family:'DM Serif Display',serif;font-size:20px;color:var(--ink)}
+.print-btn{padding:8px 16px;background:var(--gold);border:none;border-radius:8px;color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
+.yr-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:12px}
+.yr-table th{text-align:right;padding:6px 8px;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:rgba(14,14,12,0.4);border-bottom:1px solid var(--border);font-weight:600}
+.yr-table th:first-child,.yr-table td:first-child{text-align:left}
+.yr-table td{text-align:right;padding:7px 8px;border-bottom:1px solid var(--border-2);font-family:'DM Mono',monospace}
+.yr-table tr:last-child td{border-bottom:none;font-weight:700;color:var(--ink)}
+.wealth-chart{margin:12px 0 2px}
+@media print{
+  .sb,.tool-tabs,.no-print{display:none!important}
+  html,body{height:auto!important;overflow:visible!important}
+  body{background:#fff!important;display:block!important}
+  .layout{display:block!important;overflow:visible!important;height:auto!important}
+  .main{margin:0!important;overflow:visible!important;height:auto!important}
+  #panel-analyse{overflow:visible!important;height:auto!important;display:flex!important}
+  #tp-input,#tp-analysis{display:block!important;overflow:visible!important;height:auto!important;flex:none!important}
+  #step-paste,#load-area,#err-area{display:none!important}
+  #step-confirm{display:block!important;page-break-after:always}
+  .an-card{break-inside:avoid;border:1px solid #ddd!important}
+  .cf-hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  @page{margin:15mm}
+}
 .cta{background:rgba(196,151,42,0.07);border:1px solid rgba(196,151,42,0.2);border-radius:12px;padding:20px;margin-top:20px}
-.cta-t{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;color:#FAFAF7;margin-bottom:6px}
-.cta-s{font-size:12px;color:rgba(255,255,255,0.42);line-height:1.7;margin-bottom:14px}
+.cta-t{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;color:#0E0E0C;margin-bottom:6px}
+.cta-s{font-size:12px;color:rgba(14,14,12,0.55);line-height:1.7;margin-bottom:14px}
 .cta-b{padding:9px 20px;background:#C4972A;border:none;border-radius:8px;font-size:12px;font-weight:700;color:#0A0A08;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .15s}
 .cta-b:hover{opacity:.88}
 .load{display:flex;gap:5px;align-items:center;padding:16px 0}
 .dot{width:7px;height:7px;border-radius:50%;background:#C4972A;animation:bob .9s infinite}
-.load-t{font-size:12px;color:rgba(255,255,255,0.3);margin-left:8px}
+.load-t{font-size:12px;color:rgba(14,14,12,0.45);margin-left:8px}
 .err{background:rgba(180,50,50,0.08);border:1px solid rgba(180,50,50,0.2);border-radius:9px;padding:12px 14px;margin-top:12px}
 .err-t{font-size:10px;font-weight:600;text-transform:uppercase;color:#E05252;margin-bottom:4px}
-.err-s{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.65}
-.sheet-link{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:8px;text-decoration:none;font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:6px}
+.err-s{font-size:12px;color:rgba(14,14,12,0.55);line-height:1.65}
+.sheet-link{color:rgba(14,14,12,0.5)!important;border-color:rgba(14,14,12,0.15)!important;display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:8px;text-decoration:none;font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:6px}
 .sheet-link:hover{border-color:rgba(255,255,255,0.2)}
 @keyframes bob{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-6px);opacity:1}}
 
-/* Analysis results - override dark theme classes for light background */
-.kpi{background:white!important;border:1px solid var(--border)!important;border-radius:8px;padding:12px 14px}
-.kv{color:var(--ink)!important}
-.kl{color:rgba(14,14,12,0.4)!important}
-.kgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
-.trow{display:flex;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--border-2)!important;background:white}
-.trl{color:rgba(14,14,12,0.5)!important}
-.trv{color:var(--ink)!important}
-.verd{padding:14px 16px;border-radius:10px;border:1px solid;margin-bottom:12px}
-.verd-t{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
-.verd-tt{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:6px}
-.verd-r{font-size:12px;line-height:1.9;color:rgba(14,14,12,0.6)!important}
-.res-block,.tbl{background:white!important;border:1px solid var(--border)!important;border-radius:8px;overflow:hidden;margin-bottom:8px}
-.res-h,.sh{color:rgba(14,14,12,0.35)!important;background:var(--paper-2)!important;border-bottom:1px solid var(--border)!important;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding:7px 14px}
-.sheet-link{color:rgba(14,14,12,0.45)!important;border-color:rgba(14,14,12,0.12)!important}
+/* VERA CHAT */
+#vera-chat-btn{position:fixed;bottom:24px;right:24px;width:52px;height:52px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;font-size:22px;box-shadow:0 4px 16px rgba(184,135,42,0.35);z-index:500;transition:transform .15s}
+#vera-chat-btn:hover{transform:scale(1.08)}
+#vera-chat-panel{position:fixed;top:0;right:-360px;width:340px;height:100vh;background:var(--paper);border-left:1px solid rgba(14,14,12,0.1);box-shadow:-4px 0 16px rgba(14,14,12,0.08);z-index:499;display:flex;flex-direction:column;transition:right .25s ease;color:var(--ink)}
+#vera-chat-panel.open{right:0}
+.layout.chat-open #panel-analyse, .layout.chat-open #panel-database{margin-right:340px;transition:margin-right .25s ease}
+.layout{transition:all .25s ease}
+.chat-hdr{padding:14px 16px;border-bottom:1px solid rgba(14,14,12,0.08);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.chat-title{font-size:13px;font-weight:600;color:var(--ink);margin-left:8px}
+.chat-close{width:28px;height:28px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-size:16px;color:rgba(14,14,12,0.4)}
+.chat-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.cmsg{display:flex;gap:8px;align-items:flex-start}
+.cmsg.user{flex-direction:row-reverse}
+.cbubble{max-width:82%;padding:9px 12px;border-radius:12px;font-size:12px;line-height:1.7;color:var(--ink)}
+.cmsg.vera .cbubble{background:white;border:1px solid rgba(14,14,12,0.08);border-radius:0 12px 12px 12px}
+.cmsg.user .cbubble{background:var(--gold);border-radius:12px 0 12px 12px}
+.chat-input-area{padding:12px;border-top:1px solid rgba(14,14,12,0.08);display:flex;gap:8px;align-items:flex-end;flex-shrink:0}
+.chat-input{flex:1;padding:9px 12px;border:1px solid rgba(14,14,12,0.12);border-radius:10px;font-family:'Inter',sans-serif;font-size:12px;resize:none;outline:none;max-height:80px;min-height:38px;color:var(--ink);background:white}
+.chat-input:focus{border-color:var(--gold)}
+.chat-send{width:36px;height:36px;border:none;border-radius:8px;background:var(--gold);color:var(--ink);cursor:pointer;font-size:14px;flex-shrink:0}
+.chat-send:disabled{opacity:.4;cursor:not-allowed}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(14,14,12,0.25);display:inline-block;animation:vbounce .8s infinite}
+.dot:nth-child(2){animation-delay:.15s}
+.dot:nth-child(3){animation-delay:.3s}
+@keyframes vbounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
 </style>
+
 <style>
+/* VERA ACCOUNT LAYOUT */
 :root{
   --ink:#0E0E0C;--ink-2:#1C1C18;
   --paper:#F6F3EE;--paper-2:#EDEAE3;
@@ -92,6 +150,7 @@ textarea::placeholder{color:rgba(255,255,255,0.18)}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
 body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);font-size:13px;display:flex;flex-direction:column}
+
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:48px;background:var(--ink);flex-shrink:0}
 .logo{font-family:'DM Serif Display',serif;font-size:19px;color:var(--paper)}
 .logo span{font-size:10px;font-family:'Inter',sans-serif;font-weight:400;color:rgba(246,243,238,0.32);letter-spacing:.08em;text-transform:uppercase;margin-left:10px;padding-left:10px;border-left:1px solid rgba(246,243,238,0.12)}
@@ -99,7 +158,10 @@ body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);fon
 .top-email{font-size:11px;color:rgba(246,243,238,0.4)}
 .top-usage{font-size:11px;font-family:'DM Mono',monospace;color:rgba(246,243,238,0.32)}
 .top-usage b{color:var(--gold-l);font-weight:500}
+
 .layout{display:flex;flex:1;overflow:hidden}
+
+/* SIDEBAR */
 .sb{width:180px;background:var(--ink-2);display:flex;flex-direction:column;flex-shrink:0;padding:16px 0}
 .sb-lbl{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(246,243,238,0.2);padding:0 12px 5px}
 .nav{display:flex;align-items:center;gap:8px;width:100%;padding:8px 12px;border-radius:6px;border:1px solid transparent;background:transparent;color:rgba(246,243,238,0.42);font-size:12px;font-family:'Inter',sans-serif;cursor:pointer;text-align:left;transition:all .12s;margin-bottom:1px}
@@ -112,53 +174,84 @@ body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);fon
 .sb-rl{color:rgba(246,243,238,0.3)}
 .sb-rv{font-family:'DM Mono',monospace;color:rgba(246,243,238,0.55)}
 .sb-rv.g{color:var(--green-l)}
+
+/* MAIN */
 .main{flex:1;overflow:hidden;display:flex;flex-direction:column}
-#panel-analyse{flex:1;display:none;flex-direction:column;overflow:hidden}
+
+/* ANALYSE PANEL */
+#panel-analyse{flex:1;display:none;flex-direction:column;overflow:hidden;color:#0E0E0C}
 #panel-analyse.active{display:flex}
 .tool-tabs{display:flex;border-bottom:1px solid var(--border);background:white;flex-shrink:0}
-.ttab{padding:10px 18px;font-size:12px;font-weight:500;cursor:pointer;color:rgba(14,14,12,0.42);border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:'Inter',sans-serif;transition:all .12s}
+.ttab{padding:10px 20px;font-size:12px;font-weight:500;cursor:pointer;color:rgba(14,14,12,0.42);border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:'Inter',sans-serif;transition:all .12s}
 .ttab.active{color:var(--ink);border-bottom-color:var(--gold)}
-.ttab:disabled{opacity:.3;cursor:not-allowed}
-.ttab.ready{color:var(--gold);font-weight:600}
-.tp{display:none;flex:1;overflow-y:auto;background:var(--paper)}
-.tp.active{display:block}
-/* Override dark tool styles for light background */
-.body{background:transparent!important;max-width:100%!important;padding:16px 24px!important;margin:0!important;color:var(--ink)!important}
-.hdr{display:none!important}
-.title{font-size:15px!important;color:var(--ink)!important;margin-bottom:4px!important}
-.sub{font-size:12px!important;color:rgba(14,14,12,0.5)!important;margin-bottom:12px!important}
-.hint{background:var(--paper-2)!important;border:1px solid var(--border)!important;color:rgba(14,14,12,0.55)!important}
-.hint-t{color:var(--ink)!important}
-#paste-area{background:white!important;border:1px solid var(--border)!important;color:var(--ink)!important;min-height:160px!important}
-#paste-area::placeholder{color:rgba(14,14,12,0.35)!important}
-.btn-gold{background:var(--gold)!important;color:white!important}
-.btn-green{background:var(--green)!important;color:white!important}
-.sh{color:rgba(14,14,12,0.35)!important;background:var(--paper-2)!important;border-top:1px solid var(--border)!important;border-bottom:1px solid var(--border)!important}
-.ec{background:white!important;border:1px solid var(--border)!important}
-.erow{border-bottom:1px solid rgba(14,14,12,0.05)!important;background:white!important}
-.erl{color:rgba(14,14,12,0.5)!important}
-.trl{color:rgba(14,14,12,0.45)!important}
-.load-t{color:rgba(14,14,12,0.45)!important}
-.verd{border-radius:8px!important}
-.res-block{background:white!important;border:1px solid var(--border)!important}
-.res-h{background:var(--paper-2)!important;color:rgba(14,14,12,0.35)!important;border-bottom:1px solid var(--border)!important}
-.res-l{color:rgba(14,14,12,0.5)!important}
-.res-v{color:var(--ink)!important}
-.res-row{border-bottom:1px solid var(--border-2)!important}
-.sheet-link{border-color:rgba(14,14,12,0.15)!important;color:rgba(14,14,12,0.5)!important}
-input[id^="edit_"]{background:var(--amber-bg)!important;border:1px solid var(--amber-bd)!important;color:var(--amber)!important}
-/* Database */
+.ttab:disabled{opacity:.35;cursor:not-allowed}
+#tp-input{display:flex;flex-direction:column;flex:1;overflow-y:auto;background:var(--paper)}
+#tp-analysis{display:none;flex:1;overflow-y:auto;background:var(--paper)}
+
+/* Override tool CSS to fit in account light layout */
+.body{background:transparent !important;max-width:100% !important;padding:16px 24px !important;margin:0 !important;color:var(--ink) !important}
+.hdr{display:none !important}
+.title{font-size:16px !important;color:var(--ink) !important;margin-bottom:4px !important}
+.sub{font-size:12px !important;color:rgba(14,14,12,0.5) !important;margin-bottom:12px !important;line-height:1.6 !important}
+.hint{background:var(--paper-2) !important;border:1px solid var(--border) !important;border-radius:8px !important;color:rgba(14,14,12,0.55) !important}
+.hint-t{color:var(--ink) !important;font-size:11px !important;font-weight:600 !important}
+#paste-area{background:white !important;border:1px solid var(--border) !important;color:var(--ink) !important;min-height:160px !important}
+#paste-area::placeholder{color:rgba(14,14,12,0.35) !important}
+.btn-gold{background:var(--gold) !important;color:white !important;border:none !important}
+.ec{background:white !important;border:1px solid var(--border) !important;color:var(--ink) !important}
+.sh{color:rgba(14,14,12,0.35) !important;background:var(--paper-2) !important;border-top:1px solid var(--border) !important;border-bottom:1px solid var(--border) !important;font-size:9px !important;letter-spacing:.1em !important}
+.erow{border-bottom:1px solid rgba(14,14,12,0.05) !important;background:white !important}
+.erl{color:rgba(14,14,12,0.5) !important;font-size:11px !important}
+.erv{font-size:12px !important}
+.load{display:flex;justify-content:center;gap:6px;padding:8px 0}
+.load-msg{color:rgba(14,14,12,0.5) !important;font-size:12px !important}
+.verd{border-radius:8px !important}
+.verd-t{font-size:15px !important}
+.verd-sub{color:rgba(14,14,12,0.45) !important;font-size:11px !important}
+.res-block{background:white !important;border:1px solid var(--border) !important;color:var(--ink) !important}
+.res-h{color:rgba(14,14,12,0.35) !important;background:var(--paper-2) !important;border-bottom:1px solid var(--border) !important;font-size:9px !important}
+.res-row{border-bottom:1px solid var(--border-2) !important}
+.res-l{color:rgba(14,14,12,0.5) !important;font-size:12px !important}
+.res-v{color:var(--ink) !important;font-size:12px !important}
+.btn-green{background:var(--green) !important;color:white !important;border-color:var(--green) !important}
+.conf-bar-wrap{background:var(--paper-2) !important;border:1px solid var(--border) !important}
+.conf-pct{font-size:14px !important;font-weight:600 !important}
+.conf-sub{color:rgba(14,14,12,0.4) !important;font-size:10px !important}
+.fin-note{color:rgba(14,14,12,0.45) !important;font-size:11px !important}
+.miss-box{background:var(--red-bg) !important;border:1px solid var(--red-bd) !important;color:var(--red) !important}
+input[id^="edit_"]{background:var(--amber-bg) !important;border:1px solid var(--amber-bd) !important;color:var(--amber) !important}
+
+/* DATABASE PANEL */
 #panel-database{flex:1;display:none;flex-direction:column;overflow:hidden}
 #panel-database.active{display:flex}
+
+/* HOME PANEL */
+#panel-home{flex:1;display:none;flex-direction:column;overflow-y:auto;background:var(--paper)}
+#panel-home.active{display:flex}
+.home-wrap{max-width:920px;margin:0 auto;padding:40px 24px 48px;width:100%}
+.home-eyebrow{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.home-h{font-family:'Playfair Display',serif;font-size:30px;font-weight:400;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.home-sub{font-size:14px;color:rgba(14,14,12,0.5);margin-bottom:32px}
+.home-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:700px){.home-grid{grid-template-columns:1fr}}
+.home-card{background:white;border:1px solid var(--border);border-radius:12px;padding:20px;cursor:pointer;text-align:left;font-family:inherit;transition:border-color .15s ease,transform .15s ease}
+.home-card:hover{border-color:var(--gold-bd);transform:translateY(-1px)}
+.home-card-ic{width:38px;height:38px;border-radius:9px;background:var(--gold-bg);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px}
+.home-card-t{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.home-card-d{font-size:12px;color:rgba(14,14,12,0.5);line-height:1.55}
+.home-card-arrow{font-size:12px;color:var(--gold);margin-top:12px;font-weight:600}
 .db-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid var(--border);background:white;flex-shrink:0;gap:12px;flex-wrap:wrap}
+.db-bar-left{display:flex;align-items:center;gap:8px}
 .vt{font-size:11px;font-weight:500;padding:4px 12px;border-radius:16px;border:1px solid var(--border);background:white;cursor:pointer;font-family:'Inter',sans-serif;color:rgba(14,14,12,0.5);transition:all .12s}
 .vt.active{background:var(--ink);color:white;border-color:var(--ink)}
-.ct{font-family:'DM Mono',monospace;font-size:10px;margin-left:4px;opacity:.65}
+.vt .ct{font-family:'DM Mono',monospace;font-size:10px;margin-left:4px;opacity:.65}
 .mkt-sel{font-size:12px;border:1px solid var(--border);border-radius:6px;padding:5px 10px;background:white;font-family:'Inter',sans-serif;cursor:pointer;outline:none;color:var(--ink)}
 .db-scroll{flex:1;overflow-y:auto;padding:20px 24px}
 .kpi-mini{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
 .km{background:white;border:1px solid var(--border);border-radius:8px;padding:10px 12px}
-.km.g{border-left:3px solid var(--green-l)} .km.a{border-left:3px solid var(--amber)} .km.r{border-left:3px solid var(--red)}
+.km.g{border-left:3px solid var(--green-l)}
+.km.a{border-left:3px solid var(--amber)}
+.km.r{border-left:3px solid var(--red)}
 .km-lbl{font-size:10px;color:rgba(14,14,12,0.38);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
 .km-num{font-family:'DM Serif Display',serif;font-size:22px;line-height:1}
 .km-num.g{color:var(--green)} .km-num.a{color:var(--gold)} .km-num.r{color:var(--red)}
@@ -167,6 +260,8 @@ input[id^="edit_"]{background:var(--amber-bg)!important;border:1px solid var(--a
 .vi{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:rgba(14,14,12,0.65);line-height:1.55;margin-bottom:4px}
 .vi-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:5px}
 .acard{background:white;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:10px}
+.acard:hover{box-shadow:0 4px 14px rgba(14,14,12,0.07)}
+.ac-miss{display:flex;align-items:center;gap:8px;padding:6px 14px;background:var(--red-bg);border-bottom:1px solid var(--red-bd);font-size:11px;color:var(--red)}
 .ac-hdr{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid var(--border-2)}
 .ac-hl{display:flex;align-items:center;gap:10px}
 .vbadge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:8px;white-space:nowrap}
@@ -185,10 +280,15 @@ input[id^="edit_"]{background:var(--amber-bg)!important;border:1px solid var(--a
 .conf-row{display:flex;align-items:center;gap:7px;font-size:11px;color:rgba(14,14,12,0.4)}
 .cbar{width:56px;height:4px;background:var(--paper-2);border-radius:2px;overflow:hidden}
 .cfill{height:100%;border-radius:2px}
+.btn-sm{font-size:11px;font-weight:500;padding:4px 11px;border-radius:6px;border:none;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
+.btn-dark{background:var(--ink);color:var(--paper)}
+.btn-gold-sm{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-bd)}
 .anne{background:var(--ink);border-radius:10px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:14px;flex-wrap:wrap}
 .anne-title{font-family:'DM Serif Display',serif;font-size:15px;color:var(--paper);margin-bottom:2px}
 .anne-sub{font-size:11px;color:rgba(246,243,238,0.4)}
-.anne-btn{font-size:12px;font-weight:500;padding:8px 16px;border-radius:7px;background:var(--gold);color:var(--ink);border:none;cursor:pointer;font-family:'Inter',sans-serif}
+.anne-btn{font-size:12px;font-weight:500;padding:8px 16px;border-radius:7px;background:var(--gold);color:var(--ink);border:none;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
+
+/* MODAL */
 .overlay{position:fixed;inset:0;background:rgba(14,14,12,0.5);z-index:300;display:none;align-items:center;justify-content:center}
 .overlay.open{display:flex}
 .modal{background:white;border-radius:12px;width:520px;max-width:96vw;overflow:hidden}
@@ -203,10 +303,6 @@ input[id^="edit_"]{background:var(--amber-bg)!important;border:1px solid var(--a
 .mbtn{font-size:11px;font-weight:500;padding:5px 12px;border-radius:6px;border:none;cursor:pointer;font-family:'Inter',sans-serif}
 .mbtn-dark{background:var(--ink);color:var(--paper)}
 .mbtn-out{background:white;color:rgba(14,14,12,0.55);border:1px solid var(--border)}
-/* Fix confidence bar and financing note inline styles set by JS */
-#confidence-bar{color:var(--ink)!important}
-#financing-note{color:rgba(14,14,12,0.5)!important}
-#payload-box{color:rgba(14,14,12,0.6)!important;background:var(--paper-2)!important;border:1px solid var(--border)!important}
 </style>
 </head>
 <body>
@@ -220,11 +316,16 @@ input[id^="edit_"]{background:var(--amber-bg)!important;border:1px solid var(--a
 </div>
 
 <div class="layout">
+
+<!-- SIDEBAR -->
 <div class="sb">
   <div style="padding:0 10px;margin-bottom:12px">
     <div class="sb-lbl" style="margin-bottom:6px">Menu</div>
-    <button class="nav active" id="nav-analyse" onclick="showPanel('analyse',this)">📋 Analyse a property</button>
+    <button class="nav active" id="nav-home" onclick="showPanel('home',this)">🏠 Home</button>
+    <button class="nav" id="nav-analyse" onclick="showPanel('analyse',this)">📋 Analyse a property</button>
     <button class="nav" id="nav-database" onclick="showPanel('database',this)">📊 My analyses</button>
+    <button class="nav" id="nav-search" onclick="showPanel('search',this)">🔍 Find properties</button>
+    <button class="nav" id="nav-market" onclick="showPanel('market',this)">🗺 Find a market</button>
   </div>
   <div class="sb-div"></div>
   <div class="sb-foot">
@@ -238,105 +339,189 @@ input[id^="edit_"]{background:var(--amber-bg)!important;border:1px solid var(--a
   </div>
 </div>
 
+<!-- MAIN -->
 <div class="main">
 
+  <!-- HOME PANEL -->
+  <div id="panel-home" class="active">
+    <div class="home-wrap">
+      <div class="home-eyebrow">VERA</div>
+      <div class="home-h">Where do you want to start?</div>
+      <div class="home-sub">Pick a tool below — everything opens right here, in the same window.</div>
+      <div class="home-grid">
+        <button class="home-card" onclick="showPanel('analyse', document.getElementById('nav-analyse'))">
+          <div class="home-card-ic">📋</div>
+          <div class="home-card-t">Analyse a property</div>
+          <div class="home-card-d">Paste a listing → VERA reads it, sends it to your calculator, and gives you a full Turnkey / BRRRR / NO-GO verdict.</div>
+          <div class="home-card-arrow">Open →</div>
+        </button>
+        <button class="home-card" onclick="showPanel('database', document.getElementById('nav-database'))">
+          <div class="home-card-ic">📊</div>
+          <div class="home-card-t">My analyses</div>
+          <div class="home-card-d">Every property you've run through VERA, saved and searchable — compare deals side by side.</div>
+          <div class="home-card-arrow">Open →</div>
+        </button>
+        <button class="home-card" onclick="showPanel('search', document.getElementById('nav-search'))">
+          <div class="home-card-ic">🔍</div>
+          <div class="home-card-t">Find properties</div>
+          <div class="home-card-d">New multifamily listings, pulled daily from Realtor.ca, Kijiji, and off-market sources — any Canadian city.</div>
+          <div class="home-card-arrow">Open →</div>
+        </button>
+        <button class="home-card" onclick="showPanel('market', document.getElementById('nav-market'))">
+          <div class="home-card-ic">🗺</div>
+          <div class="home-card-t">Find a market</div>
+          <div class="home-card-d">Compare Canadian cities and neighbourhoods — avg prices, cap rates, rent trends, best areas for BRRRR.</div>
+          <div class="home-card-arrow">Open →</div>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- ANALYSE PANEL -->
-  <div id="panel-analyse" class="active">
+  <div id="panel-analyse">
     <div class="tool-tabs">
-      <button class="ttab active" id="ttab-input" onclick="showToolTab('input')">📋 Paste listing</button>
-      <button class="ttab" id="ttab-data" onclick="showToolTab('data')" disabled>📄 Property data</button>
+      <button class="ttab active" id="ttab-input" onclick="showToolTab('input')">📋 Property details</button>
       <button class="ttab" id="ttab-analysis" onclick="showToolTab('analysis')" disabled>📊 Analysis</button>
     </div>
-
-    <!-- TAB 1: Paste listing -->
-    <div id="tp-input" class="tp active">
+    <div id="tp-input">
       <div class="body">
-        <div class="title">Paste the listing</div>
-        <div class="sub">From Realtor.ca + any confirmed numbers from your realtor: rents, tax, insurance, financing terms.</div>
-        <div id="step-paste">
-          <div class="hint-wrap">
-            <div class="hint">
-              <div class="hint-t">What to paste</div>
-              The listing from Realtor.ca and any numbers your realtor confirmed.<br><br>
-              <strong style="color:var(--ink)">Required:</strong> address, asking price, number of units (max 4).<br>
-              <strong style="color:rgba(14,14,12,0.5)">Everything else</strong> estimated by VERA and editable before sending.
-            </div>
-            <textarea id="paste-area" placeholder="Paste the listing here..." style="min-height:280px;width:100%;background:white;border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-family:'Inter',sans-serif;font-size:12px;line-height:1.7;resize:vertical;outline:none;color:var(--ink);display:block;margin-top:8px"></textarea>
-            <button class="btn-gold" id="read-btn" onclick="readListing()" style="width:100%;padding:11px;background:var(--gold);border:none;border-radius:8px;color:var(--ink);font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;margin-top:8px">Read this listing →</button>
+  <div class="title">Validate your property</div>
+  <div class="sub">Paste the listing and confirmed numbers from your realtor. VERA extracts the data, sends it to the calculator, and returns your real numbers.</div>
+
+  <div id="step-paste">
+    <div class="hint">
+      <div class="hint-t">What to paste</div>
+      The listing from Realtor.ca + confirmed numbers from your realtor: rents per unit, annual property tax, insurance, and your financing terms (rate, down payment, amortization).
+    </div>
+    <textarea id="paste-area" placeholder="Example:&#10;&#10;44 Albert St, Saint John NB — $290,000&#10;Triplex · 3 units&#10;Unit 1: 3-bed — $1,200/mo (confirmed)&#10;Unit 2: 3-bed — $1,100/mo (confirmed)&#10;Unit 3: 3-bed — $1,100/mo (confirmed)&#10;Annual property tax: $3,189&#10;Insurance: $2,400/yr&#10;Financing: 20% down | 5% rate | 25yr amort"></textarea>
+    <button class="btn" id="read-btn" onclick="readListing()">Read this listing →</button>
+  </div>
+
+  <div id="load-area" style="display:none">
+    <div class="load">
+      <div class="dot" style="animation-delay:0ms"></div>
+      <div class="dot" style="animation-delay:150ms"></div>
+      <div class="dot" style="animation-delay:300ms"></div>
+      <span class="load-t" id="load-msg">Reading your listing…</span>
+    </div>
+  </div>
+
+  <div id="err-area" style="display:none">
+    <div class="err"><div class="err-t">⚠ Error</div><div class="err-s" id="err-msg"></div></div>
+    <button onclick="resetAll()" style="width:100%;margin-top:10px;padding:11px;background:transparent;border:1px solid rgba(14,14,12,0.15);border-radius:10px;color:rgba(14,14,12,0.45);font-size:13px;font-weight:500;cursor:pointer;font-family:Inter,sans-serif;">← Start over with a new listing</button>
+  </div>
+
+  <div id="step-confirm" style="display:none">
+    <div class="sh">What VERA found</div><div style="font-size:11px;color:rgba(14,14,12,0.45);margin-bottom:12px"><span style="color:#3A8B5F">✓ confirmed from listing</span> &nbsp;·&nbsp; <span style="color:#C4972A">~ assumed by VERA — editable</span></div>
+    <div class="miss" id="miss-box" style="display:none">
+      <div class="miss-t">⚠ These fields were not found — VERA will use defaults</div>
+      <div class="miss-i" id="miss-list"></div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.28);margin-top:7px;line-height:1.65">You can edit the assumed values below before sending, or re-paste with more details.</div>
+    </div>
+    <div class="ex-box" id="extracted-box"></div>
+    <div style="margin-top:8px">
+      <button onclick="togglePayload()" style="font-size:10px;color:rgba(14,14,12,0.45);background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;padding:0">▶ Show full payload sent to Google Sheet</button>
+      <pre id="payload-box" style="display:none;font-size:10px;font-family:monospace;color:rgba(14,14,12,0.5);background:rgba(14,14,12,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:10px;margin-top:6px;overflow-x:auto;white-space:pre-wrap;max-height:300px;overflow-y:auto"></pre>
+    </div>
+    <div id="confidence-bar" style="margin:12px 0 6px"></div>
+    <div id="financing-note" style="font-size:11px;color:rgba(14,14,12,0.5);margin-bottom:10px;line-height:1.6"></div>
+    <button class="btn-green" id="run-btn" onclick="runNumbers()">Send to calculator & run analysis →</button>
+  </div>
+
+  <div id="step-results" style="display:none"></div>
+</div>
+    </div>
+    <div id="tp-analysis">
+      <div style="max-width:920px;margin:0 auto;padding:24px 20px 40px">
+
+        <div class="an-topbar no-print">
+          <div class="an-topbar-t">Your analysis</div>
+          <button class="print-btn" onclick="window.print()">🖨 Save PDF</button>
+        </div>
+
+        <div class="verd" id="verd-box">
+          <div class="verd-t" id="verd-type"></div>
+          <div class="verd-tt" id="verd-title"></div>
+          <div class="verd-r" id="verd-insight"></div>
+          <table class="yr-table" id="verd-criteria" style="margin-top:12px"></table>
+        </div>
+
+        <!-- Property summary — full width, like the listing block up top of the reference layout -->
+        <div class="an-card">
+          <div class="an-hdr"><div class="an-hdr-ic">◆</div><div class="an-hdr-t">Property summary</div></div>
+          <div class="tbl" id="summary-tbl" style="margin:0;border:none;border-radius:0"></div>
+        </div>
+
+        <!-- Hero cash-flow number, full width — the headline figure -->
+        <div class="cf-hero">
+          <div>
+            <div class="cf-hero-lbl">Net monthly cash flow</div>
+            <div class="cf-hero-num" id="cf-big"></div>
+            <div class="cf-hero-sub">After mortgage &amp; expenses</div>
           </div>
         </div>
-        <div id="load-area" style="display:none">
-          <div class="load">
-            <div class="dot" style="animation-delay:0ms"></div>
-            <div class="dot" style="animation-delay:150ms"></div>
-            <div class="dot" style="animation-delay:300ms"></div>
-            <div class="load-t" id="load-msg">Reading listing…</div>
+
+        <!-- The 2 numbers to check, side by side -->
+        <div class="report-grid" style="grid-template-columns:repeat(2,1fr)">
+          <div class="an-card">
+            <div class="an-hdr"><div class="an-hdr-ic num">1</div><div class="an-hdr-t">Monthly cash flow</div></div>
+            <div class="tbl" id="cashflow-tbl" style="margin:0;border:none;border-radius:0"></div>
+          </div>
+
+          <div class="an-card">
+            <div class="an-hdr"><div class="an-hdr-ic num">2</div><div class="an-hdr-t">Out-of-pocket risk</div></div>
+            <div class="tbl" id="risk-tbl" style="margin:0;border:none;border-radius:0"></div>
+            <div class="an-total-row"><span>Total risk</span><span id="risk-total"></span></div>
           </div>
         </div>
-        <div id="err-area" class="err" style="display:none"></div>
-      </div>
-    </div>
 
-    <!-- TAB 2: Property data -->
-    <div id="tp-data" class="tp">
-      <!-- shims for JS compatibility -->
-      <div id="step-confirm" style="display:none"></div>
-      <div class="body">
-        <div class="title">What VERA found</div>
-        <div class="sub" style="color:rgba(14,14,12,0.5)"><span style="color:var(--green-l)">✓ confirmed from listing</span> &nbsp;·&nbsp; <span style="color:var(--amber)">~ assumed by VERA — editable</span></div>
-        <div class="miss" id="miss-box" style="display:none">
-          <div class="miss-t">⚠ These fields were not found — VERA will use defaults</div>
-          <div class="miss-i" id="miss-list"></div>
+        <!-- ROI breakdown, full width -->
+        <div class="an-card">
+          <div class="an-hdr"><div class="an-hdr-ic">↗</div><div class="an-hdr-t">Year 1 ROI Breakdown</div></div>
+          <div class="kgrid" id="roi-grid" style="padding:14px 16px;margin:0;grid-template-columns:repeat(auto-fit,minmax(110px,1fr))"></div>
         </div>
-        <div class="ex-box" id="extracted-box"></div>
-        <div style="margin-top:8px">
-          <button onclick="togglePayload()" style="font-size:10px;color:rgba(14,14,12,0.45);background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;padding:0">▶ Show full payload sent to Google Sheet</button>
-          <pre id="payload-box" style="display:none;font-size:10px;font-family:monospace;color:rgba(14,14,12,0.6);background:var(--paper-2);border:1px solid var(--border);border-radius:8px;padding:10px;margin-top:6px;overflow-x:auto;white-space:pre-wrap;max-height:300px;overflow-y:auto"></pre>
-        </div>
-        <div id="confidence-bar" style="margin:12px 0 6px"></div>
-        <div id="financing-note" style="font-size:11px;color:rgba(14,14,12,0.5);margin-bottom:10px;line-height:1.6"></div>
-        <button class="btn-green" id="run-btn" onclick="runNumbers()">Send to calculator &amp; run analysis →</button>
-        <div id="load-area-2" style="display:none;text-align:center;padding:14px;font-size:12px;color:rgba(14,14,12,0.45)">Sending to Google Sheet…<br><span style="font-size:11px;color:rgba(14,14,12,0.3)">First request may take ~30 seconds.</span></div>
-        <button onclick="resetAll()" style="width:100%;margin-top:8px;padding:9px;background:transparent;border:1px solid var(--border);border-radius:8px;color:rgba(14,14,12,0.4);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif">← Start over with a new listing</button>
-      </div>
-    </div>
 
-    <!-- TAB 3: Analysis -->
-    <div id="tp-analysis" class="tp">
-      <div class="body">
-        <div id="step-results">
-          <div class="verd" id="verd-box">
-            <div class="verd-t" id="verd-type"></div>
-            <div class="verd-tt" id="verd-title"></div>
-            <div class="verd-r" id="verd-reasons"></div>
+        <!-- 5-year wealth plan, full width — chart + year-by-year table -->
+        <div class="an-card">
+          <div class="an-hdr"><div class="an-hdr-ic num">3</div><div class="an-hdr-t">5-Year Projected Gains</div></div>
+          <div style="padding:14px 16px 4px">
+            <div class="wealth-chart" id="wealth-chart"></div>
+            <table class="yr-table" id="wealth-yr-tbl"></table>
           </div>
-          <div class="sh">Key metrics</div>
-          <div class="kgrid" id="kpi-grid"></div>
-          <div class="sh">Cash required to close</div>
-          <div class="tbl" id="cash-tbl"></div>
-          <div class="sh">ROI breakdown</div>
-          <div class="tbl" id="roi-tbl"></div>
-          <div class="sh">5-year projection</div>
-          <div class="tbl" id="proj-tbl"></div>
-          <div class="sh">Financing</div>
-          <div class="tbl" id="fin-tbl"></div>
-          <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1LVEdltKDfDO3mN3Ibr8QZ3BAYQ7FQKZ0X-ZK3xQWjP0/edit" target="_blank">📊 Open full Google Sheet →</a>
+          <div class="an-total-row"><span>Year 5 projected gain</span><span id="wealth-total"></span></div>
+          <div class="an-total-row" style="border-top:none;padding-top:0"><span>Year 5 projected ROI</span><span id="wealth-roi"></span></div>
+          <div class="an-foot" id="wealth-foot"></div>
         </div>
-        <div style="background:var(--ink);border-radius:10px;padding:16px;margin-top:14px;margin-bottom:8px">
-          <div id="cta-title" style="font-size:13px;font-weight:600;color:var(--paper);margin-bottom:4px">Ready to move forward?</div>
-          <div id="cta-sub" style="font-size:11px;color:rgba(246,243,238,0.45);margin-bottom:10px;line-height:1.5">Book a call with Anne to discuss financing.</div>
-          <button id="cta-btn" style="padding:8px 16px;background:var(--gold);border:none;border-radius:6px;color:var(--ink);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Book a call with Anne →</button>
+
+        <div class="no-print" style="margin-top:8px">
+          <button onclick="toggleResponse()" style="font-size:10px;color:rgba(14,14,12,0.45);background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;padding:0">▶ Show raw response from calculator</button>
+          <pre id="response-box" style="display:none;font-size:10px;font-family:monospace;color:rgba(14,14,12,0.5);background:rgba(14,14,12,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:10px;margin-top:6px;overflow-x:auto;white-space:pre-wrap;max-height:300px;overflow-y:auto"></pre>
         </div>
-        <button onclick="saveAndGoToDatabase()" style="width:100%;margin-top:4px;padding:11px;background:var(--green);border:none;border-radius:8px;color:white;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif">💾 Save analysis to My analyses →</button>
-        <button onclick="resetAll()" style="width:100%;margin-top:8px;padding:9px;background:transparent;border:1px solid var(--border);border-radius:8px;color:rgba(14,14,12,0.4);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif">← Analyse another property</button>
+
+        <a class="sheet-link no-print" href="https://docs.google.com/spreadsheets/d/1LVEdltKDfDO3mN3Ibr8QZ3BAYQ7FQKZ0X-ZK3xQWjP0/edit" target="_blank">📊 Open full Google Sheet ↗</a>
+        <div class="cta no-print">
+          <div class="cta-t" id="cta-title"></div>
+          <div class="cta-s" id="cta-sub"></div>
+          <button class="cta-b" id="cta-btn"></button>
+        </div>
+        <button class="no-print" onclick="saveToMyAnalyses()" style="width:100%;margin-top:12px;padding:12px;background:var(--gold);border:none;border-radius:10px;color:var(--ink);font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">💾 Save analysis</button>
+        <button class="no-print" onclick="resetAll()" style="width:100%;margin-top:8px;padding:10px;background:transparent;border:1px solid rgba(14,14,12,0.12);border-radius:10px;color:rgba(14,14,12,0.4);font-size:12px;cursor:pointer;font-family:Inter,sans-serif">← Analyse another property</button>
       </div>
     </div>
+  </div>
+
+  <div id="panel-search" style="flex:1;display:none;flex-direction:column;overflow:hidden">
+    <iframe src="vera-search.html" style="width:100%;height:100%;border:none" id="search-iframe"></iframe>
+  </div>
+
+  <div id="panel-market" style="flex:1;display:none;flex-direction:column;overflow:hidden">
+    <iframe src="vera-market.html" style="width:100%;height:100%;border:none" id="market-iframe"></iframe>
   </div>
 
   <!-- DATABASE PANEL -->
   <div id="panel-database">
     <div class="db-bar">
-      <div style="display:flex;align-items:center;gap:8px">
+      <div class="db-bar-left">
         <button class="vt active" onclick="setVerdict('all',this)">All<span class="ct" id="ct-all">0</span></button>
         <button class="vt" onclick="setVerdict('turnkey',this)">✓ Turnkey<span class="ct" id="ct-tk">0</span></button>
         <button class="vt" onclick="setVerdict('brrrr',this)">⟳ BRRRR<span class="ct" id="ct-br">0</span></button>
@@ -361,178 +546,143 @@ input[id^="edit_"]{background:var(--amber-bg)!important;border:1px solid var(--a
         <div class="km r"><div class="km-lbl">No-go</div><div class="km-num r" id="k-ng">0</div></div>
       </div>
       <div id="cards-container"></div>
-      
+      <div class="anne">
+        <div>
+          <div class="anne-title">Ready to move forward on a property?</div>
+          <div class="anne-sub">Anne Chauvin · Licensed Mortgage Agent · 8Twelve Mortgage · FSRA #M25000164</div>
+        </div>
+        <button class="anne-btn" onclick="window.open('https://calendly.com/anne-chauvin-8twelve/15min','_blank')">Book a free 20-min call →</button>
+      </div>
     </div>
   </div>
 
-</div>
-</div>
+</div><!-- /main -->
+</div><!-- /layout -->
 
-<!-- MODAL -->
+<!-- EMAIL MODAL -->
 <div class="overlay" id="modal">
   <div class="modal">
-    <div class="mhdr"><div><h3 id="m-title">Request missing data</h3><p id="m-sub"></p></div><button class="mx" id="mx">×</button></div>
-    <div class="mbody"><div class="esubj" id="m-subj"></div><div class="ebody" id="m-body"></div></div>
-    <div class="mftr"><button class="mbtn mbtn-dark" id="copy-btn">Copy email</button><button class="mbtn mbtn-out" id="close-btn">Close</button><span style="margin-left:auto;font-size:11px;color:rgba(14,14,12,0.35)">Paste into your email client</span></div>
+    <div class="mhdr">
+      <div><h3 id="m-title">Request missing data</h3><p id="m-sub"></p></div>
+      <button class="mx" id="mx">×</button>
+    </div>
+    <div class="mbody">
+      <div class="esubj" id="m-subj"></div>
+      <div class="ebody" id="m-body"></div>
+    </div>
+    <div class="mftr">
+      <button class="mbtn mbtn-dark" id="copy-btn">Copy email</button>
+      <button class="mbtn mbtn-out" id="close-btn">Close</button>
+      <span style="margin-left:auto;font-size:11px;color:rgba(14,14,12,0.35)">Paste into your email client</span>
+    </div>
   </div>
 </div>
 
 <script>
-const ACCOUNT_LIMIT = 10;
-function getEmail()    { return localStorage.getItem('vera_email'); }
-function getCount()    { return parseInt(localStorage.getItem('vera_count')||'0'); }
-function getAnalyses() { const e=getEmail(); if(!e) return []; return JSON.parse(localStorage.getItem('vera_analyses_'+e)||'[]'); }
-function logout()      { localStorage.removeItem('vera_email'); window.location.href='index.html'; }
+// ── ACCOUNT AUTH ──
+const ACCOUNT_LIMIT = 999999;
 
-if (!getEmail()) window.location.href='index.html';
+// Bridge login from the marketing site: if an ?email= param is present (set by
+// index.html's signup form), trust it and persist to localStorage on THIS
+// origin. This matters if the website and the app end up on different subdomains
+// (e.g. vera.ca vs app.vera.ca) — localStorage doesn't carry over between origins,
+// but a URL param does, so this makes login work regardless of hosting setup.
+(function bridgeEmailFromURL(){
+  const params = new URLSearchParams(window.location.search);
+  const urlEmail = params.get('email');
+  if (urlEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(urlEmail)) {
+    localStorage.setItem('vera_email', urlEmail);
+    // Clean the email out of the visible URL without reloading the page
+    params.delete('email');
+    const cleanUrl = window.location.pathname + (params.toString() ? '?'+params.toString() : '') + window.location.hash;
+    window.history.replaceState({}, '', cleanUrl);
+  }
+})();
 
+function getEmail()  { return localStorage.getItem('vera_email'); }
+function getCount()  { return parseInt(localStorage.getItem('vera_count')||'0'); }
+async function loadAnalysesFromSheet() {
+  const email = getEmail();
+  if (!email) return;
+  const container = document.getElementById('cards-container');
+  if (container) container.innerHTML = '<div style="padding:32px;text-align:center;color:rgba(14,14,12,0.4);font-size:13px">Loading your analyses...</div>';
+  try {
+    const resp = await fetch('https://vera-proxy.onrender.com/get-analyses?email='+encodeURIComponent(email));
+    const data = await resp.json();
+    window._cachedAnalyses = Array.isArray(data) ? data : [];
+    buildMarketDropdown();
+    renderCards();
+    buildInsights();
+  } catch(err) {
+    if (container) container.innerHTML = '<div style="padding:32px;text-align:center;color:rgba(14,14,12,0.4);font-size:13px">Could not load analyses. Try again.</div>';
+  }
+}
+
+function getAnalyses() {
+  return window._cachedAnalyses || [];
+}
+function logout() {
+  localStorage.removeItem('vera_email');
+  window.location.href = 'index.html';
+}
+
+// Guard — redirect if not logged in
+if (!getEmail()) window.location.href = 'index.html';
+
+// Init topbar
 document.getElementById('top-email').textContent = getEmail()||'';
-document.getElementById('top-used').textContent  = getCount();
-document.getElementById('sb-used').textContent   = getCount()+' / '+ACCOUNT_LIMIT;
-document.getElementById('sb-left').textContent   = Math.max(0, ACCOUNT_LIMIT-getCount());
+document.getElementById('top-used').textContent = getCount();
+document.getElementById('sb-used').textContent = getCount()+' / '+ACCOUNT_LIMIT;
+document.getElementById('sb-left').textContent = Math.max(0, ACCOUNT_LIMIT - getCount());
 
+// ── PANEL NAV ──
 function showPanel(panel, btn) {
   document.querySelectorAll('.nav').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
+  document.getElementById('panel-home').classList.remove('active');
   document.getElementById('panel-analyse').classList.remove('active');
   document.getElementById('panel-database').classList.remove('active');
+  document.getElementById('panel-market').style.display = 'none';
+  document.getElementById('panel-search').style.display = 'none';
   document.getElementById('panel-'+panel).classList.add('active');
-  if (panel==='database') { buildMarketDropdown(); renderCards(); buildInsights(); }
+  if (panel === 'database') { loadAnalysesFromSheet(); }
+  if (panel === 'search') {
+    document.getElementById('panel-search').style.display = 'flex';
+    const iframe = document.getElementById('search-iframe');
+    if (iframe) iframe.src = iframe.src;
+  }
+  if (panel === 'market') {
+    document.getElementById('panel-market').style.display = 'flex';
+  }
 }
 
+// ── TOOL TABS ──
 function showToolTab(tab) {
   document.querySelectorAll('.ttab').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));
-  const btn = document.getElementById('ttab-'+tab);
-  if (btn) { btn.classList.add('active'); btn.classList.remove('ready'); }
-  const panel = document.getElementById('tp-'+tab);
-  if (panel) panel.classList.add('active');
+  document.getElementById('ttab-'+tab).classList.add('active');
+  document.getElementById('tp-input').style.display  = tab==='input'  ? 'block' : 'none';
+  document.getElementById('tp-analysis').style.display = tab==='analysis' ? 'block' : 'none';
+}
+function showAnalysisTab() {
+  document.getElementById('ttab-analysis').disabled = false;
+  showToolTab('analysis');
 }
 
-function enableTab(tab) {
-  const btn = document.getElementById('ttab-'+tab);
-  if (btn) { btn.disabled=false; btn.classList.add('ready'); }
-}
-
+// ── SAVE ANALYSIS ──
 function saveAnalysis(inputs, results) {
-  const email = getEmail(); if(!email) return;
-  const capRate = parseFloat(results.capRate)||0;
-  const key = 'vera_analyses_'+email;
-  const existing = JSON.parse(localStorage.getItem(key)||'[]');
-  // Remove any previous entry for same address to avoid duplicates
-  const addr = inputs.PropertyAddress||'Unknown';
-  const deduped = existing.filter(a => a.addr !== addr);
-  deduped.unshift({
-    id:Date.now(),
-    date:new Date().toLocaleDateString('en-CA',{month:'short',day:'numeric',year:'numeric'}),
-    addr:inputs.PropertyAddress||'Unknown',
-    city:(inputs.PropertyAddress||'').toLowerCase().includes('saint john')?'Saint John':'Unknown',
-    neighbourhood:inputs.PropertyNeighborhood||'',
-    province:'NB', units:inputs.NumberofUnits||1,
-    type:inputs.NumberofUnits===1?'Single':inputs.NumberofUnits===2?'Duplex':inputs.NumberofUnits===3?'Triplex':'Fourplex',
-    asking:inputs.PropertyAskingPrice||0, capRate: capRate>1 ? capRate : parseFloat((capRate*100).toFixed(2)),
-    cashflow:parseFloat(results.monthlyCashflow||results.TotalMonthlyCashflowYr1)||0,
-    coc:(v=>v>1?v:v*100)(parseFloat(results.roi?.cashOnCash||results.CashOnCashYr1)||0),
-    totalROI:(v=>v>1?v:v*100)(parseFloat(results.roi?.totalROI||results.ROIPercentageYr1)||0),
-    cashToClose:parseFloat(results.cashRequired?.totalCashRequired||results.TotalCashRequired)||0,
-    confidence:results._confidence||0, verdict:window._lastVerdict || ((capRate>1?capRate:capRate*100)>=5?'turnkey':(capRate>1?capRate:capRate*100)>=3?'brrrr':'nogo'), missing:[]
-  });
-  localStorage.setItem(key, JSON.stringify(deduped.slice(0,50)));
+  // Analysis is automatically saved to Google Sheet via Apps Script
+  // Just update the display counter
   const newCount = getCount()+1;
   localStorage.setItem('vera_count', newCount.toString());
-  document.getElementById('top-used').textContent = newCount;
-  document.getElementById('sb-used').textContent  = newCount+' / '+ACCOUNT_LIMIT;
-  document.getElementById('sb-left').textContent  = Math.max(0, ACCOUNT_LIMIT-newCount);
+  const el1 = document.getElementById('top-used');
+  const el2 = document.getElementById('sb-used');
+  const el3 = document.getElementById('sb-left');
+  if (el1) el1.textContent = newCount;
+  if (el2) el2.textContent = newCount;
+  if (el3) el3.textContent = '';
 }
 
-function saveAndGoToDatabase() {
-  showPanel('database', document.getElementById('nav-database'));
-}
-
-function resetAll() {
-  document.getElementById('paste-area').value='';
-  document.getElementById('load-area').style.display='none';
-  document.getElementById('err-area').style.display='none';
-  document.getElementById('err-area').textContent='';
-  document.getElementById('extracted-box').innerHTML='';
-  document.getElementById('confidence-bar').innerHTML='';
-  document.getElementById('financing-note').innerHTML='';
-  document.getElementById('miss-box').style.display='none';
-  document.getElementById('payload-box').style.display='none';
-  document.getElementById('load-area-2').style.display='none';
-  document.getElementById('run-btn').disabled=false;
-  document.getElementById('read-btn').disabled=false;
-  // Keep data+analysis tabs accessible so user can edit and re-run
-  showToolTab('input');
-}
-
-// Override hooks called by tool JS
-function afterReadSuccess()  { enableTab('data'); }
-function afterRunSuccess()   { enableTab('analysis'); }
-
-// DATABASE
-let currentVerdict='all';
-function buildMarketDropdown(){
-  const analyses=getAnalyses();
-  const sel=document.getElementById('mkt-filter');
-  const cities=[...new Set(analyses.map(a=>a.city).filter(Boolean))];
-  sel.innerHTML='<option value="all">All markets</option>';
-  cities.forEach(city=>{const o=document.createElement('option');o.value=city;o.textContent=city;sel.appendChild(o);});
-}
-function setVerdict(v,btn){ currentVerdict=v; document.querySelectorAll('.vt').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderCards(); }
-function renderCards(){
-  const analyses=getAnalyses();
-  const mkt=document.getElementById('mkt-filter').value;
-  let data=analyses;
-  if(mkt!=='all') data=data.filter(a=>a.city===mkt);
-  if(currentVerdict==='turnkey') data=data.filter(a=>a.verdict==='turnkey');
-  else if(currentVerdict==='brrrr') data=data.filter(a=>a.verdict==='brrrr');
-  else if(currentVerdict==='nogo') data=data.filter(a=>a.verdict==='nogo');
-  const base=mkt==='all'?analyses:analyses.filter(a=>a.city===mkt);
-  ['all','tk','br','ng'].forEach((k,i)=>{
-    const counts=[base.length, base.filter(a=>a.verdict==='turnkey').length, base.filter(a=>a.verdict==='brrrr').length, base.filter(a=>a.verdict==='nogo').length];
-    document.getElementById('ct-'+k).textContent=counts[i];
-    const km=document.getElementById('k-'+(['total','tk','br','ng'][i]));
-    if(km) km.textContent=counts[i];
-  });
-  const container=document.getElementById('cards-container');
-  if(!data.length){ container.innerHTML=`<div style="text-align:center;padding:48px 20px"><div style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--ink);margin-bottom:8px">No analyses yet</div><div style="font-size:13px;color:rgba(14,14,12,0.42);margin-bottom:16px">Paste any listing in the Analyse tab to get started.</div><button onclick="document.getElementById('nav-analyse').click()" style="padding:9px 20px;background:var(--gold);border-radius:8px;color:var(--ink);font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif">Analyse a property →</button></div>`; return; }
-  const fmt$=n=>'$'+Math.round(n).toLocaleString();
-  container.innerHTML=data.map(a=>{
-    const vc=a.verdict==='turnkey'?'vb-tk':a.verdict==='brrrr'?'vb-br':'vb-ng';
-    const vl=a.verdict==='turnkey'?'✓ Turnkey':a.verdict==='brrrr'?'⟳ BRRRR':'✕ No-go';
-    const cc=a.confidence>=70?'var(--green-l)':a.confidence>=45?'var(--amber)':'var(--red)';
-    return `<div class="acard">
-      <div class="ac-hdr">
-        <div class="ac-hl"><span class="vbadge ${vc}">${vl}</span><div><div class="ac-addr">${a.addr}</div><div class="ac-meta">${a.type} · ${a.units} units · ${fmt$(a.asking)} · ${a.date}</div></div></div>
-        <button style="font-size:11px;font-weight:500;padding:4px 11px;border-radius:6px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;font-family:'Inter',sans-serif" onclick="document.getElementById('nav-analyse').click()">↩ Re-analyse</button>
-      </div>
-      <div class="ac-stats">
-        <div class="ac-stat"><div class="asl">Cap rate</div><div class="asv ${a.capRate>=5?'g':a.capRate>=3?'a':'r'}">${a.capRate.toFixed(2)}%</div></div>
-        <div class="ac-stat"><div class="asl">Monthly CF</div><div class="asv ${a.cashflow>=0?'g':'r'}">${fmt$(a.cashflow)}</div></div>
-        <div class="ac-stat"><div class="asl">Cash on cash</div><div class="asv ${a.coc>=7?'g':a.coc>=4?'a':'r'}">${a.coc.toFixed(2)}%</div></div>
-        <div class="ac-stat"><div class="asl">Total ROI yr1</div><div class="asv ${a.totalROI>=20?'g':a.totalROI>=10?'a':'r'}">${a.totalROI.toFixed(2)}%</div></div>
-        <div class="ac-stat"><div class="asl">Cash to close</div><div class="asv">${fmt$(a.cashToClose)}</div></div>
-      </div>
-      <div class="ac-foot"><div class="conf-row"><span>Data confidence</span><div class="cbar"><div class="cfill" style="width:${a.confidence}%;background:${cc}"></div></div><span style="font-family:'DM Mono',monospace;font-size:11px;color:${cc}">${a.confidence}%</span></div></div>
-    </div>`;
-  }).join('');
-}
-function buildInsights(){
-  const analyses=getAnalyses();
-  if(!analyses.length){document.getElementById('vera-box').style.display='none';return;}
-  document.getElementById('vera-box').style.display='block';
-  const avg=arr=>arr.reduce((s,x)=>s+x,0)/arr.length;
-  const insights=[`${analyses.length} propert${analyses.length===1?'y':'ies'} analysed · avg cap rate ${avg(analyses.map(a=>a.capRate)).toFixed(1)}%.`];
-  const sj=analyses.filter(a=>a.city==='Saint John');
-  if(sj.length>=2) insights.push(`Saint John avg cap rate: ${avg(sj.map(a=>a.capRate)).toFixed(1)}% across ${sj.length} properties.`);
-  document.getElementById('vera-insights').innerHTML=insights.map(i=>`<div class="vi"><div class="vi-dot"></div><span>${i}</span></div>`).join('');
-}
-document.getElementById('mx').onclick=()=>document.getElementById('modal').classList.remove('open');
-document.getElementById('close-btn').onclick=()=>document.getElementById('modal').classList.remove('open');
-document.getElementById('copy-btn').onclick=function(){navigator.clipboard.writeText(document.getElementById('m-subj').textContent+'\n\n'+document.getElementById('m-body').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy email',2000);};
-
-// TOOL JS
+// ── TOOL JS (exact fixed version from index.html) ──
 const PROXY_URL    = 'https://vera-proxy.onrender.com/analyze';
 const SHEET_URL    = 'https://docs.google.com/spreadsheets/d/1LVEdltKDfDO3mN3Ibr8QZ3BAYQ7FQKZ0X-ZK3xQWjP0/edit';
 
@@ -545,6 +695,9 @@ const REQUIRED = [
 
 const fmt$ = n => n!=null&&!isNaN(n) ? (n<0?'-$':'$')+Math.abs(Math.round(n)).toLocaleString() : '—';
 const fmtP = n => n!=null&&!isNaN(n) ? (Math.abs(n)<1?(n*100).toFixed(2):(+n).toFixed(2))+'%' : '—';
+// For fields confirmed to be fraction-formatted in the sheet (e.g. 1.83 = 183%) that can exceed 100% —
+// fmtP's "under 1 = fraction" heuristic breaks here since a >100% cumulative return is >= 1.
+const fmtPFrac = n => n!=null&&!isNaN(n) ? (n*100).toFixed(2)+'%' : '—';
 
 let extractedData = null;
 
@@ -575,8 +728,8 @@ function applyAssumptions(d) {
   if (!d.DownpaymentPercentage) d.DownpaymentPercentage  = isOwner ? 5 : 20;
   if (!d.CMHCInsurancePremium)  d.CMHCInsurancePremium   = 0;
 
-  // 4. Vacancy — 2% for 1-2 units, 3% for 3+
-  if (!d.VacancyRate) d.VacancyRate = units <= 2 ? 2 : 3;
+  // 4. Vacancy — book: "usually between 5-10%" (Ch.14). Using 5% as the conservative default.
+  if (!d.VacancyRate) d.VacancyRate = 5;
 
   // 5. Repairs — infer from listing description and reno budget
   if (!d.RepairsAndMaintenanceRate) {
@@ -586,8 +739,8 @@ function applyAssumptions(d) {
     else                    d.RepairsAndMaintenanceRate = 5;
   }
 
-  // 6. Property management — 7%
-  if (!d.PropertyManagementRate) d.PropertyManagementRate = 7;
+  // 6. Property management — book: "often set at around 6%" (Ch.13/14)
+  if (!d.PropertyManagementRate) d.PropertyManagementRate = 6;
 
   // 7. Lawn & snow — $1,200
   if (!d.LawnAndSnowMaintenance) d.LawnAndSnowMaintenance = 1200;
@@ -753,7 +906,7 @@ async function readListing() {
 
     const units = Number(withAssumptions.NumberofUnits) || 1;
     function secHdr(title) {
-      return `<div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.22);padding:10px 14px 5px;border-top:1px solid rgba(255,255,255,0.06);margin-top:4px">${title}</div>`;
+      return `<div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(14,14,12,0.35);padding:10px 14px 5px;border-top:1px solid rgba(14,14,12,0.07);margin-top:4px">${title}</div>`;
     }
     let html = '';
 
@@ -851,18 +1004,17 @@ async function readListing() {
     // confirmedCount and totalCount set above
     const pct = Math.round((confirmedCount / totalCount) * 100);
     const barColor = pct >= 70 ? '#3A8B5F' : pct >= 40 ? '#C4972A' : '#E05252';
-    window._lastConfidence = pct;
     document.getElementById('confidence-bar').innerHTML = `
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
         <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:rgba(14,14,12,0.4)">Data confidence</div>
         <div style="font-size:13px;font-weight:600;color:${barColor}">${pct}%</div>
       </div>
-      <div style="background:rgba(14,14,12,0.1);border-radius:4px;height:6px;overflow:hidden">
+      <div style="background:rgba(14,14,12,0.08);border-radius:4px;height:6px;overflow:hidden">
         <div style="width:${pct}%;height:100%;background:${barColor};border-radius:4px;transition:width .5s"></div>
       </div>
-      <div style="font-size:11px;color:rgba(14,14,12,0.5);margin-top:5px">${confirmedCount} of ${totalCount} key fields confirmed from listing — ${totalCount - confirmedCount} assumed by VERA</div>
+      <div style="font-size:11px;color:rgba(14,14,12,0.45);margin-top:5px">${confirmedCount} of ${totalCount} key fields confirmed from listing — ${totalCount - confirmedCount} assumed by VERA</div>
     `;
-    document.getElementById('financing-note').innerHTML =
+    document.getElementById('financing-note').innerHTML = 
       '💡 <strong style="color:rgba(14,14,12,0.7)">Financing terms</strong> are assumed based on typical Canadian rates. ' +
       'For accurate numbers, <a href="mailto:anne.chauvin@8twelve.mortgage" style="color:#B8872A">confirm your pre-approval with Anne</a>.';
 
@@ -902,8 +1054,7 @@ async function runNumbers() {
   // Apply edits directly to base data before running assumptions
   Object.assign(baseData, editedAssumptions);
   const payload = applyAssumptions(baseData);
-  
-
+  payload.userEmail = getEmail() || '';
 
   try {
     const resp = await fetch(PROXY_URL, {
@@ -919,18 +1070,15 @@ async function runNumbers() {
 
     const result = await resp.json();
     if(result.error) throw new Error('Sheet error: ' + result.error);
+    window._lastRawResult = result;
+    console.log('VERA calculator raw response:', result);
 
     renderResults(result);
-    result._confidence = window._lastConfidence || 0;
-    saveAnalysis(payload, result);
+    window._lastResult = result;
+    saveAnalysis(withAssumptions, result);
     hide('load-area');
-    hide('step-confirm');
-    show('step-results');
-    document.getElementById('run-btn').disabled = false;
-    // Switch to analysis tab so user can see results
-    document.getElementById('ttab-analysis').disabled = false;
-    document.getElementById('ttab-analysis').classList.add('ready');
-    showToolTab('analysis');
+    showAnalysisTab();
+    document.getElementById('tp-analysis').scrollTop = 0;
 
   } catch(e) {
     hide('load-area');
@@ -942,82 +1090,309 @@ async function runNumbers() {
 function renderResults(r) {
   const units  = Number(extractedData.NumberofUnits)||1;
   const reno   = Number(extractedData.RenovationEstimate)||0;
-  // Your Apps Script returns: r.capRate, r.monthlyCashflow, r.noi, r.roi.cashOnCash etc.
-  const cap    = r.capRate||r.CapRateOnPurchasePrice||0;
-  const moCF   = r.monthlyCashflow||r.TotalMonthlyCashflowYr1||0;
-  const cfUnit = units>0 ? moCF/units : 0;
-  const coc    = r.roi?.cashOnCash||r.CashOnCashYr1||0;
-  const totROI = r.roi?.totalROI||r.ROIPercentageYr1||0;
 
-  let type,icon,color,bg,border,title,reasons;
-  window._lastVerdict = null;
-  if(moCF<0 || cap<0.03){
-    type='PASS';icon='✗';color='#E05252';bg='rgba(180,50,50,0.1)';border='rgba(180,50,50,0.3)';
-    title='This deal does not meet the criteria';
-    reasons=[moCF<0&&`Negative cash flow: ${fmt$(moCF)}/mo`,cap<0.03&&`Cap rate too low: ${fmtP(cap)} — minimum 3%`].filter(Boolean);
-  } else if(reno>0){
-    type='BRRRR';icon='⟳';color='#C4972A';bg='rgba(196,151,42,0.08)';border='rgba(196,151,42,0.3)';
-    title='BRRRR candidate — post-reno analysis required';
-    reasons=[`Renovation: ${fmt$(reno)} — get contractor quotes`,`Current cap rate: ${fmtP(cap)} — target 6%+ after reno`,`Cash flow/unit: ${fmt$(cfUnit)}/mo — target $200+ post-reno`];
-  } else {
-    type='TURNKEY';icon='✓';color='#3A8B5F';bg='rgba(42,107,74,0.08)';border='rgba(42,107,74,0.3)';
-    title='Turnkey — meets investment criteria';
-    reasons=[cap>=0.05&&`Cap rate: ${fmtP(cap)} ✓ (target 5%+)`,cfUnit>=200&&`Cash flow/unit: ${fmt$(cfUnit)}/mo ✓ (target $200+)`,coc>=0.07&&`Cash on cash: ${fmtP(coc)} ✓ (target 7%+)`,totROI>=0.20&&`Total ROI: ${fmtP(totROI)} ✓ (target 20%+)`].filter(Boolean);
+  // Read from the calculator's actual output: the original nested structure
+  // (r.roi.cashOnCash, r.capRate, r.financing.mortgageAmount, etc.)
+  const cap    = Number(r.capRate) || 0;
+  const moCF   = Number(r.monthlyCashflow) || 0;
+  const cfUnit = units>0 ? moCF/units : 0;
+  const coc    = Number(r.roi?.cashOnCash) || 0;
+  const totROI = Number(r.roi?.totalROI) || 0;
+  const totalCashReq = Number(r.cashRequired?.totalCashRequired) || 0;
+  const downAmt      = Number(r.cashRequired?.downpaymentAmount) || 0;
+  const closingCosts = Number(r.cashRequired?.closingCosts) || 0;
+  const monthlyMtg   = Number(r.financing?.monthlyMortgageAmount) || 0;
+  const mortgageAmt  = Number(r.financing?.mortgageAmount) || 0;
+  const noi          = Number(r.noi) || 0;
+  const dscr = monthlyMtg>0 ? (noi/(monthlyMtg*12)) : 0;
+
+  // ── Property inputs not returned by the calculator — pulled from confirmed listing data ──
+  const a = withAssumptions || extractedData || {};
+  const purchasePrice = Number(a.PropertyPuchasePrice||a.PropertyAskingPrice)||0;
+  const amortYears   = Number(a.AmortizationYears||a.AmortizationPeriod||r.financing?.amortizationPeriod)||25;
+  const interestPct  = Number(a.InterestRate)||5; // whole-number percent, e.g. 5 means 5%
+  const ltv = purchasePrice>0 ? (mortgageAmt/purchasePrice) : 0;
+  const grossRentMo = ['AsIsRent1','AsIsRent2','AsIsRent3','AsIsRent4'].reduce((s,k)=>s+(Number(a[k])||0),0) + (Number(a.OtherMonthlyIncome)||0);
+  const breakEvenRent = grossRentMo - moCF;
+  const onePctRule = purchasePrice>0 ? (grossRentMo/purchasePrice)*100 : null;
+  const annualCFYr1 = moCF*12;
+
+  // ── Price per unit vs. researched market data (from the Market tab) ──
+  // Extract the city from the address ("123 Street, City, Province PostalCode" format),
+  // look up whatever's been researched for that city, and compare this property's
+  // price/unit against it directly — using real data instead of a generic zone name.
+  function marketPriceComparison(){
+    const addr = a.PropertyAddress || '';
+    const parts = addr.split(',').map(s=>s.trim()).filter(Boolean);
+    const city = parts.length>=2 ? parts[1] : null;
+    const pricePerUnit = (purchasePrice>0 && units>0) ? purchasePrice/units : null;
+    if (!city || pricePerUnit==null) return null;
+
+    let cache;
+    try { cache = JSON.parse(localStorage.getItem('vera_market_cities')||'{}'); } catch(e){ return null; }
+    const cityData = cache[city.toLowerCase().trim()];
+    if (!cityData || !cityData.avgPricePerUnit) return { city, pricePerUnit, cityData: null };
+
+    // Parse a range string like "$175K-$200K/unit" into low/high numbers
+    const nums = (cityData.avgPricePerUnit.match(/[\d,.]+\s*[KkMm]?/g)||[]).map(s=>{
+      let n = parseFloat(s.replace(/,/g,''));
+      if(/[Kk]/.test(s)) n*=1000;
+      if(/[Mm]/.test(s)) n*=1000000;
+      return n;
+    }).filter(n=>!isNaN(n) && n>0);
+    if(!nums.length) return { city, pricePerUnit, cityData };
+    const low = Math.min(...nums), high = Math.max(...nums);
+    return { city, pricePerUnit, cityData, low, high };
+  }
+  const marketComp = marketPriceComparison();
+
+  function priceZoneLine(){
+    if (!marketComp) return null; // couldn't parse a city from the address at all
+    if (!marketComp.cityData) {
+      return `Price per unit here is ${fmt$(marketComp.pricePerUnit)} — run ${marketComp.city} through the Market tab to get a researched price-per-unit benchmark for this deal.`;
+    }
+    if (marketComp.low==null) {
+      return `Price per unit here is ${fmt$(marketComp.pricePerUnit)}. ${marketComp.city} is researched as a Grade ${marketComp.cityData.grade||'—'} market — check the Market tab for the full price-per-unit range.`;
+    }
+    const { pricePerUnit, low, high, city, cityData } = marketComp;
+    const grade = cityData.grade ? `Grade ${cityData.grade} market` : 'researched market';
+    if (pricePerUnit < low*0.85) {
+      return `Price per unit here is ${fmt$(pricePerUnit)} — well below ${city}'s researched range of ${fmt$(low)}-${fmt$(high)}/unit (${grade}). That's a strong signal for renovation upside, but worth extra due diligence — very-low-priced properties can also carry higher risk.`;
+    } else if (pricePerUnit > high*1.15) {
+      return `Price per unit here is ${fmt$(pricePerUnit)} — above ${city}'s researched range of ${fmt$(low)}-${fmt$(high)}/unit (${grade}). At this price point, make sure the property's condition and income justify the premium.`;
+    } else {
+      return `Price per unit here is ${fmt$(pricePerUnit)}, within ${city}'s researched range of ${fmt$(low)}-${fmt$(high)}/unit (${grade}) — a solidly priced deal for this market.`;
+    }
   }
 
-  window._lastVerdict = type==='TURNKEY'?'turnkey':type==='BRRRR'?'brrrr':'nogo';
+  // ── Owner-paid utilities — value-add signal straight from Ch.13 ──
+  // Utilities_Heat / Utilities_Electricity default to exactly 0 unless the listing
+  // stated a real number (see applyAssumptions), so a positive value here is a
+  // reliable signal the owner is genuinely paying it — not a guess.
+  function utilityOpportunityLine(){
+    const heat = Number(a.Utilities_Heat)||0;
+    const elec = Number(a.Utilities_Electricity)||0;
+    if (heat<=0 && elec<=0) return null;
+    const items = [];
+    if (heat>0) items.push(`heat (${fmt$(heat)}/yr)`);
+    if (elec>0) items.push(`electricity (${fmt$(elec)}/yr)`);
+    const total = heat+elec;
+    return `Owner currently pays ${items.join(' and ')} — worth investigating why. This is often a shared heating system or a single electrical meter serving all units, common in older multifamily buildings. If it can be split to individual tenant-metered billing, that's a direct ${fmt$(total)}/yr reduction in operating expenses — improving both cash flow and cap rate without touching rent.`;
+  }
+
+  // ── Verdict, per your book's Ch.15 "Level 1 Property Analysis" criteria ──
+  // Turnkey requires ALL FIVE: cap rate 5-6%+, cash flow/unit $200-$600/mo, annual cash flow 10%+ of purchase price,
+  // cash-on-cash 7%+, total ROI 20%+ (25%+ in a favorable market).
+  // BRRRR (has a renovation budget) is judged against higher post-reno targets: cap 6%+, CoC 10%+, ROI 25%+, same 10%+ annual CF bar.
+  // 1% rule: relaxes to 0.75%+ for BRRRR properties specifically (book's explicit stretch allowance).
+  // Floor for any GO verdict: monthly cash flow can't be negative, and cap rate can't be below 3%.
+  // Note: your book also screens Price per Unit against local market zones (Upper Luxury / Median / Lower Median / War-Ghetto) —
+  // that isn't wired in below since the app doesn't have a price-per-unit market-zone data source yet.
+  const tkCapRate  = cap    >= 0.05;
+  const tkCFUnit   = cfUnit >= 200;
+  const tkCOC      = coc    >= 0.07;
+  const tkTotalROI = totROI >= 0.20;
+  const tkAnnualCF = purchasePrice>0 && annualCFYr1 >= 0.10*purchasePrice;
+  const meetsTurnkey = tkCapRate && tkCFUnit && tkCOC && tkTotalROI && tkAnnualCF;
+
+  const brrrrCapAfter = cap    >= 0.06;
+  const brrrrCOC       = coc   >= 0.10;
+  const brrrrTotalROI  = totROI>= 0.25;
+
+  // Specific, numbers-first descriptions of whatever's missing — used in NO-GO insight text
+  // so the coaching is concrete ("$188/mo vs $200+ target") instead of just naming the category.
+  const missDetail = [
+    !tkCapRate  && `cap rate (${fmtP(cap)} vs 5%+ target)`,
+    !tkCFUnit   && `cash flow per unit (${fmt$(cfUnit)}/mo vs $200+ target)`,
+    !tkAnnualCF && `annual cash flow (${fmt$(annualCFYr1)} vs ${fmt$(purchasePrice*0.10)}+ target)`,
+    !tkCOC      && `cash-on-cash (${fmtP(coc)} vs 7%+ target)`,
+    !tkTotalROI && `total ROI (${fmtP(totROI)} vs 20%+ target)`,
+  ].filter(Boolean);
+
+  // Per Ch.15: for a BRRRR property, weak as-is numbers are EXPECTED, not a failure — the strategic
+  // guidance is per-metric (current state, why it's normal, and the specific move) rather than
+  // grading against turnkey thresholds.
+  function brrrrStrategyLines(){
+    const lines = [];
+    lines.push(brrrrCapAfter
+      ? `Cap rate is already ${fmtP(cap)} — above the 6%+ post-stabilization target.`
+      : `Cap rate is ${fmtP(cap)} as-is — expected pre-renovation. Target 6%+ after stabilization, through renovation and rent optimization.`);
+    const cfOk = tkCFUnit && tkAnnualCF;
+    lines.push(cfOk
+      ? `Cash flow already clears turnkey-level benchmarks (${fmt$(cfUnit)}/unit/mo, ${fmt$(annualCFYr1)}/yr) even before renovation.`
+      : `Cash flow is ${fmt$(cfUnit)}/unit/mo (${fmt$(annualCFYr1)}/yr) as-is — normal during the renovation phase, as long as income at least covers expenses. Time your purchase to avoid high seasonal costs, like winter heating, during a vacant reno period. Target post-renovation: 10%+ of purchase price annually.`);
+    lines.push(brrrrCOC
+      ? `Cash-on-cash ROI is already ${fmtP(coc)} — above the 10%+ post-improvement target.`
+      : `Cash-on-cash ROI is ${fmtP(coc)} as-is — expected to be low pre-stabilization given renovation costs. Target 10%+ once improvements are complete.`);
+    lines.push(brrrrTotalROI
+      ? `Total ROI is already ${fmtP(totROI)} — above the 25%+ post-renovation target.`
+      : `Total ROI is ${fmtP(totROI)} as-is — likely modest before renovation. Target 25%+ post-renovation if your numbers and the local market align.`);
+    const pzLine = priceZoneLine();
+    if (pzLine) lines.push(pzLine);
+    return lines;
+  }
+
+  let type,icon,color,bg,border,title,insight;
+  if(moCF<0 || cap<0.03){
+    type='NO-GO';icon='✗';color='#E05252';bg='rgba(180,50,50,0.1)';border='rgba(180,50,50,0.3)';
+    title='This deal does not meet the criteria';
+    insight = [moCF<0
+      ? `Negative monthly cash flow (${fmt$(moCF)}/mo) fails the minimum bar before any other criteria are considered.`
+      : `Cap rate of ${fmtP(cap)} is below the 3% minimum floor required before any other criteria are considered.`];
+  } else if(meetsTurnkey){
+    type='TURNKEY';icon='✓';color='#3A8B5F';bg='rgba(42,107,74,0.08)';border='rgba(42,107,74,0.3)';
+    title='Turnkey — meets investment criteria';
+    insight = [`Clears all five turnkey thresholds day one: cap rate (${fmtP(cap)}), cash flow per unit (${fmt$(cfUnit)}/mo), annual cash flow (${fmt$(annualCFYr1)}), cash-on-cash (${fmtP(coc)}), and total ROI (${fmtP(totROI)}).`];
+    { const pzLine = priceZoneLine(); if (pzLine) insight.push(pzLine); }
+  } else if(reno>0){
+    type='BRRRR';icon='⟳';color='#C4972A';bg='rgba(196,151,42,0.08)';border='rgba(196,151,42,0.3)';
+    title='BRRRR play — renovation budget entered';
+    insight = [`A ${fmt$(reno)} renovation budget means this is evaluated as a BRRRR play, not turnkey. Here's the strategy, metric by metric:`, ...brrrrStrategyLines()];
+  } else if(missDetail.length===1){
+    // Misses exactly one of the five turnkey criteria — that's not a renovation
+    // thesis, it's a strong deal with one soft spot. Say so honestly rather than
+    // dressing a near-turnkey deal up as a BRRRR play with no actual reno signal.
+    type='TURNKEY';icon='✓';color='#3A8B5F';bg='rgba(42,107,74,0.08)';border='rgba(42,107,74,0.3)';
+    title='Turnkey — strong deal, one metric short';
+    insight = [`Clears cap rate, cash flow per unit, cash-on-cash, and total ROI convincingly. The only shortfall: ${missDetail[0]} — common at this price point, and it doesn't offset how strong the rest of this deal is.`];
+    { const pzLine = priceZoneLine(); if (pzLine) insight.push(pzLine); }
+  } else if(missDetail.length<=4){
+    // Multiple criteria fall short with no renovation budget entered — genuinely
+    // worth evaluating as a BRRRR play, per-metric strategy from the book.
+    type='BRRRR';icon='⟳';color='#C4972A';bg='rgba(196,151,42,0.08)';border='rgba(196,151,42,0.3)';
+    title='Renovation could close the gap';
+    insight = [`Doesn't clear every turnkey threshold as-is — short on ${missDetail.join(', ')}. Here's the strategy, metric by metric:`, ...brrrrStrategyLines()];
+  } else {
+    type='NO-GO';icon='✗';color='#E05252';bg='rgba(180,50,50,0.1)';border='rgba(180,50,50,0.3)';
+    title='Does not meet turnkey criteria';
+    insight = [`Cash flow and cap rate clear the minimum floor, but this falls short on every turnkey benchmark: ${missDetail.join(', ')}. Not enough here to build a renovation thesis on.`];
+  }
+
   const vb = document.getElementById('verd-box');
   vb.style.background=bg; vb.style.borderColor=border;
   document.getElementById('verd-type').style.color=color;
   document.getElementById('verd-type').textContent=`${icon} ${type}`;
   document.getElementById('verd-title').style.color=color;
   document.getElementById('verd-title').textContent=title;
-  document.getElementById('verd-reasons').innerHTML=reasons.map(r=>`<div>• ${r}</div>`).join('');
+  { const utilLine = utilityOpportunityLine(); if (utilLine) insight.push(utilLine); }
+  document.getElementById('verd-insight').innerHTML = insight.map((line,i)=>`<div style="${i>0?'margin-top:7px':''}">${i>0?'• ':''}${line}</div>`).join('');
 
-  // Calculate DSCR from noi and monthly mortgage
-  const monthlyMtg = r.financing?.monthlyMortgageAmount||r.MonthlyMortgageAmount||0;
-  const noi = r.noi||r.AnnualNOI||0;
-  const dscr = monthlyMtg>0 ? (noi/(monthlyMtg*12)) : 0;
+  // ── Key criteria checklist — the exact figures the verdict above was decided on. Targets switch to BRRRR post-reno thresholds when applicable ──
+  const isBRRRRview = type==='BRRRR';
+  const critRows = [
+    ['Cap rate', fmtP(cap), isBRRRRview?'6%+ (post-reno)':'5-6%+', isBRRRRview?brrrrCapAfter:tkCapRate],
+    ['Cash flow / unit', fmt$(cfUnit)+'/mo', '$200-$600/mo', tkCFUnit],
+    ['Annual cash flow', fmt$(annualCFYr1), purchasePrice>0?`10%+ of price (${fmt$(purchasePrice*0.10)})`:'10%+ of price', tkAnnualCF],
+    ['Cash-on-cash', fmtP(coc), isBRRRRview?'10%+ (post-reno)':'7%+', isBRRRRview?brrrrCOC:tkCOC],
+    ['Total ROI', fmtP(totROI), isBRRRRview?'25%+ (post-reno)':'20%+', isBRRRRview?brrrrTotalROI:tkTotalROI],
+    ['DSCR', dscr.toFixed(2), '1.20+', dscr>=1.2],
+    ['Gross rent', fmt$(grossRentMo), `Break-even: ${fmt$(breakEvenRent)}`, grossRentMo>=breakEvenRent],
+    ['1% rule', onePctRule!=null?onePctRule.toFixed(2)+'%':'—', isBRRRRview?'0.75%+':'1.00%+', onePctRule!=null && onePctRule>=(isBRRRRview?0.75:1)],
+  ];
+  document.getElementById('verd-criteria').innerHTML =
+    `<tr><th>Criteria</th><th>Actual</th><th>Target</th><th></th></tr>` +
+    critRows.map(([l,v,t,pass])=>`<tr><td>${l}</td><td>${v}</td><td style="color:rgba(14,14,12,0.45)">${t}</td><td style="text-align:center;color:${pass?'#3A8B5F':'#E05252'};font-weight:700">${pass?'✓':'✗'}</td></tr>`).join('');
 
-  document.getElementById('kpi-grid').innerHTML=[
-    [fmt$(moCF),'Monthly cash flow',moCF>=0?'#3A8B5F':'#E05252'],
-    [fmtP(cap),'Cap rate',cap>=0.05?'#3A8B5F':cap>=0.03?'#C4972A':'#E05252'],
-    [dscr.toFixed(2),'DSCR',dscr>=1.2?'#3A8B5F':dscr>=1.0?'#C4972A':'#E05252'],
-    [fmtP(coc),'Cash on cash',coc>=0.07?'#3A8B5F':'#C4972A'],
-    [fmt$(r.cashRequired?.totalCashRequired||r.TotalCashRequired),'Cash to close',null],
-    [fmt$(r.financing?.monthlyMortgageAmount||r.MonthlyMortgageAmount),'Monthly mortgage',null],
-    [fmt$(noi),'Annual NOI',null],
-    [fmtP(totROI),'Total ROI',null],
+  const cfBreak = r.cashflowBreakdown || {};
+  const risk = r.risk || {};
+
+  // ── Property summary ──
+  document.getElementById('summary-tbl').innerHTML=[
+    ['Address', a.PropertyAddress||'—'],
+    ['Purchase price', fmt$(purchasePrice)],
+    ['Down payment', fmt$(downAmt)+(a.DownpaymentPercentage!=null?` (${a.DownpaymentPercentage}%)`:'')],
+    ['Mortgage amount', fmt$(mortgageAmt)],
+    ['Interest rate', interestPct+'%'],
+    ['Amortization', amortYears+' years'],
+    ['Closing costs', fmt$(closingCosts)],
+  ].map(([l,v])=>`<div class="trow"><span class="trl">${l}</span><span class="trv">${v}</span></div>`).join('')
+   + `<div class="trow emph"><span class="trl">Total cash required</span><span class="trv">${fmt$(totalCashReq)}</span></div>`;
+
+  // ── Monthly cash flow — read straight from the sheet ──
+  document.getElementById('cf-big').textContent = fmt$(moCF);
+  document.getElementById('cf-big').style.color = moCF>=0?'#5FBF87':'#F0776E';
+  document.getElementById('cashflow-tbl').innerHTML=[
+    ['Effective gross income (inc. vacancy loss)', fmt$(Number(cfBreak.effectiveGrossIncome)||0)],
+    ['Total operating expenses', '-'+fmt$(Number(cfBreak.totalOperatingExpenses)||0)],
+    ['Mortgage (P&I)', '-'+fmt$(monthlyMtg)],
+  ].map(([l,v])=>`<div class="trow"><span class="trl">${l}</span><span class="trv">${v}</span></div>`).join('')
+   + `<div class="trow emph"><span class="trl">Net cash flow</span><span class="trv" style="color:${moCF>=0?'#3A8B5F':'#E05252'}">${fmt$(moCF)}</span></div>`;
+
+  // ── Out-of-pocket risk — read straight from the sheet, plus negative cash flow itself if applicable ──
+  const annualVacancyLoss = Number(risk.annualVacancyLoss)||0;
+  const annualRepairMaint = Number(risk.annualRepairMaintenance)||0;
+  const renoEstimate      = Number(risk.renovationEstimate)||0;
+  const negativeCFRisk    = annualCFYr1<0 ? Math.abs(annualCFYr1) : 0;
+  const totalRisk = annualVacancyLoss + annualRepairMaint + renoEstimate + negativeCFRisk;
+  document.getElementById('risk-tbl').innerHTML=[
+    ['Annual vacancy loss', '-'+fmt$(annualVacancyLoss)],
+    ['Annual repair & maintenance', '-'+fmt$(annualRepairMaint)],
+    ['Renovation (est.)', '-'+fmt$(renoEstimate)],
+    ...(negativeCFRisk>0 ? [['Negative annual cash flow', '-'+fmt$(negativeCFRisk)]] : []),
+  ].map(([l,v])=>`<div class="trow"><span class="trl">${l}</span><span class="trv" style="color:#E05252">${v}</span></div>`).join('');
+  document.getElementById('risk-total').textContent = fmt$(totalRisk);
+
+  // ── ROI breakdown — all four figures the calculator returns for Year 1 ──
+  const equityROI = Number(r.roi?.equityROI) || 0;
+  const apprROI    = Number(r.roi?.appreciationROI) || 0;
+  document.getElementById('roi-grid').innerHTML=[
+    [fmtP(coc),'Cash-on-cash ROI',coc>=0.07?'#3A8B5F':'#C4972A'],
+    [fmtP(equityROI),'Equity ROI',null],
+    [fmtP(apprROI),'Appreciation ROI',null],
+    [fmtP(totROI),'Total ROI',totROI>=0.20?'#3A8B5F':'#C4972A'],
   ].map(([v,l,c])=>
-    `<div class="kpi"><div class="kv" style="color:${c||'var(--ink)'}">${v}</div><div class="kl">${l}</div></div>`
+    `<div class="kpi"><div class="kv" style="color:${c||'#0E0E0C'}">${v}</div><div class="kl">${l}</div></div>`
   ).join('');
 
-  document.getElementById('cash-tbl').innerHTML=[
-    ['Down payment',        fmt$(r.DownpaymentAmount||r.cashRequired?.downpaymentAmount)],
-    ['Closing costs',       fmt$(r.ClosingCosts||r.cashRequired?.closingCosts)],
-    ['Total cash required', fmt$(r.TotalCashRequired||r.cashRequired?.totalCashRequired)],
-    ['Mortgage amount',     fmt$(r.TotalMortgageAmount||r.financing?.mortgageAmount)],
-    ['Monthly mortgage',    fmt$(r.MonthlyMortgageAmount||r.financing?.monthlyMortgageAmount)],
-    ['LTV',                 fmtP(r.LTV)],
-  ].map(([l,v])=>
-    `<div class="trow"><span class="trl">${l}</span><span class="trv">${v}</span></div>`
-  ).join('');
+  // ── 5-year wealth plan — read straight from your sheet's own 5-year projection table, no calculations ──
+  const fy = r.fiveYear || {};
+  const annualCF   = fy.annualCashflow || [0,0,0,0,0];
+  const equityArr  = fy.equity || [0,0,0,0,0];
+  const apprGainArr= fy.appreciationGain || [0,0,0,0,0];
+  const totalRetArr= fy.totalAnnualReturn || [0,0,0,0,0];
+  const yr5Gain = Number(fy.yr5Gain) || 0;
+  const yr5ROI  = Number(fy.yr5ROI) || 0;
 
-  document.getElementById('roi-tbl').innerHTML=[
-    ['Cash on cash ROI Yr 1',  fmtP(r.CashOnCashYr1||r.roi?.cashOnCash)],
-    ['Equity ROI Yr 1',        fmtP(r.EquityROIYr1||r.roi?.equityROI)],
-    ['Appreciation ROI Yr 1',  fmtP(r.AppreciationROIYr1||r.roi?.appreciationROI)],
-    ['Total ROI Yr 1',         fmtP(r.ROIPercentageYr1||r.roi?.totalROI)],
-    ['Monthly cash flow Yr 2', fmt$(r.TotalMonthlyCashflowYr2)],
-    ['Monthly cash flow Yr 5', fmt$(r.TotalMonthlyCashflowYr5)],
-  ].map(([l,v])=>
-    `<div class="trow"><span class="trl">${l}</span><span class="trv" style="color:#3A8B5F">${v}</span></div>`
-  ).join('');
+  const years = [1,2,3,4,5].map((yr,i)=>({
+    year: yr,
+    cf: Number(annualCF[i])||0,
+    equity: Number(equityArr[i])||0,
+    apprGain: Number(apprGainArr[i])||0,
+    totalReturn: Number(totalRetArr[i])||0
+  }));
 
+  // Avg. assumption rates — a straight average of the 5 rate cells your sheet already shows, nothing invented
+  const avgOf = arr => arr.reduce((s,v)=>s+(Number(v)||0),0) / arr.length;
+  const avgAppr   = fmtP(avgOf(fy.appreciationRateByYear || [0,0,0,0,0]));
+  const avgGrowth = fmtP(avgOf(fy.rentGrowthRateByYear || [0,0,0,0,0]));
+
+  // Bar chart — Total Annual Return by year (sheet's own E65:I65 row)
+  const chartW = 856, chartH = 160, padL = 44, padB = 22, barGap = 18;
+  const maxW = Math.max(...years.map(y=>y.totalReturn), 1);
+  const barW = (chartW - padL - (years.length-1)*barGap) / years.length;
+  const bars = years.map((y,i)=>{
+    const h = Math.max((y.totalReturn/maxW) * (chartH-padB-16), 2);
+    const x = padL + i*(barW+barGap);
+    const yTop = chartH - padB - h;
+    return `<rect x="${x}" y="${yTop}" width="${barW}" height="${h}" rx="4" fill="#B8872A"/>
+      <text x="${x+barW/2}" y="${yTop-6}" text-anchor="middle" font-size="10" font-family="'DM Mono',monospace" fill="#0E0E0C" font-weight="600">${fmt$(y.totalReturn)}</text>
+      <text x="${x+barW/2}" y="${chartH-4}" text-anchor="middle" font-size="10" font-family="Inter,sans-serif" fill="rgba(14,14,12,0.45)">Yr ${y.year}</text>`;
+  }).join('');
+  document.getElementById('wealth-chart').innerHTML =
+    `<svg viewBox="0 0 ${chartW} ${chartH}" style="width:100%;height:auto;display:block"><line x1="${padL-8}" y1="${chartH-padB}" x2="${chartW}" y2="${chartH-padB}" stroke="#E5E0D5"/>${bars}</svg>`;
+
+  // Year-by-year table
+  document.getElementById('wealth-yr-tbl').innerHTML =
+    `<tr><th>Year</th><th>Cash flow</th><th>Equity</th><th>Appreciation gain</th><th>Total return</th></tr>` +
+    years.map(y=>`<tr><td>Year ${y.year}</td><td>${fmt$(y.cf)}</td><td>${fmt$(y.equity)}</td><td>${fmt$(y.apprGain)}</td><td>${fmt$(y.totalReturn)}</td></tr>`).join('');
+
+  document.getElementById('wealth-total').textContent = fmt$(yr5Gain);
+  document.getElementById('wealth-roi').textContent = fmtPFrac(yr5ROI);
+  document.getElementById('wealth-foot').textContent = `5 year wealth plan calculations are based on the following assumptions: Property value grows at ${avgAppr} avg. annual appreciation; cash flow grows at ${avgGrowth} avg. annual rent growth. Equity = principal paydown in that year. Total wealth = equity (principal paydown) + cumulative cash flow to date + property value increase to date.`;
 
 
   const ctaMap = {
-    PASS:    ['This property didn\'t pass — but the right one is out there','Before you analyse more properties, make sure you have the right budget, market, and data.','Talk to Anne →'],
+    'NO-GO': ['This property didn\'t pass — but the right one is out there','Before you analyse more properties, make sure you have the right budget, market, and data.','Talk to Anne →'],
     BRRRR:   ['BRRRR deal — you need the full renovation and refi analysis','A BRRRR deal needs contractor quotes, ARV comps, and a refi simulation before you know if it truly works.','Get the full BRRRR analysis →'],
     TURNKEY: ['This property passes — ready to move forward?','To move forward you need the right financing in place. Anne specialises in investor mortgages for Canadian multifamily.','Get pre-approved for this property →'],
   };
@@ -1050,6 +1425,19 @@ function updateAssumption(key, value) {
   }
 }
 
+function toggleResponse() {
+  const box = document.getElementById('response-box');
+  const btn = box.previousElementSibling;
+  if (box.style.display === 'none') {
+    box.textContent = JSON.stringify(window._lastRawResult, null, 2);
+    box.style.display = 'block';
+    btn.textContent = '▼ Hide raw response';
+  } else {
+    box.style.display = 'none';
+    btn.textContent = '▶ Show raw response from calculator';
+  }
+}
+
 function togglePayload() {
   const box = document.getElementById('payload-box');
   const btn = box.previousElementSibling;
@@ -1075,10 +1463,11 @@ function resetAll() {
   extractedData = null;
   document.getElementById('paste-area').value = '';
   document.getElementById('step-confirm').style.display = 'none';
-  document.getElementById('step-results').style.display = 'none';
   document.getElementById('err-area').style.display = 'none';
   document.getElementById('load-area').style.display = 'none';
   document.getElementById('step-paste').style.display = 'block';
+  document.getElementById('ttab-analysis').disabled = true;
+  showToolTab('input');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -1086,23 +1475,287 @@ function resetAll() {
 
 // Intercept readListing to check usage limit
 
-// Hook into tool JS after successful steps
-// We patch readListing and runNumbers directly instead of overriding hide()
-const _origReadListing = readListing;
-window.readListing = async function() {
-  await _origReadListing();
-  // If extracted-box has content, reading succeeded
-  if (document.getElementById('extracted-box').innerHTML.length > 10) {
-    afterReadSuccess();
+// ── DATABASE ──
+let currentVerdict='all';
+
+function buildMarketDropdown(){
+  const analyses=getAnalyses();
+  const sel=document.getElementById('mkt-filter');
+  const cities=[...new Set(analyses.map(a=>a.city).filter(Boolean))];
+  sel.innerHTML='<option value="all">All markets</option>';
+  cities.forEach(city=>{const o=document.createElement('option');o.value=city;o.textContent=city;sel.appendChild(o);});
+}
+
+function setVerdict(v,btn){
+  currentVerdict=v;
+  document.querySelectorAll('.vt').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCards();
+}
+
+function renderCards(){
+  const analyses=getAnalyses();
+  const mkt=document.getElementById('mkt-filter').value;
+  let data=analyses;
+  if(mkt!=='all')data=data.filter(a=>a.city===mkt);
+  if(currentVerdict==='turnkey')data=data.filter(a=>a.verdict==='turnkey');
+  else if(currentVerdict==='brrrr')data=data.filter(a=>a.verdict==='brrrr');
+  else if(currentVerdict==='nogo')data=data.filter(a=>a.verdict==='nogo');
+  const base=mkt==='all'?analyses:analyses.filter(a=>a.city===mkt);
+  document.getElementById('ct-all').textContent=base.length;
+  document.getElementById('ct-tk').textContent=base.filter(a=>a.verdict==='turnkey').length;
+  document.getElementById('ct-br').textContent=base.filter(a=>a.verdict==='brrrr').length;
+  document.getElementById('ct-ng').textContent=base.filter(a=>a.verdict==='nogo').length;
+  document.getElementById('k-total').textContent=base.length;
+  document.getElementById('k-tk').textContent=base.filter(a=>a.verdict==='turnkey').length;
+  document.getElementById('k-br').textContent=base.filter(a=>a.verdict==='brrrr').length;
+  document.getElementById('k-ng').textContent=base.filter(a=>a.verdict==='nogo').length;
+  const container=document.getElementById('cards-container');
+  if(!data.length){
+    container.innerHTML=`<div style="text-align:center;padding:48px 20px">
+      <div style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--ink);margin-bottom:8px">No analyses yet</div>
+      <div style="font-size:13px;color:rgba(14,14,12,0.42);margin-bottom:16px;line-height:1.7">Switch to the Analyse tab, paste any listing, and run your first analysis.</div>
+      <button onclick="document.getElementById('nav-analyse').click()" style="padding:9px 20px;background:var(--gold);border-radius:8px;color:var(--ink);font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif">Analyse a property →</button>
+    </div>`;
+    return;
   }
-};
-const _origRunNumbers = runNumbers;
-window.runNumbers = async function() {
-  await _origRunNumbers();
-  afterRunSuccess();
+  const fmt$=n=>'$'+Math.round(n).toLocaleString();
+  container.innerHTML=data.map(a=>{
+    const vc=a.verdict==='turnkey'?'vb-tk':a.verdict==='brrrr'?'vb-br':'vb-ng';
+    const vl=a.verdict==='turnkey'?'✓ Turnkey':a.verdict==='brrrr'?'⟳ BRRRR':'✕ No-go';
+    const cc=a.confidence>=70?'var(--green-l)':a.confidence>=45?'var(--amber)':'var(--red)';
+    const hasMiss=a.missing&&a.missing.length>0;
+    const miss=hasMiss?`<div class="ac-miss"><span>⚠ Missing: ${a.missing.join(' · ')}</span><button class="btn-sm btn-gold-sm" style="margin-left:auto" onclick="emailModal(${JSON.stringify(a).replace(/"/g,"'")})">✉ Request from realtor</button></div>`:'';
+    return `<div class="acard">${miss}
+      <div class="ac-hdr">
+        <div class="ac-hl">
+          <span class="vbadge ${vc}">${vl}</span>
+          <div><div class="ac-addr">${a.addr}</div><div class="ac-meta">${a.type} · ${a.units} units · ${fmt$(a.asking)} · ${a.date}</div></div>
+        </div>
+        <button class="btn-sm btn-dark" onclick="document.getElementById('nav-analyse').click()">↩ Re-analyse</button>
+      </div>
+      <div class="ac-stats">
+        <div class="ac-stat"><div class="asl">Cap rate</div><div class="asv ${a.capRate>=5?'g':a.capRate>=3?'a':'r'}">${a.capRate.toFixed(2)}%</div></div>
+        <div class="ac-stat"><div class="asl">Monthly CF</div><div class="asv ${a.cashflow>=0?'g':'r'}">${fmt$(a.cashflow)}</div></div>
+        <div class="ac-stat"><div class="asl">Cash on cash</div><div class="asv ${a.coc>=7?'g':a.coc>=4?'a':'r'}">${a.coc.toFixed(2)}%</div></div>
+        <div class="ac-stat"><div class="asl">Total ROI yr1</div><div class="asv ${a.totalROI>=20?'g':a.totalROI>=10?'a':'r'}">${a.totalROI.toFixed(2)}%</div></div>
+        <div class="ac-stat"><div class="asl">Cash to close</div><div class="asv">${fmt$(a.cashToClose)}</div></div>
+      </div>
+      <div class="ac-foot">
+        <div class="conf-row">
+          <span>Data confidence</span>
+          <div class="cbar"><div class="cfill" style="width:${a.confidence}%;background:${cc}"></div></div>
+          <span style="font-family:'DM Mono',monospace;font-size:11px;color:${cc}">${a.confidence}%</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function buildInsights(){
+  const analyses=getAnalyses();
+  if(!analyses.length){document.getElementById('vera-box').style.display='none';return;}
+  document.getElementById('vera-box').style.display='block';
+  const insights=[];
+  const avg=arr=>arr.reduce((s,x)=>s+x,0)/arr.length;
+  insights.push(`${analyses.length} propert${analyses.length===1?'y':'ies'} analysed · avg cap rate ${avg(analyses.map(a=>a.capRate)).toFixed(1)}%.`);
+  const sj=analyses.filter(a=>a.city==='Saint John');
+  if(sj.length>=2)insights.push(`Saint John avg cap rate: ${avg(sj.map(a=>a.capRate)).toFixed(1)}% across ${sj.length} properties.`);
+  document.getElementById('vera-insights').innerHTML=insights.map(i=>`<div class="vi"><div class="vi-dot"></div><span>${i}</span></div>`).join('');
+}
+
+function emailModal(a){
+  if(!a.missing||!a.missing.length)return;
+  document.getElementById('m-title').textContent='Request missing data · '+a.addr;
+  document.getElementById('m-sub').textContent='Missing: '+a.missing.join(', ');
+  document.getElementById('m-subj').textContent=`Subject: ${a.addr} — investor buyer data request`;
+  document.getElementById('m-body').textContent=`Hi,\n\nI am working with an investor buyer analyzing ${a.addr}.\n\nTo complete the analysis I need:\n\n${a.missing.map(f=>`• ${f}`).join('\n')}\n\nAnne Chauvin\n8Twelve Mortgage · FSRA #M25000164\n416-274-9419`;
+  document.getElementById('modal').classList.add('open');
+}
+
+document.getElementById('mx').onclick=()=>document.getElementById('modal').classList.remove('open');
+document.getElementById('close-btn').onclick=()=>document.getElementById('modal').classList.remove('open');
+document.getElementById('copy-btn').onclick=function(){
+  navigator.clipboard.writeText(document.getElementById('m-subj').textContent+'\n\n'+document.getElementById('m-body').textContent);
+  this.textContent='Copied!';setTimeout(()=>this.textContent='Copy email',2000);
 };
 
+// Init
 showToolTab('input');
+window._lastResult = null;
+
+async function saveToMyAnalyses() {
+  const btn = document.querySelector('[onclick="saveToMyAnalyses()"]');
+  if (!window._lastResult) { alert('No analysis to save yet.'); return; }
+  if (btn) { btn.textContent = 'Saving...'; btn.disabled = true; }
+  try {
+    const d = withAssumptions;
+    const r = window._lastResult;
+    const income = (Number(d.AsIsRent1)||0)+(Number(d.AsIsRent2)||0)+(Number(d.AsIsRent3)||0)+(Number(d.AsIsRent4)||0);
+    const payload = {
+      action: 'saveAnalysis',
+      email: getEmail()||'',
+      addr: d.PropertyAddress||'',
+      neighbourhood: d.PropertyNeighborhood||'',
+      units: d.NumberofUnits||0,
+      asking: d.PropertyAskingPrice||0,
+      downAmt: r.cashRequired?.downpaymentAmount||0,
+      propertyTax: d.PropertyTax||0,
+      monthlyIncome: income,
+      cashflow: r.monthlyCashflow||0,
+      dscr: (r.financing?.monthlyMortgageAmount||0)>0 ? Math.round((r.noi/12)/(r.financing.monthlyMortgageAmount)*100)/100 : 0,
+      capRate: r.capRate||0,
+      totalROI: r.roi?.totalROI||0,
+      cashToClose: r.cashRequired?.totalCashRequired||0,
+    };
+    const resp = await fetch(PROXY_URL, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    if (!resp.ok) throw new Error('Server error ' + resp.status);
+    const data = await resp.json();
+    if (data.error) throw new Error(data.error);
+    if (btn) { btn.textContent = '✓ Saved!'; btn.style.background='#2D6A4F'; btn.style.color='white'; }
+    setTimeout(()=>{ if(btn){btn.textContent='💾 Save analysis';btn.style.background='var(--gold)';btn.style.color='var(--ink)';btn.disabled=false;}}, 2500);
+  } catch(err) {
+    console.error('Save error:', err);
+    if (btn) { btn.textContent = '✗ ' + err.message.slice(0,30); btn.disabled = false; }
+    setTimeout(()=>{ if(btn) btn.textContent='💾 Save analysis'; }, 3000);
+  }
+}
+
+
+function toggleVeraChat() {
+  var panel = document.getElementById('vera-chat-panel');
+  var layout = document.querySelector('.layout');
+  panel.classList.toggle('open');
+  if (layout) layout.classList.toggle('chat-open', panel.classList.contains('open'));
+}
+
+function veraAppendMsg(role, text) {
+  var msgs = document.getElementById('chat-messages');
+  var div = document.createElement('div');
+  div.className = 'cmsg ' + role;
+  var bubble = document.createElement('div');
+  bubble.className = 'cbubble';
+  bubble.innerHTML = text.replace(/\n/g, '<br>');
+  div.appendChild(bubble);
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+async function veraChat() {
+  var input = document.getElementById('vera-chat-input');
+  var msg = input.value.trim();
+  if (!msg) return;
+  veraAppendMsg('user', msg);
+  input.value = '';
+
+  var send = document.getElementById('vera-chat-send');
+  send.disabled = true;
+
+  var typing = document.createElement('div');
+  typing.className = 'cmsg vera';
+  typing.id = 'vera-typing';
+  typing.innerHTML = '<div class="cbubble"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>';
+  document.getElementById('chat-messages').appendChild(typing);
+  document.getElementById('chat-messages').scrollTop = 9999;
+
+  var propertyCtx = '';
+  if (typeof withAssumptions !== 'undefined' && withAssumptions && withAssumptions.PropertyAddress) {
+    var d = withAssumptions;
+    var income = (Number(d.AsIsRent1)||0) + (Number(d.AsIsRent2)||0) + (Number(d.AsIsRent3)||0) + (Number(d.AsIsRent4)||0);
+    propertyCtx = '\n\nCURRENT PROPERTY DATA:\n';
+    propertyCtx += 'Address: ' + d.PropertyAddress + '\n';
+    propertyCtx += 'Type: ' + (d.NumberofUnits||'?') + ' units\n';
+    propertyCtx += 'Asking price: $' + Math.round(d.PropertyAskingPrice||0).toLocaleString() + '\n';
+    propertyCtx += 'Monthly income: $' + income.toLocaleString() + '/mo\n';
+    propertyCtx += 'Unit 1 rent: $' + (d.AsIsRent1||0) + '/mo\n';
+    if (d.NumberofUnits >= 2) propertyCtx += 'Unit 2 rent: $' + (d.AsIsRent2||0) + '/mo\n';
+    if (d.NumberofUnits >= 3) propertyCtx += 'Unit 3 rent: $' + (d.AsIsRent3||0) + '/mo\n';
+    propertyCtx += 'Property tax: $' + Math.round(d.PropertyTax||0).toLocaleString() + '/yr\n';
+    propertyCtx += 'Insurance: $' + Math.round(d.Insurance||0).toLocaleString() + '/yr\n';
+    propertyCtx += 'Heat: $' + Math.round(d.Utilities_Heat||0).toLocaleString() + '/yr\n';
+    propertyCtx += 'Electricity: $' + Math.round(d.Utilities_Electricity||0).toLocaleString() + '/yr\n';
+    propertyCtx += 'Water: $' + Math.round(d.Utilities_Water||0).toLocaleString() + '/yr\n';
+    propertyCtx += 'Repairs & maintenance: ' + ((d.RepairsAndMaintenanceRate||0.05)*100).toFixed(0) + '% of income\n';
+    propertyCtx += 'Property management: ' + ((d.PropertyManagementRate||0.06)*100).toFixed(0) + '% of income\n';
+    propertyCtx += 'Lawn & snow: $' + Math.round(d.LawnAndSnowMaintenance||0).toLocaleString() + '/yr\n';
+    propertyCtx += 'Renovation budget: $' + Math.round(d.RenovationEstimate||0).toLocaleString() + '\n';
+    propertyCtx += 'Down payment: ' + ((d.DownpaymentPercentage||0.20)*100).toFixed(0) + '%\n';
+    propertyCtx += 'Interest rate: ' + ((d.InterestRate||0.05)*100).toFixed(2) + '%\n';
+    if (window._lastResult) {
+      var r = window._lastResult;
+      var cap = r.capRate || 0;
+      propertyCtx += 'Cap rate: ' + (cap > 1 ? cap : cap * 100).toFixed(2) + '%\n';
+      propertyCtx += 'Monthly cash flow: $' + Math.round(r.monthlyCashflow||0).toLocaleString() + '/mo\n';
+      propertyCtx += 'NOI: $' + Math.round(r.noi||0).toLocaleString() + '/yr\n';
+      propertyCtx += 'Total ROI yr1: ' + ((r.roi&&r.roi.totalROI||0)*100).toFixed(2) + '%\n';
+      propertyCtx += 'Cash to close: $' + Math.round(r.cashRequired&&r.cashRequired.totalCashRequired||0).toLocaleString() + '\n';
+      propertyCtx += 'Monthly mortgage: $' + Math.round(r.financing&&r.financing.monthlyMortgageAmount||0).toLocaleString() + '/mo\n';
+    }
+  }
+
+  var prompt = 'You are VERA, a real estate investment assistant trained by Anne Chauvin, licensed mortgage agent specializing in Canadian multifamily properties.' + propertyCtx + ' Answer this question in plain conversational text: ' + msg;
+
+  try {
+    var resp = await fetch('https://vera-proxy.onrender.com/insights', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: prompt, category: 'Analyse a property', mode: 'chat' })
+    });
+    var t = document.getElementById('vera-typing');
+    if (t) t.remove();
+    if (!resp.ok) throw new Error('Error ' + resp.status);
+    var data = await resp.json();
+    var answer = data.answer || data.text || 'I could not generate a response. Please try again.';
+    veraAppendMsg('vera', answer);
+  } catch(err) {
+    var t2 = document.getElementById('vera-typing');
+    if (t2) t2.remove();
+    veraAppendMsg('vera', 'Sorry, I had trouble connecting. Please try again.');
+  }
+  send.disabled = false;
+}
+
+
+// ── Receive listing from search tab ──
+function loadListingFromSearch(text) {
+  document.querySelectorAll('.nav').forEach(b => b.classList.remove('active'));
+  var navAnalyse = document.getElementById('nav-analyse');
+  if (navAnalyse) navAnalyse.classList.add('active');
+  showPanel('analyse', navAnalyse);
+  var pasteArea = document.getElementById('paste-area');
+  if (pasteArea) {
+    pasteArea.value = text;
+    var hint = document.createElement('div');
+    hint.style.cssText = 'position:fixed;top:70px;right:20px;background:#2D6A4F;color:white;padding:10px 16px;border-radius:8px;font-size:12px;font-weight:500;z-index:999';
+    hint.textContent = 'Listing loaded — click Read this listing';
+    document.body.appendChild(hint);
+    setTimeout(function(){ hint.remove(); }, 3000);
+  }
+}
+
 </script>
+
+<button id="vera-chat-btn" onclick="toggleVeraChat()" title="Talk to VERA">💡</button>
+<div id="vera-chat-panel">
+  <div class="chat-hdr">
+    <div style="display:flex;align-items:center">
+      <span style="font-size:18px">💡</span>
+      <span class="chat-title">VERA</span>
+    </div>
+    <button class="chat-close" onclick="toggleVeraChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chat-messages">
+    <div class="cmsg vera">
+      <div class="cbubble">Hi! I am VERA. Ask me anything about property investing, your analysis, or Anne's program.</div>
+    </div>
+  </div>
+  <div class="chat-input-area">
+    <textarea class="chat-input" id="vera-chat-input" placeholder="Ask VERA..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();veraChat()}"></textarea>
+    <button class="chat-send" id="vera-chat-send" onclick="veraChat()">&#8593;</button>
+  </div>
+</div>
 </body>
 </html>
