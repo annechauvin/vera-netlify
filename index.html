@@ -613,7 +613,7 @@ document.addEventListener('keydown', function(e){
 });
 function submitLogin(e){
   e.preventDefault();
-  const email = document.getElementById('login-email').value.trim();
+  const email = document.getElementById('login-email').value.trim().toLowerCase();
   const errEl = document.getElementById('login-err');
   const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   if(!isValid){
@@ -625,7 +625,7 @@ function submitLogin(e){
   // an analysis — fire-and-forget, doesn't block the redirect below.
   fetch('https://vera-proxy.onrender.com/record-signup', {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: email })
+    body: JSON.stringify({ email: email }), keepalive: true
   }).catch(function(){}); // silent — a failed log shouldn't block login
   // Pass email via URL param too (not just localStorage) — this way login still
   // works even if vera-account.html ends up hosted on a different subdomain,
