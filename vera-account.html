@@ -455,8 +455,9 @@ input[id^="edit_"]{background:var(--amber-bg) !important;border:1px solid var(--
   <div id="step-paste">
     <div class="hint">
       <div class="hint-t">What to paste</div>
-      Paste the listing and confirmed numbers from your realtor. VERA extracts the data, sends it to the calculator, and returns your As-Is Analysis verdict: whether this property is BRRRR potential, Turnkey potential, or a No-Go.<br><br>
-      The property details must include: the property income (rents per unit and any other income if applicable), the property operating expenses (annual property tax, insurance, heat, electricity, water, etc.), and your financing terms (rate, down payment, amortization).
+      Paste the listing containing the property details.<br><br>
+      The property details must include: the property income (rents per unit and any other income if applicable), the property operating expenses (annual property tax, insurance, heat, electricity, water, etc.), and your financing terms (rate, down payment, amortization).<br><br>
+      VERA reads the listing, extracts the data and gives you her take on it: what's missing, any red flags, and what to confirm with the realtor.
     </div>
     <textarea id="paste-area" placeholder="Example:&#10;&#10;44 Albert St, Saint John NB — $290,000&#10;Triplex · 3 units&#10;Unit 1: 3-bed — $1,200/mo (confirmed)&#10;Unit 2: 3-bed — $1,100/mo (confirmed)&#10;Unit 3: 3-bed — $1,100/mo (confirmed)&#10;Annual property tax: $3,189&#10;Insurance: $2,400/yr&#10;Financing: 20% down | 5% rate | 25yr amort"></textarea>
     <button class="btn" id="read-btn" onclick="readListing()">Read this listing →</button>
