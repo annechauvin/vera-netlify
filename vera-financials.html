@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VERA — Financials</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0E0E0C;--paper:#F6F3EE;
+  --gold:#B8872A;--gold-bg:rgba(184,135,42,0.08);--gold-bd:rgba(184,135,42,0.25);
+  --green:#2D7A4F;--green-bg:rgba(45,122,79,0.08);--green-bd:rgba(45,122,79,0.25);
+  --amber:#C4972A;--amber-bg:rgba(196,151,42,0.08);
+  --red:#E05252;--red-bg:rgba(224,82,82,0.08);
+  --border:rgba(14,14,12,0.08);
+}
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+.hdr{padding:14px 20px;border-bottom:1px solid var(--border);background:white;flex-shrink:0}
+.hdr-top{display:flex;align-items:center;justify-content:space-between}
+.hdr-title{font-size:14px;font-weight:600}
+.hdr-sub{font-size:11px;color:rgba(14,14,12,0.4);margin-top:1px}
+.status-pill{font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:20px}
+.status-pill.complete{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
+.status-pill.pending{background:rgba(14,14,12,0.05);color:rgba(14,14,12,0.4);border:1px solid var(--border)}
+
+.tabs{display:flex;background:white;border-bottom:1px solid var(--border);flex-shrink:0;padding:0 20px}
+.tab-btn{padding:12px 16px;background:none;border:none;border-bottom:2px solid transparent;font-size:12.5px;font-weight:600;color:rgba(14,14,12,0.4);cursor:pointer;font-family:inherit}
+.tab-btn.active{color:var(--ink);border-bottom-color:var(--gold)}
+.step-tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.step-tab-btn{padding:9px 16px;background:none;border:none;border-bottom:2px solid transparent;font-size:12.5px;font-weight:700;color:rgba(14,14,12,0.4);cursor:pointer;font-family:inherit}
+.step-tab-btn.active{color:var(--ink);border-bottom-color:var(--gold)}
+
+.main{flex:1;overflow-y:auto;padding:24px}
+.wrap{max-width:640px;margin:0 auto}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.print-btn{padding:8px 16px;background:var(--gold);border:none;border-radius:8px;color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
+@media print{
+  .tabs,.no-print{display:none!important}
+  html,body{height:auto!important;overflow:visible!important}
+  body{background:#fff!important;display:block!important}
+  .hdr{position:static!important}
+  .main{overflow:visible!important;height:auto!important;padding:0!important}
+  .wrap{max-width:none!important}
+}
+
+/* VERA message bubble */
+.vera-msg{display:flex;gap:10px;margin-bottom:18px}
+.v-av{width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:14px;font-weight:600;color:white;font-style:italic;flex-shrink:0}
+.v-bubble{background:white;border:1px solid var(--border);border-radius:2px 12px 12px 12px;padding:12px 15px;flex:1;font-size:12.5px;line-height:1.65;color:rgba(14,14,12,0.75)}
+.v-bubble .check{color:var(--green);font-weight:700}
+
+/* Budget results card */
+.budget-card{background:white;border:1px solid var(--green-bd);border-radius:12px;overflow:hidden;margin-bottom:16px}
+.budget-hd{padding:14px 18px;border-bottom:1px solid var(--border);background:var(--green-bg)}
+.budget-hd-t{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--green)}
+.budget-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.budget-cell{padding:16px 18px;border-bottom:1px solid var(--border)}
+.budget-cell:nth-child(odd){border-right:1px solid var(--border)}
+.budget-val{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;color:var(--ink)}
+.budget-lbl{font-size:11px;color:rgba(14,14,12,0.5);margin-top:3px}
+.budget-val.pct{color:var(--green)}
+.profile-row{padding:16px 18px;display:flex;align-items:center;gap:10px}
+.profile-badge{font-size:12px;font-weight:700;color:var(--green);background:var(--green-bg);border:1px solid var(--green-bd);padding:4px 12px;border-radius:20px}
+.profile-note{font-size:12px;line-height:1.6;color:rgba(14,14,12,0.6);padding:0 18px 16px}
+
+.cta-card{background:var(--gold-bg);border:1px solid var(--gold-bd);border-radius:10px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;font-size:12.5px;color:rgba(14,14,12,0.7)}
+.next-card{background:white;border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+.next-hd{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(14,14,12,0.4);margin-bottom:10px}
+.next-body{font-size:12.5px;line-height:1.75;color:rgba(14,14,12,0.7);margin-bottom:12px}
+.next-list{list-style:none;font-size:12.5px;color:rgba(14,14,12,0.65);line-height:2;margin-bottom:14px}
+.next-list li::before{content:"— ";color:var(--gold)}
+.next-cta{padding:10px 18px;border:none;border-radius:8px;background:var(--ink);color:white;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+.cta-card a{color:var(--gold);font-weight:700;text-decoration:none;white-space:nowrap;margin-left:10px}
+
+.privacy-note{font-size:11px;color:rgba(14,14,12,0.4);line-height:1.7;border-top:1px solid var(--border);padding-top:14px;margin-top:8px}
+.privacy-note b{color:rgba(14,14,12,0.55)}
+
+.empty-card{background:white;border:1px dashed var(--border);border-radius:10px;padding:32px 24px;text-align:center;font-size:12.5px;color:rgba(14,14,12,0.5);line-height:1.7}
+.empty-card button{margin-top:12px;padding:9px 18px;border:none;border-radius:8px;background:var(--gold);color:white;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit}
+
+/* Drive connection tab */
+.drive-status{display:flex;align-items:center;gap:12px;background:white;border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+.drive-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.drive-icon.connected{background:var(--green-bg)}
+.drive-icon.disconnected{background:rgba(14,14,12,0.05)}
+.drive-status-t{font-size:13px;font-weight:700}
+.drive-status-s{font-size:11.5px;color:rgba(14,14,12,0.5);margin-top:2px}
+.drive-btn{padding:9px 18px;border:none;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;margin-left:auto}
+.drive-btn.connect{background:var(--gold);color:white}
+.drive-btn.disconnect{background:white;border:1px solid var(--border);color:rgba(14,14,12,0.5)}
+.checklist{background:white;border:1px solid var(--border);border-radius:10px;padding:16px 18px}
+.checklist-t{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(14,14,12,0.4);margin-bottom:10px}
+.checklist ul{list-style:none;font-size:12.5px;color:rgba(14,14,12,0.65);line-height:2}
+.checklist li::before{content:"— ";color:var(--gold)}
+
+/* Documents tab */
+/* Step wizard */
+.step-card{background:white;border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden}
+.budget-sec{background:white;border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.budget-sec-t{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--gold);margin-bottom:6px}
+.budget-sec-guide{font-size:12px;line-height:1.65;color:rgba(14,14,12,0.6);margin-bottom:14px}
+.step-card.done{border-color:var(--green-bd)}
+.step-hd{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer}
+.step-num{width:26px;height:26px;border-radius:50%;background:var(--paper);border:1.5px solid var(--border);color:rgba(14,14,12,0.4);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-card.done .step-num{background:var(--green);border-color:var(--green);color:white}
+.step-title{font-size:13.5px;font-weight:700;flex:1}
+.step-summary{font-size:12px;color:var(--green);font-weight:600}
+.step-body{padding:0 18px 18px;display:none}
+.step-card.open .step-body{display:block}
+.step-guide{font-size:12px;line-height:1.65;color:rgba(14,14,12,0.6);background:var(--paper);border-radius:8px;padding:10px 12px;margin-bottom:12px}
+.step-doclist{margin-bottom:10px}
+.step-doc-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}
+.doc-collapse summary::-webkit-details-marker{display:none}
+.doc-collapse summary::after{content:'▸';margin-left:auto;color:rgba(14,14,12,0.3);transition:transform .15s}
+.doc-collapse[open] summary::after{transform:rotate(90deg)}
+.step-doc-row:last-child{border-bottom:none}
+.step-doc-name{flex:1}
+.step-btn{padding:9px 16px;border:none;border-radius:8px;background:var(--gold);color:white;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit}
+.step-btn:disabled{opacity:.45;cursor:not-allowed}
+.step-manual-input{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.step-manual-input input{flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px}
+.step-value{font-size:12.5px;color:rgba(14,14,12,0.6);margin-top:8px}
+.step-context-note{font-size:11px;color:rgba(14,14,12,0.4);margin-top:10px;line-height:1.6}
+
+.doc-row{display:flex;align-items:center;gap:12px;background:white;border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:8px}
+.doc-icon{width:32px;height:32px;border-radius:8px;background:var(--gold-bg);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.doc-name{font-size:12.5px;font-weight:600}
+.doc-type{font-size:11px;color:rgba(14,14,12,0.45);margin-top:2px}
+.doc-check{margin-left:auto}
+.rescan-btn{width:100%;padding:11px;background:var(--gold);border:none;border-radius:10px;color:white;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:14px}
+.rescan-btn:disabled{opacity:.5;cursor:not-allowed}
+
+.load{display:flex;align-items:center;gap:8px;justify-content:center;padding:24px 0}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:bob .9s infinite}
+.dot:nth-child(2){animation-delay:.15s}.dot:nth-child(3){animation-delay:.3s}
+@keyframes bob{0%,60%,100%{transform:translateY(0);opacity:.3}30%{transform:translateY(-5px);opacity:1}}
+.err{background:var(--red-bg);border:1px solid rgba(224,82,82,0.2);border-radius:9px;padding:12px 14px;font-size:12px;color:rgba(14,14,12,0.6);margin-bottom:14px}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-top">
+    <div>
+      <div class="hdr-title">💰 Set a Budget</div>
+      <div class="hdr-sub" id="hdr-sub">Fill in your numbers below</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <button class="print-btn no-print" onclick="window.print()">🖨 Save PDF</button>
+      <span class="status-pill pending" id="status-pill">Not started</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="wrap">
+    <div id="wizard-banner"></div>
+    <div id="wizard-content"></div>
+  </div>
+</div>
+
+<script>
+const CLIENT_ID = '268645094838-ahos0o5e9aiqbk15j8sfivuj3gn78862.apps.googleusercontent.com';
+const DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.readonly';
+const PROXY = 'https://vera-proxy.onrender.com';
+let tokenClient = null;
+let accessToken = null;
+let driveFiles = [];
+let veraSubfolders = [];
+let subfolderFilesCache = {};
+
+function getEmail() {
+  try { if (window.parent && window.parent.getEmail) return window.parent.getEmail(); } catch(e) {}
+  return null;
+}
+
+// ── Reads the shared Drive connection set up on the Documents tab. This
+// page never initiates OAuth itself — it only checks whether a valid token
+// already exists (shared via localStorage across all VERA tool pages). ──
+function fmt$(n) {
+  n = Number(n) || 0;
+  return '$' + Math.round(n).toLocaleString();
+}
+
+const VERA_FOLDER_NAME = 'VERA Financials';
+
+async function loadDriveFiles() {
+  setWizardBanner('<div class="load"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>');
+  try {
+    const folderQuery = "name='" + VERA_FOLDER_NAME + "' and mimeType='application/vnd.google-apps.folder' and trashed=false";
+    const folderRes = await fetch('https://www.googleapis.com/drive/v3/files?fields=files(id,name)&q=' + encodeURIComponent(folderQuery), {
+      headers: { Authorization: 'Bearer ' + accessToken }
+    });
+    if (!folderRes.ok) throw new Error('Drive API error ' + folderRes.status);
+    const folderData = await folderRes.json();
+    const folders = folderData.files || [];
+
+    if (!folders.length) {
+      setWizardBanner('<div class="empty-card">Connected, but no "' + VERA_FOLDER_NAME + '" folder found yet — create it in your Drive, then <button onclick="loadDriveFiles()" style="display:inline;margin:0;padding:6px 12px;font-size:11.5px">↻ Refresh</button></div>');
+      return;
+    }
+
+    const folderId = folders[0].id;
+    const topQuery = "'" + folderId + "' in parents and trashed=false";
+    const res = await fetch('https://www.googleapis.com/drive/v3/files?pageSize=50&fields=files(id,name,mimeType,modifiedTime)&orderBy=name&q=' + encodeURIComponent(topQuery), {
+      headers: { Authorization: 'Bearer ' + accessToken }
+    });
+    if (!res.ok) throw new Error('Drive API error ' + res.status);
+    const data = await res.json();
+    const topItems = data.files || [];
+    const topFiles = topItems.filter(function(f){ return f.mimeType !== 'application/vnd.google-apps.folder'; });
+    veraSubfolders = topItems.filter(function(f){ return f.mimeType === 'application/vnd.google-apps.folder'; });
+
+    // Load every subfolder's contents once, up front, so step rendering can
+    // stay synchronous — matches your existing organization (e.g. "2. 3 recent
+    // pay stubs", "6. Equifax Credit bureau") instead of a flat guessed list.
+    subfolderFilesCache = {};
+    for (const sf of veraSubfolders) {
+      const sfQuery = "'" + sf.id + "' in parents and mimeType!='application/vnd.google-apps.folder' and trashed=false";
+      const sfRes = await fetch('https://www.googleapis.com/drive/v3/files?pageSize=50&fields=files(id,name,mimeType,modifiedTime)&orderBy=modifiedTime desc&q=' + encodeURIComponent(sfQuery), {
+        headers: { Authorization: 'Bearer ' + accessToken }
+      });
+      if (sfRes.ok) {
+        const sfData = await sfRes.json();
+        subfolderFilesCache[sf.id] = sfData.files || [];
+      } else {
+        subfolderFilesCache[sf.id] = [];
+      }
+    }
+
+    driveFiles = topFiles.concat(Object.values(subfolderFilesCache).flat());
+    setWizardBanner('');
+    renderBudgetForm();
+  } catch(err) {
+    setWizardBanner('<div class="err">Could not load Drive files: ' + err.message + '</div>');
+  }
+}
+
+function setWizardBanner(html) { document.getElementById('wizard-banner').innerHTML = html; }
+
+// ── Download a Drive file's content as base64, for sending to the proxy ──
+async function downloadFileAsBase64(fileId) {
+  const res = await fetch('https://www.googleapis.com/drive/v3/files/' + fileId + '?alt=media', {
+    headers: { Authorization: 'Bearer ' + accessToken }
+  });
+  if (!res.ok) throw new Error('Could not download file ' + fileId);
+  const blob = await res.blob();
+  return new Promise(function(resolve, reject) {
+    const reader = new FileReader();
+    reader.onloadend = function() { resolve(reader.result.split(',')[1]); };
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+// ── 7-step wizard, matching the book's own breakdown ──────────────────────
+// Step 2 (expenses) is deliberately manual, not document-driven — the book's
+// own Step 2 language calls this an "estimated" figure, not something pulled
+// from a specific document the way income, assets, debts, down payment, and
+// credit score are.
+const STEPS = [
+  { key:'income', num:1, title:'Your Monthly Income', guide:'VERA helps you determine your monthly income to establish your financial baseline. We\'ll need this to evaluate your budget.', folderNumbers:[2] },
+  { key:'expenses', num:2, title:'Your Monthly Expenses', guide:'Lenders also need to see your monthly expenses to calculate your debt-to-income ratio. Export or screenshot your budget app\'s category breakdown — VERA reads the categorized summary directly, which is far more reliable than reading raw bank statement transactions.', folderNumbers:[11] },
+];
+let stepData = {};
+let expenseFormValues = null;
+let budgetFormValues = {}; // holds current values for income (3 fields) + down payment
+try { stepData = JSON.parse(localStorage.getItem('vera_step_data') || '{}'); } catch(e) { stepData = {}; }
+
+// Suggest likely files for a step by matching filenames against its keywords —
+// users confirm or adjust rather than hunting through every file from scratch.
+// Extracts a leading number from a folder name like "2. 3 recent pay stubs" -> 2
+function folderNumber(name) {
+  var m = name.match(/^(\d+)/);
+  return m ? parseInt(m[1], 10) : null;
+}
+
+// Fallback keyword sets, only used for users who haven't organized into
+// numbered subfolders at all — matches against a flat filename list instead.
+const FALLBACK_KEYWORDS = {
+  income: ['pay stub','paystub','pay date','t4','noa','notice of assessment','employment','t1','business financial','business plan','hst'],
+  expenses: ['bank','chequing','checking','statement'],
+  assets: ['bank','chequing','checking','savings','investment','rrsp','tfsa','balance','banking plan','asset'],
+  debts: ['loan','credit card','visa','mastercard','line of credit','debt'],
+  downPayment: ['bank','savings','investment','rrsp','tfsa','balance'],
+  creditScore: ['credit report','creditreport','equifax','transunion','efx'],
+};
+
+function suggestedFileIds(step) {
+  var kws = FALLBACK_KEYWORDS[step.key];
+  if (!kws) return [];
+  return driveFiles.filter(function(f) {
+    var name = f.name.toLowerCase();
+    return kws.some(function(kw) { return name.indexOf(kw) > -1; });
+  }).map(function(f) { return f.id; });
+}
+
+// Finds subfolder(s) whose NUMBER PREFIX matches a step's assigned folder
+// numbers (e.g. income = folders 2,3,4,5,7) — exact and reliable, since every
+// user is guided to create numbered folders matching the documented structure.
+function matchedSubfoldersForStep(step) {
+  if (!step.folderNumbers) return [];
+  return veraSubfolders.filter(function(sf) {
+    var n = folderNumber(sf.name);
+    return n !== null && step.folderNumbers.indexOf(n) > -1;
+  });
+}
+
+// Files to show for a step: if one or more matching subfolders exist, use
+// exactly what's inside them (all relevant by definition, no guessing
+// needed). Otherwise fall back to the flat top-level list.
+function filesForStep(step) {
+  var matchedFolders = matchedSubfoldersForStep(step);
+  var files;
+  var fromFolders = null;
+  if (matchedFolders.length) {
+    files = [];
+    matchedFolders.forEach(function(sf) {
+      var num = folderNumber(sf.name);
+      (subfolderFilesCache[sf.id] || []).forEach(function(f) {
+        files.push(Object.assign({}, f, { _fromFolderNum: num }));
+      });
+    });
+    fromFolders = matchedFolders.map(function(sf){ return sf.name; });
+  } else {
+    files = driveFiles;
+  }
+  return { files: files, fromFolders: fromFolders };
+}
+
+function saveStepData() { localStorage.setItem('vera_step_data', JSON.stringify(stepData)); }
+
+function renderBudgetForm() {
+  let html = '<div class="coach-note" style="background:var(--gold-bg);border:1px solid var(--gold-bd);border-radius:9px;padding:14px 16px;margin-bottom:16px;font-size:12.5px;color:rgba(14,14,12,0.7);line-height:1.65">Fill in what you know directly, or upload a document to any section below and VERA will fill it in for you — every field stays editable either way. When you\'re done, send everything to the calculator at the bottom.</div>';
+
+  html += renderIncomeSection();
+  html += renderHousingCostsSection();
+  html += renderDebtPaymentsSection();
+
+  html += '<button class="step-btn no-print" style="width:100%;padding:14px;font-size:14px;margin-top:4px" onclick="sendAllToCalculator(this)">Send to calculator</button>';
+  html += '<div id="budget-results" style="margin-top:20px"></div>';
+
+  document.getElementById('wizard-content').innerHTML = html;
+}
+
+function sectionDocPicker(step) {
+  if (!driveFiles.length) {
+    return '<div class="step-context-note" style="margin-top:10px">Connect Google Drive in <a href="#" onclick="goToDocumentsTab();return false" style="color:var(--gold);font-weight:600">Get Pre-Approved → Documents</a> to also fill this in from an upload.</div>';
+  }
+  const result = filesForStep(step);
+  const files = result.files;
+  const fromLabel = result.fromFolders ? result.fromFolders.join('", "') : null;
+  let html = '<details class="doc-collapse no-print" style="margin-top:12px">';
+  html += '<summary style="cursor:pointer;font-size:12px;color:var(--gold);font-weight:600;list-style:none;display:flex;align-items:center;gap:5px">📄 Or upload a document and VERA will fill this in for you' + (fromLabel ? ' — found in your "' + fromLabel + '" folder' : '') + '</summary>';
+  html += '<div class="step-doclist" style="margin-top:10px">' + files.map(function(f) {
+    const icon = f.mimeType === 'application/pdf' ? '📄' : '🖼';
+    const isPrimary = !step.primaryFolder || f._fromFolderNum === step.primaryFolder;
+    return '<div class="step-doc-row"><input type="checkbox" class="step-doc-cb" data-step="' + step.key + '" value="' + f.id + '"' + (isPrimary ? ' checked' : '') + '><span>' + icon + '</span><span class="step-doc-name">' + f.name + '</span></div>';
+  }).join('') + '</div>';
+  if (step.primaryFolder) {
+    html += '<div class="step-context-note" style="margin-top:6px">Only the most relevant folder is pre-checked — select any others you want VERA to also read.</div>';
+  }
+  html += '<button class="step-btn" style="background:white;border:1px solid var(--gold-bd);color:var(--gold);margin-top:8px" onclick="readSectionData(\'' + step.key + '\')">Read the data</button>';
+  html += '</details>';
+  return html;
+}
+
+function goToDocumentsTab() {
+  try {
+    if (window.parent && window.parent.showPanel) {
+      window.parent.showPanel('database', window.parent.document.getElementById('nav-database'));
+      if (window.parent.showDbTab) window.parent.showDbTab('documents');
+    }
+  } catch(e) {}
+}
+
+
+async function readSectionData(stepKey) {
+  const step = STEPS.find(function(s){ return s.key === stepKey; });
+  const checked = Array.from(document.querySelectorAll('.step-doc-cb[data-step="' + stepKey + '"]:checked')).map(function(el){ return el.value; });
+  if (!checked.length) { alert('Select at least one document first.'); return; }
+  try {
+    const selected = driveFiles.filter(function(f){ return checked.indexOf(f.id) > -1; });
+    const documents = [];
+    for (const f of selected) {
+      const base64 = await downloadFileAsBase64(f.id);
+      documents.push({ name: f.name, mimeType: f.mimeType, base64: base64 });
+    }
+    const res = await fetch(PROXY + '/extract-financials', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ documents: documents })
+    });
+    if (!res.ok) { const e = await res.json(); throw new Error(e.error || 'Server error ' + res.status); }
+    const extracted = await res.json();
+    if (extracted.error) throw new Error(extracted.error);
+
+    if (stepKey === 'income') {
+      if (extracted.employmentIncome != null) budgetFormValues.applicant1Income = Math.round(extracted.employmentIncome * 12);
+      if (extracted.sideIncome != null) budgetFormValues.sideHustle = Math.round(extracted.sideIncome * 12);
+      // otherIncome isn't auto-mapped — child support, alimony, and rental
+      // income are distinct enough that a pay stub can't reliably tell them
+      // apart, so those stay manual entry.
+    } else if (stepKey === 'expenses') {
+      const transactions = extracted.transactions ? extracted.transactions.filter(function(t){ return t.type === 'Expense'; }) : [];
+      const extrapolated = extrapolateExpensesToYear(transactions);
+      expenseFormValues = categoryTotalsFromDetail(extrapolated);
+    } else if (extracted[step.field] != null) {
+      budgetFormValues[stepKey] = extracted[step.field];
+    } else {
+      alert('VERA could not find a clear ' + step.title.toLowerCase() + ' figure in the selected document(s).');
+    }
+    renderBudgetForm();
+  } catch(err) {
+    alert('Could not read documents: ' + err.message);
+  }
+}
+
+const SHEET_MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','July','Aug','Sept','Oct','Nov','Dec'];
+
+// Given itemized expense transactions (real months only), fills in the rest
+// of the year using the average of whichever months ARE covered — same
+// pattern as Projected Financials' assumption styling, just for a full
+// category/month grid instead of a single field.
+function extrapolateExpensesToYear(transactions) {
+  const byCategory = {};
+  const realMonthsSet = new Set();
+  transactions.forEach(function(t) {
+    if (!byCategory[t.category]) byCategory[t.category] = {};
+    byCategory[t.category][t.month] = (byCategory[t.category][t.month] || 0) + (Number(t.amount) || 0);
+    realMonthsSet.add(t.month);
+  });
+  const realMonths = SHEET_MONTHS.filter(function(m) { return realMonthsSet.has(m); });
+  Object.keys(byCategory).forEach(function(cat) {
+    const realValues = realMonths.map(function(m) { return byCategory[cat][m] || 0; });
+    const avg = realValues.length ? realValues.reduce(function(a,b){return a+b;}, 0) / realValues.length : 0;
+    SHEET_MONTHS.forEach(function(m) {
+      if (!(m in byCategory[cat])) byCategory[cat][m] = Math.round(avg * 100) / 100;
+    });
+  });
+  return { byCategory: byCategory, realMonths: realMonths };
+}
+
+const PIE_COLORS = ['#B8872A','#2D7A4F','#5B7FBF','#C4527A','#8B6914','#4A9B8E','#D4A54C','#6B5B95','#E07856','#7FA650','#9B6BA8','#C0392B','#16A085','#F39C12','#7B8794','#34495E'];
+
+function renderExpensePieChart(categoryTotals) {
+  const entries = Object.entries(categoryTotals).filter(function(e){ return e[1] > 0; }).sort(function(a,b){ return b[1]-a[1]; });
+  const total = entries.reduce(function(sum,e){ return sum+e[1]; }, 0);
+  if (total === 0) return '<div class="step-context-note">No expense data to chart yet.</div>';
+
+  const cx = 100, cy = 100, r = 90;
+  let cumulativeAngle = -90;
+  let paths = '', legend = '';
+  entries.forEach(function(entry, i) {
+    const cat = entry[0], val = entry[1];
+    const pct = val / total;
+    const angle = pct * 360;
+    const startRad = cumulativeAngle * Math.PI / 180;
+    const endRad = (cumulativeAngle + angle) * Math.PI / 180;
+    const x1 = cx + r * Math.cos(startRad), y1 = cy + r * Math.sin(startRad);
+    const x2 = cx + r * Math.cos(endRad), y2 = cy + r * Math.sin(endRad);
+    const largeArc = angle > 180 ? 1 : 0;
+    const color = PIE_COLORS[i % PIE_COLORS.length];
+    paths += '<path d="M'+cx+','+cy+' L'+x1.toFixed(2)+','+y1.toFixed(2)+' A'+r+','+r+' 0 '+largeArc+' 1 '+x2.toFixed(2)+','+y2.toFixed(2)+' Z" fill="'+color+'"></path>';
+    legend += '<div style="display:flex;align-items:center;gap:6px;font-size:11.5px;margin-bottom:5px"><span style="width:10px;height:10px;border-radius:2px;background:'+color+';display:inline-block;flex-shrink:0"></span><span>'+cat+' — '+(pct*100).toFixed(1)+'% ('+fmt$(val)+')</span></div>';
+    cumulativeAngle += angle;
+  });
+  return '<div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">'
+    + '<svg viewBox="0 0 200 200" style="width:180px;height:180px;flex-shrink:0">'+paths+'</svg>'
+    + '<div style="flex:1;min-width:180px">'+legend+'</div></div>';
+}
+
+// Single write to the Income&Expenses sheet — clears and pastes fresh, same
+// pattern as Projected Financials, not an accumulating log.
+async function saveIncomeExpensesToSheet() {
+  const email = getEmail();
+  if (!email) {
+    console.warn('saveIncomeExpensesToSheet: no email found — window.parent.getEmail() returned nothing');
+    return { success: false, reason: 'No email found — you may need to sign back in.' };
+  }
+
+  const expenseTransactions = [];
+  if (stepData.expensesDetail) {
+    Object.keys(stepData.expensesDetail.byCategory).forEach(function(cat) {
+      SHEET_MONTHS.forEach(function(m) {
+        expenseTransactions.push({ category: cat, month: m, amount: stepData.expensesDetail.byCategory[cat][m] });
+      });
+    });
+  }
+  const salaryByMonth = (stepData.incomeDetail && stepData.incomeDetail.salaryByMonth) || {};
+
+  try {
+    const res = await fetch(PROXY + '/update-income-expenses', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, expenseTransactions: expenseTransactions, salaryByMonth: salaryByMonth, otherIncomeByMonth: {} })
+    });
+    if (!res.ok) {
+      let serverMsg = 'Server error ' + res.status;
+      try { const errJson = await res.json(); if (errJson.error) serverMsg = errJson.error; } catch(e) {}
+      console.warn('saveIncomeExpensesToSheet: server responded with error:', serverMsg);
+      return { success: false, reason: serverMsg };
+    }
+    const result = await res.json();
+    if (!result.success) {
+      console.warn('saveIncomeExpensesToSheet: server returned success:false', result);
+      return { success: false, reason: result.error || 'The calculator did not confirm the save.' };
+    }
+    return result;
+  } catch (err) {
+    console.warn('saveIncomeExpensesToSheet: network/fetch error:', err.message);
+    return { success: false, reason: 'Network error — ' + err.message };
+  }
+}
+
+const INCOME_SOURCES = [
+  { key:'employmentIncome', label:'Employment Income', desc:'Your salary or wages from your primary job.' },
+  { key:'sideIncome', label:'Side Income', desc:'Any income from freelance work, investments, or a side business.' },
+  { key:'otherIncome', label:'Other Income', desc:'This could include alimony, child support, pensions, or government benefits.' },
+];
+
+const DOWN_PAYMENT_SOURCES = [
+  { value:'Own Resources', desc:'Any non-borrowed savings or investments in your personal name.' },
+  { value:'Gifted Down Payment', desc:'An immediate family member can gift you a portion of your down payment.' },
+  { value:'Gifted Equity', desc:'Parents can gift equity from their family home to their child.' },
+  { value:'First-Time Home Buyer Incentive', desc:'A government program offering 5% for resale properties or 5 to 10% for new construction.' },
+  { value:'Other', desc:'Equity borrowed from another property, or sale proceeds from a previous home or asset.' },
+];
+
+function renderDownPaymentSection() {
+  const amount = budgetFormValues.downPaymentAmount;
+  const source = budgetFormValues.downPaymentSource || '';
+  let html = '<div class="budget-sec"><div class="budget-sec-t">3. Your Down Payment</div><div class="budget-sec-guide">You will identify the source and amount of your down payment.</div>';
+
+  html += '<div class="step-doclist"><div class="step-doc-row"><div style="flex:1"><div class="step-doc-name">Down Payment Amount</div></div>'
+    + '<div style="display:flex;align-items:center;gap:4px"><span style="font-size:12px;color:rgba(14,14,12,0.4)">$</span><input type="number" class="budget-field-input" data-field="downPaymentAmount" value="' + (amount||'') + '" placeholder="0" style="width:110px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:12.5px;text-align:right"></div></div></div>';
+
+  html += '<div style="margin-top:12px"><div class="step-doc-name" style="margin-bottom:6px">Source of Down Payment</div>'
+    + '<select class="budget-field-input" data-field="downPaymentSource" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:12.5px">'
+    + '<option value="">— Select —</option>'
+    + DOWN_PAYMENT_SOURCES.map(function(s){ return '<option value="' + s.value + '"' + (source===s.value?' selected':'') + '>' + s.value + '</option>'; }).join('')
+    + '</select></div>';
+
+  const selected = DOWN_PAYMENT_SOURCES.find(function(s){ return s.value === source; });
+  if (selected) {
+    html += '<div class="step-context-note" style="margin-top:8px">' + selected.desc + '</div>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
+const HOUSING_COST_FIELDS = [
+  { key:'mortgagePayment', label:'Monthly Mortgage Payment or Rent', note:'Principal + Interest' },
+  { key:'propertyTaxes', label:'Monthly Property Taxes', note:'As applicable — leave blank if not applicable' },
+  { key:'heatingCosts', label:'Monthly Heating Costs', note:'' },
+  { key:'condoFees', label:'Monthly Condo Fees', note:'As applicable — leave blank if not applicable' },
+];
+const DEBT_PAYMENT_FIELDS = [
+  { key:'carLoan', label:'Monthly Car Loan Payment', note:'' },
+  { key:'studentLoan', label:'Monthly Student Loan Payment', note:'' },
+  { key:'creditCardPayments', label:'Monthly Credit Card Payments', note:'Minimum monthly payment amount' },
+  { key:'rentalProperty1Mortgage', label:'Rental Property 1 Mortgage Payment', note:'An existing rental property you already own, if applicable.' },
+  { key:'rentalProperty2Mortgage', label:'Rental Property 2 Mortgage Payment', note:'A second existing rental property, if applicable.' },
+  { key:'otherDebtPayments', label:'Other Monthly Debt Payments', note:'Include any other recurring debt payments' },
+];
+
+function renderFieldGroupSection(sectionNum, title, guide, fields) {
+  let html = '<div class="budget-sec"><div class="budget-sec-t">' + sectionNum + '. ' + title + '</div><div class="budget-sec-guide">' + guide + '</div>';
+  html += '<div class="step-doclist">' + fields.map(function(f) {
+    const val = budgetFormValues[f.key];
+    return '<div class="step-doc-row"><div style="flex:1"><div class="step-doc-name">' + f.label + '</div>' + (f.note ? '<div style="font-size:11px;color:rgba(14,14,12,0.45)">' + f.note + '</div>' : '') + '</div>'
+      + '<div style="display:flex;align-items:center;gap:4px"><span style="font-size:12px;color:rgba(14,14,12,0.4)">$</span><input type="number" class="budget-field-input" data-field="' + f.key + '" value="' + (val||'') + '" placeholder="0" style="width:100px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:12.5px;text-align:right"></div></div>';
+  }).join('') + '</div>';
+  html += '</div>';
+  return html;
+}
+
+function renderHousingCostsSection() {
+  return renderFieldGroupSection(2, 'Your Monthly Housing Costs — Primary Residence', 'Your current home, not the rental property you\'re considering. This tells us your Gross Debt Service (GDS) ratio — how much of your income already goes toward housing.', HOUSING_COST_FIELDS);
+}
+
+function renderDebtPaymentsSection() {
+  return renderFieldGroupSection(3, 'Your Other Monthly Debt Payments', 'Combined with your housing costs, this gives your Total Debt Service (TDS) ratio — how much of your income goes toward all debt obligations.', DEBT_PAYMENT_FIELDS);
+}
+
+const SUBJECT_PROPERTY_FIELDS = [
+  { key:'expectedAnnualRentalIncome', label:'Expected Annual Rental Income', note:'Lenders typically count 50% of this toward qualifying income. Update this once you\'ve found a real property, for a more accurate number.', unit:'/yr', defaultVal:12000 },
+  { key:'expectedMonthlyPropertyTaxes', label:'Expected Monthly Property Taxes', note:'', unit:'/mo', defaultVal:300 },
+  { key:'expectedMonthlyHeatingCosts', label:'Expected Monthly Heating Costs', note:'', unit:'/mo', defaultVal:100 },
+  { key:'expectedMonthlyCondoFees', label:'Expected Monthly Condo Fees', note:'As applicable — leave blank if not applicable', unit:'/mo', defaultVal:0 },
+];
+
+function renderSubjectPropertySection() {
+  let html = '<div class="budget-sec"><div class="budget-sec-t">4. The Rental Property You\'re Considering</div><div class="budget-sec-guide">Pre-filled with reasonable starting assumptions so you can check your affordability right away — come back and update these once you\'ve found a real property, for a number based on its actual numbers instead of an estimate.</div>';
+  html += '<div class="step-doclist">' + SUBJECT_PROPERTY_FIELDS.map(function(f) {
+    const val = budgetFormValues[f.key] != null ? budgetFormValues[f.key] : f.defaultVal;
+    return '<div class="step-doc-row"><div style="flex:1"><div class="step-doc-name">' + f.label + '</div>' + (f.note ? '<div style="font-size:11px;color:rgba(14,14,12,0.45)">' + f.note + '</div>' : '') + '</div>'
+      + '<div style="display:flex;align-items:center;gap:4px"><span style="font-size:12px;color:rgba(14,14,12,0.4)">$</span><input type="number" class="budget-field-input" data-field="' + f.key + '" value="' + val + '" placeholder="0" style="width:100px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:12.5px;text-align:right"><span style="font-size:11px;color:rgba(14,14,12,0.4)">' + f.unit + '</span></div></div>';
+  }).join('') + '</div>';
+  html += '</div>';
+  return html;
+}
+
+const INCOME_LINE_ITEMS = [
+  { key:'applicant1Income', label:'Annual Gross Income (Applicant 1)', desc:'Your salary or wages from your primary job.' },
+  { key:'applicant2Income', label:'Annual Gross Income (Applicant 2)', desc:'Co-applicant\'s income, if applying together — leave blank if not applicable.' },
+  { key:'childSupport', label:'Other Income: Child Support', desc:'' },
+  { key:'alimony', label:'Other Income: Alimony', desc:'' },
+  { key:'sideHustle', label:'Other Income: Side Hustle', desc:'Freelance work, investments, or a side business.' },
+  { key:'rentalIncome1', label:'Other Income: Net Income Rental Property 1', desc:'An existing rental property you already own — lenders typically count 50% of this toward qualifying income.' },
+  { key:'rentalIncome2', label:'Other Income: Net Income Rental Property 2', desc:'A second existing rental property, if applicable.' },
+];
+
+function renderIncomeSection() {
+  const step = STEPS.find(function(s){ return s.key === 'income'; });
+  let html = '<div class="budget-sec"><div class="budget-sec-t">1. ' + step.title + '</div><div class="budget-sec-guide">' + step.guide + '</div>';
+
+  html += '<div class="step-doclist">' + INCOME_LINE_ITEMS.map(function(s) {
+    const val = budgetFormValues[s.key];
+    return '<div class="step-doc-row"><div style="flex:1"><div class="step-doc-name">' + s.label + '</div>' + (s.desc ? '<div style="font-size:11px;color:rgba(14,14,12,0.45)">' + s.desc + '</div>' : '') + '</div>'
+      + '<div style="display:flex;align-items:center;gap:4px"><span style="font-size:12px;color:rgba(14,14,12,0.4)">$</span><input type="number" class="budget-field-input" data-field="' + s.key + '" value="' + (val || '') + '" placeholder="0" style="width:100px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:12.5px;text-align:right"><span style="font-size:11px;color:rgba(14,14,12,0.4)">/yr</span></div></div>';
+  }).join('') + '</div>';
+
+  html += sectionDocPicker(step);
+  html += '</div>';
+  return html;
+}
+
+const EXPENSE_CATEGORIES = ['Groceries','Restaurant','Hair','Transportation','Health','Entertainment','Professional dues','Membership','Gym','Utilities','Rent','Gifts','School','Shopping','Trip','Other'];
+
+function renderExpenseSectionFlat() {
+  const step = STEPS.find(function(s){ return s.key === 'expenses'; });
+  let html = '<div class="budget-sec"><div class="budget-sec-t">2. ' + step.title + '</div><div class="budget-sec-guide">' + step.guide + '</div>';
+
+  const currentValues = expenseFormValues || {};
+  html += '<div class="step-doclist">' + EXPENSE_CATEGORIES.map(function(cat) {
+    const val = currentValues[cat];
+    return '<div class="step-doc-row"><div style="flex:1"><div class="step-doc-name">' + cat + '</div></div>'
+      + '<div style="display:flex;align-items:center;gap:4px"><span style="font-size:12px;color:rgba(14,14,12,0.4)">$</span><input type="number" class="expense-cat-input" data-category="' + cat + '" value="' + (val || '') + '" placeholder="0" style="width:80px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:12.5px;text-align:right"><span style="font-size:11px;color:rgba(14,14,12,0.4)">/mo</span></div></div>';
+  }).join('') + '</div>';
+
+  html += sectionDocPicker(step);
+  html += '</div>';
+  return html;
+}
+
+function categoryTotalsFromDetail(detail) {
+  const totals = {};
+  EXPENSE_CATEGORIES.forEach(function(cat) {
+    const catData = (detail.byCategory && detail.byCategory[cat]) || {};
+    const avg = SHEET_MONTHS.reduce(function(sum, m) { return sum + (catData[m] || 0); }, 0) / 12;
+    totals[cat] = Math.round(avg);
+  });
+  return totals;
+}
+
+async function retrySheetWrite(btn) {
+  if (btn) { btn.disabled = true; btn.textContent = 'Retrying…'; }
+  const sheetResult = await saveGdsTdsToSheet();
+  if (sheetResult && sheetResult.success) {
+    stepData.gdsTdsResult = sheetResult;
+    delete stepData.gdsTdsError;
+    updateHeaderStatus(true);
+  } else {
+    stepData.gdsTdsError = (sheetResult && sheetResult.reason) || 'Unknown error';
+  }
+  saveStepData();
+  document.getElementById('budget-results').innerHTML = renderGdsTdsResultSection();
+}
+
+async function sendAllToCalculator(btn) {
+  // Income: read all 7 line items matching Section 1 of the sheet
+  const incomeLineItems = {};
+  INCOME_LINE_ITEMS.forEach(function(item) {
+    const el = document.querySelector('.budget-field-input[data-field="' + item.key + '"]');
+    incomeLineItems[item.key] = el ? Number(el.value) || 0 : 0;
+  });
+  Object.assign(budgetFormValues, incomeLineItems);
+  const totalAnnualIncome = Object.values(incomeLineItems).reduce(function(sum,v){ return sum + v; }, 0);
+  stepData.income = { value: totalAnnualIncome, lineItems: incomeLineItems };
+  const monthlySalary = Math.round((totalAnnualIncome/12) * 100) / 100;
+  const salaryByMonth = {};
+  SHEET_MONTHS.forEach(function(m) { salaryByMonth[m] = monthlySalary; });
+  stepData.incomeDetail = { salaryByMonth: salaryByMonth };
+
+  // Expenses: read all 16 category fields
+  const expenseInputs = document.querySelectorAll('.expense-cat-input');
+  const formValues = {};
+  expenseInputs.forEach(function(el) { formValues[el.dataset.category] = Number(el.value) || 0; });
+  expenseFormValues = formValues;
+  const byCategory = {};
+  EXPENSE_CATEGORIES.forEach(function(cat) {
+    byCategory[cat] = {};
+    SHEET_MONTHS.forEach(function(m) { byCategory[cat][m] = formValues[cat] || 0; });
+  });
+  const monthlyExpenseTotal = EXPENSE_CATEGORIES.reduce(function(sum,cat){ return sum + (formValues[cat]||0); }, 0);
+  stepData.expenses = { value: monthlyExpenseTotal };
+  stepData.expensesDetail = { byCategory: byCategory, realMonths: SHEET_MONTHS.slice() };
+
+  // Down Payment: amount + source dropdown
+  const dpAmountEl = document.querySelector('.budget-field-input[data-field="downPaymentAmount"]');
+  const dpSourceEl = document.querySelector('.budget-field-input[data-field="downPaymentSource"]');
+  const downPaymentAmount = dpAmountEl ? Number(dpAmountEl.value) || null : null;
+  const downPaymentSource = dpSourceEl ? dpSourceEl.value || null : null;
+  budgetFormValues.downPaymentAmount = downPaymentAmount;
+  budgetFormValues.downPaymentSource = downPaymentSource;
+  if (downPaymentAmount != null || downPaymentSource) {
+    stepData.downPayment = { amount: downPaymentAmount, source: downPaymentSource };
+  }
+
+  // Housing Costs (feeds GDS) and Debt Payments (feeds TDS, combined with housing costs)
+  HOUSING_COST_FIELDS.concat(DEBT_PAYMENT_FIELDS).forEach(function(f) {
+    const el = document.querySelector('.budget-field-input[data-field="' + f.key + '"]');
+    const val = el ? Number(el.value) || 0 : 0;
+    budgetFormValues[f.key] = val;
+  });
+  stepData.housingCosts = {
+    mortgagePayment: budgetFormValues.mortgagePayment || 0,
+    propertyTaxes: budgetFormValues.propertyTaxes || 0,
+    heatingCosts: budgetFormValues.heatingCosts || 0,
+    condoFees: budgetFormValues.condoFees || 0
+  };
+  stepData.debtPayments = {
+    carLoan: budgetFormValues.carLoan || 0,
+    studentLoan: budgetFormValues.studentLoan || 0,
+    creditCardPayments: budgetFormValues.creditCardPayments || 0,
+    rentalProperty1Mortgage: budgetFormValues.rentalProperty1Mortgage || 0,
+    rentalProperty2Mortgage: budgetFormValues.rentalProperty2Mortgage || 0,
+    otherDebtPayments: budgetFormValues.otherDebtPayments || 0
+  };
+
+  // Subject property — pre-filled with defaults, but fully user-editable so
+  // someone can come back once they've found a real property and check the
+  // actual numbers instead of the starting estimate.
+  const subjectProperty = {};
+  SUBJECT_PROPERTY_FIELDS.forEach(function(f) {
+    const el = document.querySelector('.budget-field-input[data-field="' + f.key + '"]');
+    subjectProperty[f.key] = el && el.value !== '' ? Number(el.value) || 0 : f.defaultVal;
+  });
+  Object.assign(budgetFormValues, subjectProperty);
+  stepData.subjectProperty = subjectProperty;
+
+  // Optional — only present if the user is checking a real listing
+  saveStepData();
+
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending to calculator…'; }
+
+  // VERA doesn't calculate anything itself — it only sends Income, Housing
+  // Costs, and Debt Payments to the GDS & TDS Calculator sheet, which does
+  // the actual math and returns the ratios read back below.
+  const sheetResult = await saveGdsTdsToSheet();
+  if (sheetResult && sheetResult.success) {
+    stepData.gdsTdsResult = sheetResult;
+    delete stepData.gdsTdsError;
+    updateHeaderStatus(true);
+  } else {
+    stepData.gdsTdsError = (sheetResult && sheetResult.reason) || 'Unknown error';
+  }
+  saveStepData();
+
+  document.getElementById('budget-results').innerHTML = renderGdsTdsResultSection();
+
+  if (btn) { btn.disabled = false; btn.textContent = 'Send to calculator'; }
+  document.getElementById('budget-results').scrollIntoView({ behavior: 'smooth' });
+}
+
+// PLACEHOLDER — needs the real "GDS & TDS Calculator" tab's exact name and
+// cell layout before this can actually write/read. Currently returns a
+// clear "not yet connected" error rather than silently failing or lying
+// about success. Same clear-and-paste pattern as Income&Expenses once wired.
+async function saveGdsTdsToSheet() {
+  const email = getEmail();
+  if (!email) return { success: false, reason: 'No email found — you may need to sign back in.' };
+
+  const li = (stepData.income && stepData.income.lineItems) || {};
+  const hc = stepData.housingCosts || {};
+  const dp = stepData.debtPayments || {};
+  const sp = stepData.subjectProperty || {};
+
+  const payload = {
+    email: email,
+    applicant1Income: li.applicant1Income || 0,
+    applicant2Income: li.applicant2Income || 0,
+    childSupport: li.childSupport || 0,
+    alimony: li.alimony || 0,
+    sideHustle: li.sideHustle || 0,
+    rentalIncome1: li.rentalIncome1 || 0,
+    rentalIncome2: li.rentalIncome2 || 0,
+    mortgagePayment: hc.mortgagePayment || 0,
+    propertyTaxes: hc.propertyTaxes || 0,
+    heatingCosts: hc.heatingCosts || 0,
+    condoFees: hc.condoFees || 0,
+    carLoan: dp.carLoan || 0,
+    studentLoan: dp.studentLoan || 0,
+    creditCardPayments: dp.creditCardPayments || 0,
+    rentalProperty1Mortgage: dp.rentalProperty1Mortgage || 0,
+    rentalProperty2Mortgage: dp.rentalProperty2Mortgage || 0,
+    otherDebtPayments: dp.otherDebtPayments || 0,
+    expectedAnnualRentalIncome: sp.expectedAnnualRentalIncome != null ? sp.expectedAnnualRentalIncome : 12000,
+    expectedMonthlyPropertyTaxes: sp.expectedMonthlyPropertyTaxes != null ? sp.expectedMonthlyPropertyTaxes : 300,
+    expectedMonthlyHeatingCosts: sp.expectedMonthlyHeatingCosts != null ? sp.expectedMonthlyHeatingCosts : 100,
+    expectedMonthlyCondoFees: sp.expectedMonthlyCondoFees != null ? sp.expectedMonthlyCondoFees : 0
+  };
+  stepData.gdsTdsPayload = payload; // stored for visibility, same as Analyse a Property shows what was sent
+
+  try {
+    const res = await fetch(PROXY + '/update-gds-tds', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) {
+      let serverMsg = 'Server error ' + res.status;
+      let rawBody = null;
+      try { rawBody = await res.json(); if (rawBody.error) serverMsg = rawBody.error; } catch(e) {}
+      stepData.gdsTdsRawResponse = rawBody || { httpStatus: res.status };
+      return { success: false, reason: serverMsg };
+    }
+    const result = await res.json();
+    stepData.gdsTdsRawResponse = result; // stored for visibility, whatever shape it actually came back in
+    if (result.error) return { success: false, reason: result.error };
+    if (result.currentGds == null || result.currentTds == null || result.affordabilityGds == null || result.affordabilityTds == null) {
+      return { success: false, reason: 'Sheet responded but did not include all expected values — see raw response below.' };
+    }
+    return result; // pass through everything the sheet returned
+  } catch (err) {
+    stepData.gdsTdsRawResponse = { networkError: err.message };
+    return { success: false, reason: 'Network error — ' + err.message };
+  }
+}
+
+function renderGdsTdsResultSection() {
+  const r = stepData.gdsTdsResult;
+  let html = '';
+
+  if (r && r.currentGds != null) {
+    // Current GDS & TDS — Section 4, primary residence only
+    const curGdsOk = r.currentGds <= 39;
+    const curTdsOk = r.currentTds <= 44;
+    html += '<div class="tmpl-card" style="margin-top:16px"><div class="next-hd">Your Current GDS &amp; TDS</div>';
+    html += '<div style="display:flex;gap:20px;margin:10px 0">'
+      + '<div><div style="font-size:11px;color:rgba(14,14,12,0.45)">GDS</div><div style="font-size:20px;font-weight:700;color:' + (curGdsOk?'var(--green)':'var(--red)') + '">' + r.currentGds + '%</div><div style="font-size:10.5px;color:rgba(14,14,12,0.4)">limit 39%</div></div>'
+      + '<div><div style="font-size:11px;color:rgba(14,14,12,0.45)">TDS</div><div style="font-size:20px;font-weight:700;color:' + (curTdsOk?'var(--green)':'var(--red)') + '">' + r.currentTds + '%</div><div style="font-size:10.5px;color:rgba(14,14,12,0.4)">limit 44%</div></div>'
+      + '</div>';
+    if (curGdsOk && curTdsOk) {
+      html += '<div style="font-size:12.5px;color:var(--green)">✓ You\'re living within your means — both ratios are within standard lender limits.</div>';
+    } else {
+      html += '<div style="font-size:12.5px;color:var(--red)">⚠ You\'re currently above standard lender limits. Consider reducing debt or housing costs to come back within the allowed GDS and TDS before applying.</div>';
+    }
+    html += '</div>';
+
+    html += renderRoomForRentalInsight_(r.currentGds, r.currentTds);
+
+    // Affordability — Section 6, includes the modeled subject rental property
+    const sp = r.subjectPropertyAssumptions || {};
+    html += '<div class="tmpl-card" style="margin-top:12px"><div class="next-hd">What You Can Afford</div>';
+    html += '<div class="step-context-note" style="margin-bottom:10px">This is based on a rental property earning <b>at least $' + Math.round(sp.expectedAnnualRentalIncome||0).toLocaleString() + '/yr</b> ($' + Math.round((sp.expectedAnnualRentalIncome||0)/12).toLocaleString() + '/mo), with <b>no more than $' + (sp.expectedPropertyTaxes||0) + '/mo</b> property tax and <b>no more than $' + (sp.expectedHeatingCosts||0) + '/mo</b> heating, as a guideline — your real number will move once you find an actual property, higher if it earns more or costs less, lower if the opposite. This assumes a ' + (r.interestRate ? (r.interestRate*100).toFixed(2) : '5.00') + '% interest rate, ' + (r.amortizationYears || 25) + '-year amortization, and ' + (r.ltv ? (r.ltv*100).toFixed(0) : '80') + '% LTV (non-owner-occupied rental).</div>';
+    html += '<div style="display:flex;gap:20px;margin:10px 0">'
+      + '<div><div style="font-size:11px;color:rgba(14,14,12,0.45)">Max Property Price</div><div style="font-size:20px;font-weight:700">' + fmt$(r.maxHomePrice) + '</div></div>'
+      + '<div><div style="font-size:11px;color:rgba(14,14,12,0.45)">Down Payment Required</div><div style="font-size:20px;font-weight:700">' + fmt$(r.downPaymentRequired) + '</div></div>'
+      + '</div>';
+    html += '</div>';
+
+  } else {
+    const reason = stepData.gdsTdsError ? ' (' + stepData.gdsTdsError + ')' : '';
+    html += '<div class="tmpl-card" style="margin-top:16px"><div class="next-hd">Your GDS &amp; TDS</div><div class="err">Could not reach the calculator' + reason + '. <button class="step-btn" style="margin-top:8px;padding:6px 12px;font-size:11.5px" onclick="retrySheetWrite(this)">Retry</button></div></div>';
+  }
+
+  if (stepData.gdsTdsPayload || stepData.gdsTdsRawResponse) {
+    html += '<details style="margin-top:12px"><summary style="cursor:pointer;font-size:11.5px;color:var(--gold);font-weight:600">🔍 Show what was sent and received, to verify against the sheet</summary>';
+    html += '<div style="margin-top:8px">';
+    if (stepData.gdsTdsPayload) {
+      html += '<div style="font-size:11px;font-weight:700;color:rgba(14,14,12,0.5);margin-bottom:4px">SENT TO CALCULATOR</div>';
+      html += '<pre style="background:rgba(14,14,12,0.04);border-radius:6px;padding:10px;font-size:11px;overflow-x:auto;margin-bottom:10px">' + JSON.stringify(stepData.gdsTdsPayload, null, 2) + '</pre>';
+    }
+    if (stepData.gdsTdsRawResponse) {
+      html += '<div style="font-size:11px;font-weight:700;color:rgba(14,14,12,0.5);margin-bottom:4px">RECEIVED BACK</div>';
+      html += '<pre style="background:rgba(14,14,12,0.04);border-radius:6px;padding:10px;font-size:11px;overflow-x:auto">' + JSON.stringify(stepData.gdsTdsRawResponse, null, 2) + '</pre>';
+    }
+    html += '</div></details>';
+  }
+
+  return html;
+}
+
+function renderRoomForRentalInsight_(currentGds, currentTds) {
+  const gdsRoom = 39 - currentGds;
+  const tdsRoom = 44 - currentTds;
+  const bindingRoom = Math.min(gdsRoom, tdsRoom);
+
+  let html = '<div class="tmpl-card" style="margin-top:12px;border-color:var(--gold-bd);background:var(--gold-bg)"><div class="next-hd" style="color:var(--gold)">What This Means For a Rental Property</div>';
+
+  if (gdsRoom < 0 || tdsRoom < 0) {
+    html += '<div style="font-size:12.5px;color:rgba(14,14,12,0.7);line-height:1.6">Your current ratios are already above standard lender limits — before a new rental property is realistic, focus on bringing your existing debt and housing costs back within GDS 39% / TDS 44%.</div>';
+  } else if (bindingRoom >= 10) {
+    html += '<div style="font-size:12.5px;color:rgba(14,14,12,0.7);line-height:1.6">You have healthy room in your current finances — that\'s exactly what supports the affordability shown below.</div>';
+  } else {
+    // Tight — figure out whether debt or housing is the actual binding constraint
+    const debtDriven = tdsRoom < gdsRoom - 2;
+    let advice;
+    if (debtDriven) {
+      advice = 'this gap is mainly coming from your other monthly debt payments (car loan, credit cards, etc.), not your housing costs — paying those down is the most direct way to open up room for a rental property.';
+    } else {
+      advice = 'both your housing costs and other debts are already using up most of your available room — increasing your income, or reducing debt where possible, would open up more room.';
+    }
+    html += '<div style="font-size:12.5px;color:rgba(14,14,12,0.7);line-height:1.6">Your current ratios leave only about ' + Math.round(bindingRoom) + ' percentage points of room before hitting the standard limits — ' + advice + '</div>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
+function renderIncomeExpensesSection() {
+  const categoryTotals = {};
+  if (stepData.expensesDetail) {
+    Object.keys(stepData.expensesDetail.byCategory).forEach(function(cat) {
+      categoryTotals[cat] = SHEET_MONTHS.reduce(function(sum, m) { return sum + (stepData.expensesDetail.byCategory[cat][m] || 0); }, 0) / 12;
+    });
+  }
+
+  let html = '<div class="tmpl-card" style="margin-top:16px">'
+    + '<div class="next-hd">Where your money goes</div>'
+    + renderExpensePieChart(categoryTotals);
+
+  if (stepData.incomeExpensesResult) {
+    const r = stepData.incomeExpensesResult;
+    const avgCashflow = SHEET_MONTHS.reduce(function(sum,m){ return sum + (Number(r.cashflowByMonth[m])||0); }, 0) / 12;
+    const isNegative = avgCashflow < 0;
+    html += '<div style="margin-top:16px;padding:14px 16px;border-radius:10px;background:' + (isNegative?'var(--red-bg)':'var(--green-bg)') + ';border:1px solid ' + (isNegative?'rgba(224,82,82,0.25)':'var(--green-bd)') + '">'
+      + '<div style="font-size:13px;font-weight:700;color:' + (isNegative?'var(--red)':'var(--green)') + '">' + (isNegative?'⚠ Cash flow negative':'✓ Cash flow positive') + '</div>'
+      + '<div style="font-size:12px;color:rgba(14,14,12,0.65);margin-top:4px">Average monthly cash flow: ' + fmt$(avgCashflow) + '/mo — this is what you have left after real expenses, before adding a new rental property.</div>'
+      + '</div>';
+    if (isNegative) {
+      html += renderNegativeCashflowGuidance();
+    }
+  } else {
+    const reason = stepData.incomeExpensesError ? ' (' + stepData.incomeExpensesError + ')' : '';
+    html += '<div class="err" style="margin-top:10px">Could not reach the calculator' + reason + ' — try sending again. <button class="step-btn" style="margin-top:8px;padding:6px 12px;font-size:11.5px" onclick="retrySheetWrite(this)">Retry</button></div>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
+// NOTE: this guidance is general personal-finance practice, NOT yet verified
+// against your book's specific content — flagged clearly to Anne as a
+// follow-up, rather than silently presented as book-grounded when it isn't yet.
+function renderNegativeCashflowGuidance() {
+  return '<div class="tmpl-card" style="margin-top:10px;border-color:var(--gold-bd)">'
+    + '<div class="next-hd" style="color:var(--gold)">Before adding a new rental property</div>'
+    + '<div class="step-guide" style="margin-bottom:0">Being cash-flow negative today means a new mortgage payment would stretch your finances further before it starts paying you back. Worth addressing first:</div>'
+    + '<ul class="next-list"><li>Reduce spending in your largest discretionary categories shown above</li>'
+    + '<li>Pay down high-interest debt before taking on a new mortgage payment</li>'
+    + '<li>Build a cash reserve for at least 2-3 months of expenses before purchasing</li></ul>'
+    + '</div>';
+}
+
+// ── Budget calculation — grounded in Chapter 3's 4 metrics (LTV, GDS, TDS, stress
+// test) and the verified 2026 Canadian qualifying rules: GDS ≤ 39%, TDS ≤ 44%,
+// stress-test rate = max(contract rate + 2%, 5.25%), 20% minimum down payment on
+// investment/non-owner-occupied properties (no CMHC insurance available for these).
+const GDS_MAX = 0.39;
+const TDS_MAX = 0.44;
+const MIN_DOWN_PAYMENT_PCT = 0.20;
+const DEFAULT_AMORT_YEARS = 25;
+const STRESS_FLOOR = 0.0525;
+
+function pvOfAnnuity(monthlyPayment, annualRate, years) {
+  // Canadian mortgages compound semi-annually by convention.
+  const semiRate = annualRate / 2;
+  const effMonthlyRate = Math.pow(1 + semiRate, 2/12) - 1;
+  const n = years * 12;
+  if (effMonthlyRate <= 0) return monthlyPayment * n;
+  return monthlyPayment * (1 - Math.pow(1 + effMonthlyRate, -n)) / effMonthlyRate;
+}
+function pmtFromPV(mortgageAmount, annualRate, years) {
+  const semiRate = annualRate / 2;
+  const effMonthlyRate = Math.pow(1 + semiRate, 2/12) - 1;
+  const n = years * 12;
+  if (effMonthlyRate <= 0) return mortgageAmount / n;
+  return mortgageAmount * effMonthlyRate / (1 - Math.pow(1 + effMonthlyRate, -n));
+}
+
+function updateHeaderStatus(complete) {
+  document.getElementById('status-pill').className = 'status-pill ' + (complete ? 'complete' : 'pending');
+  document.getElementById('status-pill').textContent = complete ? '✓ Sent' : 'Not started';
+  document.getElementById('hdr-sub').textContent = complete ? 'Sent to your calculator · complete' : 'Fill in your numbers below';
+}
+
+// Pre-fill from any previously-sent data — placed here, after every
+// function and const this depends on (EXPENSE_CATEGORIES, SHEET_MONTHS,
+// categoryTotalsFromDetail), not at the top where it would run before
+// those declarations exist and crash the whole script.
+if (stepData.income && stepData.income.lineItems) Object.assign(budgetFormValues, stepData.income.lineItems);
+if (stepData.downPayment) {
+  if (stepData.downPayment.amount != null) budgetFormValues.downPaymentAmount = stepData.downPayment.amount;
+  if (stepData.downPayment.source) budgetFormValues.downPaymentSource = stepData.downPayment.source;
+}
+if (stepData.expensesDetail) expenseFormValues = categoryTotalsFromDetail(stepData.expensesDetail);
+
+// Placed at the very end of the script, after every function and const it
+// depends on — window.onload only ever fires after the whole script has
+// finished executing anyway, but this ordering removes any ambiguity.
+window.onload = function() {
+  const savedToken = localStorage.getItem('vera_drive_token');
+  const savedExpiry = localStorage.getItem('vera_drive_token_expiry');
+  if (savedToken && savedExpiry && Date.now() < Number(savedExpiry)) {
+    accessToken = savedToken;
+    loadDriveFiles();
+  }
+  renderBudgetForm();
+};
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VERA — Find a Realtor</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0E0E0C;--paper:#F6F3EE;--paper2:#EFECEA;
+  --gold:#B8872A;--gold-bg:rgba(184,135,42,0.08);--gold-bd:rgba(184,135,42,0.25);
+  --green:#2D6A4F;--green-bg:rgba(45,106,79,0.08);--green-bd:rgba(45,106,79,0.25);
+  --red:#9B2226;--red-bg:rgba(155,34,38,0.08);--red-bd:rgba(155,34,38,0.2);
+  --border:rgba(14,14,12,0.08);
+}
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);height:100vh;display:flex;flex-direction:column;overflow:hidden}
+.hdr{padding:14px 20px;border-bottom:1px solid var(--border);background:white;flex-shrink:0}
+.hdr-title{font-size:14px;font-weight:600}
+.hdr-sub{font-size:11px;color:rgba(14,14,12,0.4);margin-top:1px}
+.msgs{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px}
+.msg{display:flex;gap:10px;align-items:flex-start}
+.msg.user{flex-direction:row-reverse}
+.av{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-top:2px}
+.msg.vera .av{background:var(--gold-bg);border:1px solid var(--gold-bd)}
+.msg.user .av{background:var(--paper2);border:1px solid var(--border)}
+.bub{flex:1;font-size:13px;line-height:1.7;color:var(--ink)}
+.bub.vera-bub{background:white;border:1px solid var(--border);border-radius:2px 12px 12px 12px;padding:12px 15px}
+.bub.user-bub{background:var(--gold);color:white;border-radius:12px 2px 12px 12px;padding:10px 14px;max-width:80%;font-size:13px}
+
+/* Chips — identical to vera-market.html */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.chip{padding:7px 14px;border:1px solid var(--border);border-radius:20px;background:var(--paper2);font-size:12px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;color:var(--ink);transition:all .13s}
+.chip:hover{border-color:var(--gold-bd);background:var(--gold-bg);color:var(--gold)}
+.chip.selected{border-color:var(--gold);background:var(--gold);color:white}
+.chip.disabled{opacity:.4;cursor:not-allowed;pointer-events:none}
+
+/* Results — team-card shortlist, identical to vera-team.html / vera-client-dashboard.html */
+.team-card{background:white;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:12px}
+.tc-hd{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.tc-role{font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#2D7A4F}
+.tc-body{padding:12px 14px}
+.tc-candidate{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);cursor:pointer}
+.tc-candidate:last-child{border-bottom:none;padding-bottom:0}
+.tc-candidate.selected{background:rgba(45,122,79,0.08);margin:0 -14px;padding:8px 14px;border-radius:0}
+.tc-radio{width:16px;height:16px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center}
+.tc-radio.checked{border-color:#2D7A4F;background:#2D7A4F}
+.tc-radio.checked::after{content:'';width:6px;height:6px;border-radius:50%;background:white}
+.tc-info{flex:1}
+.tc-name{font-size:13px;font-weight:600;color:var(--ink)}
+.tc-detail{font-size:11.5px;color:rgba(14,14,12,0.55);margin-top:3px;line-height:1.6}
+.tc-save-btn{padding:5px 12px;border-radius:6px;border:1px solid var(--gold-bd);background:white;color:var(--gold);font-size:11px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+.tc-save-btn:hover{background:var(--gold-bg)}
+.tc-save-btn:disabled{cursor:default}
+
+/* Typing */
+.typing{display:flex;gap:5px;padding:4px 0}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:tdot .8s infinite}
+.typing span:nth-child(2){animation-delay:.15s}
+.typing span:nth-child(3){animation-delay:.3s}
+@keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:.3}30%{transform:translateY(-5px);opacity:1}}
+
+/* Input */
+.ibar{padding:12px 20px;border-top:1px solid var(--border);background:white;flex-shrink:0}
+.iwrap{display:flex;gap:8px;align-items:flex-end;background:var(--paper);border:1px solid var(--border);border-radius:12px;padding:8px 8px 8px 14px}
+.iwrap:focus-within{border-color:var(--gold)}
+.ifield{flex:1;background:transparent;border:none;outline:none;font-family:'Inter',sans-serif;font-size:13px;color:var(--ink);resize:none;max-height:100px;min-height:20px;line-height:1.55}
+.ifield::placeholder{color:rgba(14,14,12,0.3)}
+.sbtn{width:32px;height:32px;border-radius:8px;background:var(--gold);border:none;cursor:pointer;font-size:14px;color:white;flex-shrink:0}
+.sbtn:disabled{opacity:.35;cursor:not-allowed}
+.src-note{font-size:10px;color:rgba(14,14,12,0.3);margin-top:10px;line-height:1.6}
+.script-box{background:var(--paper);border-radius:8px;padding:12px 14px;font-style:italic;font-size:12.5px;line-height:1.7;margin-top:8px}
+
+@media print {
+  .hdr, .ibar, .chips, .print-btn { display:none!important }
+  body { background:white!important; overflow:visible!important; height:auto!important }
+  .msgs { overflow:visible!important; padding:0!important }
+  .msg.user { display:none!important }
+  .bub.vera-bub { border:none!important; padding:0!important; box-shadow:none!important }
+  .team-card { page-break-inside:avoid; font-size:11px }
+  .src-note { font-size:8px }
+  @page { margin:15mm; size:landscape }
+}
+</style>
+</head>
+<body>
+
+<div class="hdr" style="display:flex;align-items:center;justify-content:space-between">
+  <div>
+    <div class="hdr-title">🏡 Find a Realtor</div>
+    <div class="hdr-sub">Guided realtor research</div>
+  </div>
+  <button class="print-btn" onclick="window.print()" style="padding:7px 14px;background:var(--gold);border:none;border-radius:7px;color:white;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">🖨 Save PDF</button>
+</div>
+
+<div class="msgs" id="msgs"></div>
+
+<div class="ibar">
+  <div class="iwrap">
+    <textarea class="ifield" id="inp" placeholder="Type your answer..." rows="1"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendText()}"
+      oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px'"></textarea>
+    <button class="sbtn" id="sbtn" onclick="sendText()">↑</button>
+  </div>
+</div>
+
+<script>
+const PROXY = 'https://vera-proxy.onrender.com';
+const PROVINCES = [
+  'New Brunswick','Nova Scotia','Prince Edward Island','Newfoundland',
+  'Ontario','Quebec','Alberta','British Columbia','Manitoba','Saskatchewan'
+];
+const MAIN_CITIES = {
+  'New Brunswick': ['Saint John','Moncton','Fredericton','Miramichi','Bathurst'],
+  'Nova Scotia': ['Halifax','Sydney','Dartmouth','Truro','New Glasgow'],
+  'Prince Edward Island': ['Charlottetown','Summerside','Stratford'],
+  'Newfoundland': ["St. John's",'Corner Brook','Mount Pearl','Paradise'],
+  'Ontario': ['Toronto','Ottawa','Hamilton','London','Windsor','Kitchener'],
+  'Quebec': ['Montreal','Quebec City','Laval','Gatineau','Sherbrooke'],
+  'Alberta': ['Calgary','Edmonton','Red Deer','Lethbridge'],
+  'British Columbia': ['Vancouver','Victoria','Kelowna','Surrey','Abbotsford'],
+  'Manitoba': ['Winnipeg','Brandon','Steinbach','Thompson'],
+  'Saskatchewan': ['Saskatoon','Regina','Prince Albert','Moose Jaw']
+};
+var step = 'idle';
+var selectedProvince = null;
+var busy = false;
+
+function getEmail() {
+  try { if (window.parent && window.parent.getEmail) return window.parent.getEmail(); } catch(e) {}
+  return null;
+}
+
+// ── Add message — identical to vera-market.html ──
+function addMsg(role, html, isText) {
+  var container = document.getElementById('msgs');
+  var div = document.createElement('div');
+  div.className = 'msg ' + role;
+  var av = document.createElement('div');
+  av.className = 'av';
+  av.textContent = role === 'vera' ? '💡' : '👤';
+  var bub = document.createElement('div');
+  bub.className = 'bub ' + (role === 'vera' ? 'vera-bub' : 'user-bub');
+  if (isText) bub.textContent = html;
+  else bub.innerHTML = html;
+  div.appendChild(av);
+  div.appendChild(bub);
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return bub;
+}
+
+window.onload = function() {
+  // Coming from "Find a realtor in this market" — auto-select immediately,
+  // consuming the flag so a normal future visit isn't affected by it.
+  var autoMarket = null;
+  try { autoMarket = JSON.parse(localStorage.getItem('vera_auto_realtor_market') || 'null'); } catch(e) {}
+  if (autoMarket && autoMarket.city && autoMarket.province) {
+    localStorage.removeItem('vera_auto_realtor_market');
+    var intro2 = "Hi! I see you were just looking at " + autoMarket.city + ", " + autoMarket.province + " — searching for investor-friendly realtors there now.";
+    addMsg('vera', intro2, true);
+    setTimeout(function() { useLastMarket(autoMarket.city, autoMarket.province); }, 400);
+    return;
+  }
+
+  var intro = "Hi! I'll help you find an investor-friendly realtor in your target market. Pick a province to get started — I'll search for agents who work with multifamily investors, not just regular home buyers.";
+  addMsg('vera', intro, true);
+
+  // If a market was already researched in Find a Market, offer it as a shortcut —
+  // but this never replaces the ask-based flow, just sits alongside it.
+  var last = null;
+  try { last = JSON.parse(localStorage.getItem('vera_last_market') || 'null'); } catch(e) {}
+
+  setTimeout(function() {
+    var html = 'Which province is your target market?';
+    if (last && last.city && last.province) {
+      html += '<div class="chips"><button class="chip" style="border-color:var(--green-bd);background:var(--green-bg);color:var(--green)" onclick="useLastMarket(\'' + last.city + '\',\'' + last.province + '\')">✓ Use ' + last.city + ', ' + last.province + ' (your last Market search)</button></div>';
+    }
+    html += '<div class="chips" id="province-chips">';
+    PROVINCES.forEach(function(p) {
+      html += '<button class="chip" onclick="pickProvince(this,\'' + p + '\')">' + p + '</button>';
+    });
+    html += '</div>';
+    addMsg('vera', html);
+    step = 'pick-province';
+  }, 400);
+};
+
+function useLastMarket(city, province) {
+  addMsg('user', city + ', ' + province, true);
+  disableAllChips();
+  selectedProvince = province;
+  searchRealtors(city, province);
+}
+
+function pickProvince(btn, province) {
+  disableAllChips();
+  addMsg('user', province, true);
+  selectedProvince = province;
+  setTimeout(function() {
+    var cities = MAIN_CITIES[province] || [];
+    var html = 'Here are the main cities in ' + province + ' — pick one, type any other city below, or change province.<div class="chips">';
+    cities.forEach(function(c) {
+      html += '<button class="chip" onclick="pickCity(this,\'' + c.replace(/'/g,"\\'") + '\')">' + c + '</button>';
+    });
+    html += '<button class="chip" style="border-color:var(--border);background:transparent;color:rgba(14,14,12,0.5)" onclick="restart()">← Change province</button></div>';
+    addMsg('vera', html);
+    step = 'pick-city';
+    document.getElementById('inp').focus();
+  }, 300);
+}
+
+function pickCity(btn, city) {
+  disableAllChips();
+  addMsg('user', city, true);
+  searchRealtors(city, selectedProvince);
+}
+
+function disableAllChips() {
+  document.querySelectorAll('.chip').forEach(function(c) { c.disabled = true; c.style.pointerEvents = 'none'; c.style.opacity = '.5'; });
+}
+
+// ── Free-text input — step-aware, mirrors vera-market.html's input bar pattern ──
+async function sendText() {
+  var text = document.getElementById('inp').value.trim();
+  if (!text || busy) return;
+  document.getElementById('inp').value = '';
+  document.getElementById('inp').style.height = 'auto';
+
+  if (step === 'pick-city') {
+    addMsg('user', text, true);
+    searchRealtors(text, selectedProvince);
+    return;
+  }
+
+  // Idle / general question — plain conversational answer, same as vera-market.html
+  addMsg('user', text, true);
+  busy = true;
+  document.getElementById('sbtn').disabled = true;
+  var typingBub = addMsg('vera', '<div class="typing"><span></span><span></span><span></span></div>');
+  try {
+    var resp = await fetch(PROXY + '/insights', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        prompt: 'Answer this question about finding or working with Canadian investor-friendly realtors in plain conversational text. Be specific and helpful: ' + text,
+        category: 'Find a Realtor',
+        mode: 'chat'
+      })
+    });
+    var data = await resp.json();
+    typingBub.innerHTML = (data.answer || data.text || 'Sorry, I could not answer that.').replace(/\n/g, '<br>');
+  } catch(err) {
+    typingBub.innerHTML = 'Sorry, I had trouble connecting. Please try again.';
+  }
+  busy = false;
+  document.getElementById('sbtn').disabled = false;
+}
+
+// ── Research realtors in the chosen city — same /insights architecture as vera-market.html ──
+async function searchRealtors(city, province) {
+  step = 'idle';
+  var typingBub = addMsg('vera', '<div class="typing"><span></span><span></span><span></span></div>');
+  addMsg('vera', 'Searching for investor-friendly realtors in ' + city + ', ' + province + '...', true);
+
+  try {
+    var resp = await fetch(PROXY + '/find-realtors', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ city: city + ', ' + province })
+    });
+    var data = await resp.json();
+    if (data.error) throw new Error(data.error);
+
+    if (typingBub && typingBub.parentElement) typingBub.parentElement.remove();
+    var msgs = document.getElementById('msgs');
+    if (msgs.lastElementChild) msgs.lastElementChild.remove();
+
+    var realtors = (data && data.realtors) || [];
+    if (!realtors.length) {
+      addMsg('vera', 'I could not verify any investor-friendly realtors in ' + city + ' with confidence. Try a nearby larger city, or a different city name.', true);
+      return;
+    }
+
+    renderRealtorCards(realtors, city, data.recommendation, data.referral_tip);
+
+    setTimeout(function() {
+      addMsg('vera', 'Want VERA\'s phone script and screening questions to vet these candidates?<div class="chips"><button class="chip" onclick="showToolkit(\'' + city.replace(/'/g,"\\'") + '\')">Yes — show me the toolkit</button><button class="chip" onclick="restart()">Search a different city</button></div>');
+    }, 500);
+
+  } catch(err) {
+    console.error('Realtor search error:', err);
+    typingBub.innerHTML = 'Error: ' + err.message + ' — please try again.';
+  }
+}
+
+// Card rendering — matches vera-team.html's renderTeam() exactly: a team-card
+// with radio-select tc-candidate rows, the recommended pick highlighted, plus
+// a "VERA recommends" box and a referral tip box underneath.
+// Field names match /find-realtors' actual response shape.
+function renderRealtorCards(realtors, city, recommendation, referralTip) {
+  window._lastRealtors = realtors; // so Save buttons can look candidates up by index
+  try {
+    localStorage.setItem('vera_last_realtor_search', JSON.stringify({ city: city, realtors: realtors, searchedAt: Date.now() }));
+  } catch(e) {}
+  var html = '<div class="team-card"><div class="tc-hd"><div class="tc-role">Real estate agent — investment focus</div></div><div class="tc-body">';
+  realtors.forEach(function(p, idx) {
+    var top = p.recommended === true;
+    var site = p.website || '';
+    var href = site ? (site.indexOf('http') === 0 ? site : 'https://' + site) : '';
+    html += '<div class="tc-candidate' + (top ? ' selected' : '') + '"><div class="tc-radio' + (top ? ' checked' : '') + '"></div><div class="tc-info">'
+      + '<div class="tc-name">' + (href ? '<a href="' + href + '" target="_blank" style="color:var(--ink);text-decoration:none">' + (p.name||'Unnamed') + '</a>' : (p.name||'Unnamed')) + '</div>'
+      + '<div class="tc-detail">'
+      + (p.company ? '<strong style="color:var(--ink)">' + p.company + '</strong>' : '')
+      + (p.years ? ' · ' + p.years : '')
+      + (p.specialization ? '<br>' + p.specialization : '')
+      + (p.investment_clients ? '<br>' + p.investment_clients + ' investor clients/yr' : '')
+      + (p.strengths ? '<br>⭐ ' + p.strengths : '')
+      + (p.response_time ? '<br>⏱ ' + p.response_time : '')
+      + (p.phone ? '<br>📞 <a href="tel:' + p.phone + '" style="color:var(--ink)">' + p.phone + '</a>' : '')
+      + (p.email ? '<br>✉ <a href="mailto:' + p.email + '" style="color:var(--gold)">' + p.email + '</a>' : '')
+      + (p.website ? '<br>🌐 <a href="' + href + '" target="_blank" style="color:var(--gold)">' + p.website + '</a>' : '')
+      + '<div style="margin-top:6px"><button class="tc-save-btn" id="save-btn-' + idx + '" onclick="saveTeamMember(' + idx + ')">☆ Save as my realtor</button></div>'
+      + '</div></div></div>';
+  });
+  html += '</div></div>';
+
+  if (recommendation) {
+    html += '<div style="margin-top:8px;padding:10px 12px;background:rgba(45,122,79,0.08);border:1px solid rgba(45,122,79,0.2);border-radius:8px;font-size:12px;color:var(--ink)">✓ <strong>VERA recommends:</strong> ' + recommendation + '</div>';
+  }
+  if (referralTip) {
+    html += '<div style="margin-top:6px;padding:10px 12px;background:var(--gold-bg);border:1px solid var(--gold-bd);border-radius:8px;font-size:12px;color:var(--ink)">💡 <strong>Referral tip:</strong> ' + referralTip + '</div>';
+  }
+  html += '<div class="chips" style="margin-top:10px">'
+    + '<button class="chip" id="save-search-btn" onclick="saveRealtorSearch()" style="background:var(--gold);color:var(--bg);border-color:var(--gold);font-weight:600">💾 Save this realtor search</button>'
+    + '<button class="chip" onclick="goToFindProperties()">🏠 Find Properties →</button>'
+    + '</div>';
+  addMsg('vera', html);
+}
+
+// Explicit confirmation matching the Market page's pattern — the search is
+// already auto-saved above, this just gives clear visible feedback.
+function saveRealtorSearch() {
+  var btn = document.getElementById('save-search-btn');
+  if (btn) { btn.textContent = '✓ Saved'; btn.disabled = true; btn.style.opacity = '0.7'; }
+}
+
+function goToFindProperties() {
+  try {
+    if (window.parent && window.parent.showPanel) {
+      window.parent.showPanel('team', window.parent.document.getElementById('nav-team'));
+    }
+  } catch(e) {}
+}
+
+// Saves to a shared, cross-tool key (not realtor-specific) so a future
+// contractor/lawyer finder can use the exact same save pattern, and the
+// My Team tab can read all roles from one place.
+function saveTeamMember(idx) {
+  var p = (window._lastRealtors || [])[idx];
+  if (!p) return;
+  try {
+    var team = JSON.parse(localStorage.getItem('vera_team') || '{}');
+    team['Realtor'] = {
+      name: p.name || '', company: p.company || '', phone: p.phone || '',
+      email: p.email || '', website: p.website || '', years: p.years || '',
+      savedAt: Date.now()
+    };
+    localStorage.setItem('vera_team', JSON.stringify(team));
+    var btn = document.getElementById('save-btn-' + idx);
+    if (btn) { btn.textContent = '✓ Saved as my realtor'; btn.disabled = true; btn.style.opacity = '0.7'; }
+  } catch(e) { console.error('Could not save team member', e); }
+}
+
+function showToolkit(city) {
+  disableAllChips();
+  addMsg('user', 'Yes — show me the toolkit', true);
+  var html = '📞 <strong>Opening phone script</strong>'
+    + '<div class="script-box">Hi [Agent\'s Name], thank you for taking my call. My name is [Your Name], and I\'m interested in investing in the ' + city + ' market. I\'m looking to build a long-term portfolio, starting with a small multi-family property.</div>'
+    + '<strong style="display:block;margin-top:14px">❓ Screening questions</strong>'
+    + '<div class="script-box" style="font-style:normal">'
+    + '• How familiar are you with BRRRR properties or homes needing renovation?<br>'
+    + '• Do you have experience with out-of-town clients or know of any off-market deals that might fit my criteria?<br>'
+    + '• How many real estate transactions did you complete last year?<br>'
+    + '• Do you own rental properties yourself?<br>'
+    + '• What\'s your experience with income properties, and what have you seen in the market recently for multi-family properties?'
+    + '</div>'
+    + '<strong style="display:block;margin-top:14px">✉️ Follow-up email</strong>'
+    + '<div class="script-box">Thank you for your time today! I look forward to the possibility of working with you to find rental properties in the ' + city + ' market.</div>';
+  addMsg('vera', html);
+  setTimeout(function() {
+    addMsg('vera', '<div class="chips"><button class="chip" onclick="restart()">Search a different city</button></div>');
+  }, 400);
+}
+
+function restart() {
+  disableAllChips();
+  selectedProvince = null;
+  step = 'idle';
+  setTimeout(function() {
+    var html = 'Which province is your target market?<div class="chips" id="province-chips">';
+    PROVINCES.forEach(function(p) {
+      html += '<button class="chip" onclick="pickProvince(this,\'' + p + '\')">' + p + '</button>';
+    });
+    html += '</div>';
+    addMsg('vera', html);
+    step = 'pick-province';
+  }, 200);
+}
+</script>
+
+</body>
+</html>

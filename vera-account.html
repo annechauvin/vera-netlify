@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VERA — My Account</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
@@ -187,11 +188,15 @@ body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);fon
 .ttab:disabled{opacity:.35;cursor:not-allowed}
 #tp-input{display:flex;flex-direction:column;flex:1;overflow-y:auto;background:var(--paper)}
 #tp-analysis{display:none;flex:1;overflow-y:auto;background:var(--paper)}
+#tp-level2{flex:1;overflow-y:auto;background:var(--paper)}
+#tp-refi{display:none;flex:1;overflow-y:auto;background:var(--paper)}
+#tp-postrefi{display:none;flex:1;overflow-y:auto;background:var(--paper)}
+#tp-request{display:none;flex:1;overflow-y:auto;background:var(--paper)}
 
 /* Override tool CSS to fit in account light layout */
-.body{background:transparent !important;max-width:100% !important;padding:16px 24px !important;margin:0 !important;color:var(--ink) !important}
+.body{background:transparent !important;max-width:920px !important;padding:24px 20px 40px !important;margin:0 auto !important;color:var(--ink) !important}
 .hdr{display:none !important}
-.title{font-size:16px !important;color:var(--ink) !important;margin-bottom:4px !important}
+.title{font-family:'DM Serif Display',serif !important;font-size:20px !important;color:var(--ink) !important;margin-bottom:4px !important}
 .sub{font-size:12px !important;color:rgba(14,14,12,0.5) !important;margin-bottom:12px !important;line-height:1.6 !important}
 .hint{background:var(--paper-2) !important;border:1px solid var(--border) !important;border-radius:8px !important;color:rgba(14,14,12,0.55) !important}
 .hint-t{color:var(--ink) !important;font-size:11px !important;font-weight:600 !important}
@@ -223,6 +228,35 @@ input[id^="edit_"]{background:var(--amber-bg) !important;border:1px solid var(--
 
 /* DATABASE PANEL */
 #panel-database{flex:1;display:none;flex-direction:column;overflow:hidden}
+#panel-team{flex:1;display:none;flex-direction:column;overflow:hidden}
+#panel-documents{flex:1;display:none;flex-direction:column;overflow:hidden}
+#panel-financials{flex:1;display:none;flex-direction:column;overflow:hidden}
+#panel-quotes{flex:1;display:none;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:rgba(14,14,12,0.4)}
+#panel-preapproved{flex:1;display:none;flex-direction:column;overflow:hidden}
+#panel-preapproved.active{display:flex}
+.kyc-wrap{flex:1;overflow-y:auto;padding:24px 24px 60px}
+.kyc-inner{max-width:720px;margin:0 auto}
+.kyc-sec{background:white;border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.kyc-sec-t{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--gold);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.kyc-field{margin-bottom:14px}
+.kyc-field label{display:block;font-size:11.5px;font-weight:600;color:rgba(14,14,12,0.55);margin-bottom:5px}
+.kyc-field input[type="text"],.kyc-field input[type="date"],.kyc-field input[type="number"],.kyc-field textarea{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:13px;color:var(--ink)}
+.kyc-field input.prefilled{background:var(--green-bg);border-color:var(--green-bd)}
+.kyc-prefill-note{font-size:10.5px;color:var(--green);margin-top:3px}
+.kyc-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.kyc-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.kyc-opts{display:flex;flex-wrap:wrap;gap:10px}
+.kyc-opt{display:flex;align-items:center;gap:5px;font-size:12.5px;color:var(--ink);padding:7px 12px;border:1px solid var(--border);border-radius:7px;cursor:pointer}
+.kyc-opt input{margin:0}
+.kyc-likert{font-size:12.5px;color:var(--ink);margin-bottom:14px}
+.kyc-likert-q{margin-bottom:6px;line-height:1.5}
+.kyc-likert-opts{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:rgba(14,14,12,0.6)}
+.kyc-likert-opts label{display:flex;align-items:center;gap:4px;cursor:pointer}
+.kyc-submit-bar{position:sticky;bottom:0;background:white;border-top:1px solid var(--border);padding:16px 22px;display:flex;gap:10px;align-items:center;border-radius:0 0 12px 12px}
+#panel-documents.active{display:flex}
+#panel-financials.active{display:flex}
+#panel-quotes.active{display:flex}
+#panel-team.active{display:flex}
 #panel-database.active{display:flex}
 
 /* HOME PANEL */
@@ -247,6 +281,9 @@ input[id^="edit_"]{background:var(--amber-bg) !important;border:1px solid var(--
 .vt .ct{font-family:'DM Mono',monospace;font-size:10px;margin-left:4px;opacity:.65}
 .mkt-sel{font-size:12px;border:1px solid var(--border);border-radius:6px;padding:5px 10px;background:white;font-family:'Inter',sans-serif;cursor:pointer;outline:none;color:var(--ink)}
 .db-scroll{flex:1;overflow-y:auto;padding:20px 24px}
+#db-tab-list{display:flex;flex-direction:column;flex:1;overflow:hidden}
+#db-tab-preapproval{flex:1;overflow-y:auto}
+#db-tab-documents{flex:1;overflow-y:auto}
 .kpi-mini{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
 .km{background:white;border:1px solid var(--border);border-radius:8px;padding:10px 12px}
 .km.g{border-left:3px solid var(--green-l)}
@@ -303,15 +340,26 @@ input[id^="edit_"]{background:var(--amber-bg) !important;border:1px solid var(--
 .mbtn{font-size:11px;font-weight:500;padding:5px 12px;border-radius:6px;border:none;cursor:pointer;font-family:'Inter',sans-serif}
 .mbtn-dark{background:var(--ink);color:var(--paper)}
 .mbtn-out{background:white;color:rgba(14,14,12,0.55);border:1px solid var(--border)}
+.settings-item{display:block;width:100%;text-align:left;padding:10px 14px;background:none;border:none;cursor:pointer;font-size:12.5px;color:var(--ink);font-family:'Inter',sans-serif}
+.settings-item:hover{background:rgba(14,14,12,0.04)}
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  <div class="logo">VERA <span>Rental Property Validator</span></div>
-  <div class="top-right">
+  <div class="logo">VERA <span>Virtual Real Estate Assistant</span></div>
+  <div class="top-right" style="position:relative">
     <span class="top-email" id="top-email"></span>
-    <span class="top-usage">Analyses: <b id="top-used">0</b>/10</span>
+    <button id="settings-btn" onclick="toggleSettingsMenu(event)" style="background:none;border:none;cursor:pointer;color:rgba(246,243,238,0.7);font-size:18px;padding:4px 6px;line-height:1;font-family:inherit" title="Settings">⚙</button>
+    <div id="settings-menu" style="display:none;position:absolute;top:32px;right:0;background:white;border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.12);min-width:190px;z-index:100;overflow:hidden">
+      <button class="settings-item" onclick="openSettingsItem('profile')">👤 Profile</button>
+      <button class="settings-item" onclick="openSettingsItem('admin')">🛠 Admin</button>
+      <button class="settings-item" onclick="openSettingsItem('notifications')">🔔 Notifications</button>
+      <button class="settings-item" onclick="toggleSettingsMenu(); showUpgradePrompt()">💳 Billing &amp; Subscription</button>
+      <button class="settings-item" onclick="openSettingsItem('help')">❓ Help &amp; Support</button>
+      <div style="border-top:1px solid var(--border)"></div>
+      <button class="settings-item" onclick="logout()" style="color:#B33">🚪 Log out</button>
+    </div>
   </div>
 </div>
 
@@ -322,10 +370,12 @@ input[id^="edit_"]{background:var(--amber-bg) !important;border:1px solid var(--
   <div style="padding:0 10px;margin-bottom:12px">
     <div class="sb-lbl" style="margin-bottom:6px">Menu</div>
     <button class="nav active" id="nav-home" onclick="showPanel('home',this)">🏠 Home</button>
-    <button class="nav" id="nav-analyse" onclick="showPanel('analyse',this)">📋 Analyse a property</button>
-    <button class="nav" id="nav-database" onclick="showPanel('database',this)">📊 My analyses</button>
-    <button class="nav" id="nav-search" onclick="showPanel('search',this)">🔍 Find properties</button>
-    <button class="nav" id="nav-market" onclick="showPanel('market',this)">🗺 Find a market</button>
+    <button class="nav" id="nav-financials" onclick="showPanel('financials',this)">💰 Set a Budget</button>
+    <button class="nav" id="nav-market" onclick="showPanel('market',this)">🗺 Find a Market</button>
+    <button class="nav" id="nav-search" onclick="showPanel('search',this)">🏡 Find a Realtor</button>
+    <button class="nav" id="nav-team" onclick="showPanel('team',this)">🏠 Find Properties</button>
+    <button class="nav" id="nav-analyse" onclick="showPanel('analyse',this)">📋 Analyze a Property</button>
+    <button class="nav" id="nav-database" onclick="showPanel('database',this)">✅ Get Pre-Approved</button>
   </div>
   <div class="sb-div"></div>
   <div class="sb-foot">
@@ -333,8 +383,7 @@ input[id^="edit_"]{background:var(--amber-bg) !important;border:1px solid var(--
     <div class="sb-row"><span class="sb-rl">Plan</span><span class="sb-rv">Free</span></div>
     <div class="sb-row"><span class="sb-rl">Used</span><span class="sb-rv" id="sb-used">0 / 10</span></div>
     <div class="sb-row"><span class="sb-rl">Remaining</span><span class="sb-rv g" id="sb-left">10</span></div>
-    <button onclick="window.open('https://calendly.com/anne-chauvin-8twelve/15min','_blank')" style="display:block;width:100%;margin-top:10px;padding:7px;background:var(--gold);color:var(--ink);border-radius:6px;font-size:11px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif">Upgrade — book with Anne →</button>
-    <a href="https://calendly.com/anne-chauvin-8twelve/15min" target="_blank" style="display:block;text-align:center;margin-top:6px;padding:6px;border:1px solid rgba(196,151,42,0.3);color:var(--gold-l);border-radius:6px;font-size:11px;text-decoration:none">Book a call with Anne</a>
+    <button onclick="document.getElementById('nav-database').click()" style="display:block;width:100%;margin-top:10px;padding:7px;background:var(--gold);color:var(--ink);border-radius:6px;font-size:11px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif">✅ Get Pre-Approved →</button>
     <button onclick="logout()" style="display:block;width:100%;margin-top:6px;padding:6px;background:transparent;border:1px solid rgba(246,243,238,0.1);color:rgba(246,243,238,0.28);border-radius:6px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">Sign out</button>
   </div>
 </div>
@@ -349,28 +398,40 @@ input[id^="edit_"]{background:var(--amber-bg) !important;border:1px solid var(--
       <div class="home-h">Where do you want to start?</div>
       <div class="home-sub">Pick a tool below — everything opens right here, in the same window.</div>
       <div class="home-grid">
-        <button class="home-card" onclick="showPanel('analyse', document.getElementById('nav-analyse'))">
-          <div class="home-card-ic">📋</div>
-          <div class="home-card-t">Analyse a property</div>
-          <div class="home-card-d">Paste a listing → VERA reads it, sends it to your calculator, and gives you a full Turnkey / BRRRR / NO-GO verdict.</div>
-          <div class="home-card-arrow">Open →</div>
-        </button>
-        <button class="home-card" onclick="showPanel('database', document.getElementById('nav-database'))">
-          <div class="home-card-ic">📊</div>
-          <div class="home-card-t">My analyses</div>
-          <div class="home-card-d">Every property you've run through VERA, saved and searchable — compare deals side by side.</div>
-          <div class="home-card-arrow">Open →</div>
-        </button>
-        <button class="home-card" onclick="showPanel('search', document.getElementById('nav-search'))">
-          <div class="home-card-ic">🔍</div>
-          <div class="home-card-t">Find properties</div>
-          <div class="home-card-d">New multifamily listings, pulled daily from Realtor.ca, Kijiji, and off-market sources — any Canadian city.</div>
+        <button class="home-card" onclick="showPanel('financials', document.getElementById('nav-financials'))">
+          <div class="home-card-ic">💰</div>
+          <div class="home-card-t">Set a Budget</div>
+          <div class="home-card-d">See your current GDS &amp; TDS, and what you can actually afford for your next rental property — based on your real income, housing costs, and debts.</div>
           <div class="home-card-arrow">Open →</div>
         </button>
         <button class="home-card" onclick="showPanel('market', document.getElementById('nav-market'))">
           <div class="home-card-ic">🗺</div>
-          <div class="home-card-t">Find a market</div>
+          <div class="home-card-t">Find a Market</div>
           <div class="home-card-d">Compare Canadian cities and neighbourhoods — avg prices, cap rates, rent trends, best areas for BRRRR.</div>
+          <div class="home-card-arrow">Open →</div>
+        </button>
+        <button class="home-card" onclick="showPanel('search', document.getElementById('nav-search'))">
+          <div class="home-card-ic">🏡</div>
+          <div class="home-card-t">Find a Realtor</div>
+          <div class="home-card-d">Investor-friendly agents for your target market — plus VERA's screening script, questions, and follow-up email.</div>
+          <div class="home-card-arrow">Open →</div>
+        </button>
+        <button class="home-card" onclick="showPanel('team', document.getElementById('nav-team'))">
+          <div class="home-card-ic">🏠</div>
+          <div class="home-card-t">Find Properties</div>
+          <div class="home-card-d">Search real, current listings matching your criteria — grouped by BRRRR or Turnkey potential, with VERA on hand to dig into what you find.</div>
+          <div class="home-card-arrow">Open →</div>
+        </button>
+        <button class="home-card" onclick="showPanel('analyse', document.getElementById('nav-analyse'))">
+          <div class="home-card-ic">📋</div>
+          <div class="home-card-t">Analyze a Property</div>
+          <div class="home-card-d">Paste a listing → VERA gives you its take, runs the numbers, and returns a full Turnkey / BRRRR / NO-GO verdict — plus how to confirm your assumptions and strategy before moving forward.</div>
+          <div class="home-card-arrow">Open →</div>
+        </button>
+        <button class="home-card" onclick="showPanel('database', document.getElementById('nav-database'))">
+          <div class="home-card-ic">✅</div>
+          <div class="home-card-t">Get Pre-Approved</div>
+          <div class="home-card-d">Every property you've run through VERA, saved and searchable — get pre-approved on the one you're serious about.</div>
           <div class="home-card-arrow">Open →</div>
         </button>
       </div>
@@ -381,17 +442,21 @@ input[id^="edit_"]{background:var(--amber-bg) !important;border:1px solid var(--
   <div id="panel-analyse">
     <div class="tool-tabs">
       <button class="ttab active" id="ttab-input" onclick="showToolTab('input')">📋 Property details</button>
-      <button class="ttab" id="ttab-analysis" onclick="showToolTab('analysis')" disabled>📊 Analysis</button>
+      <button class="ttab" id="ttab-analysis" onclick="showToolTab('analysis')" disabled>📊 As-Is Analysis</button>
+      <button class="ttab" id="ttab-level2" onclick="showToolTab('level2')" disabled>🔨 Post-Reno Analysis</button>
+      <button class="ttab" id="ttab-refi" onclick="showToolTab('refi')" disabled>🔁 Refinance Projection</button>
+      <button class="ttab" id="ttab-postrefi" onclick="showToolTab('postrefi')" disabled>📈 Post-Refi Analysis</button>
+      <button class="ttab" id="ttab-request" onclick="showToolTab('request')" disabled>✉ Confirm your assumptions</button>
     </div>
     <div id="tp-input">
       <div class="body">
-  <div class="title">Validate your property</div>
-  <div class="sub">Paste the listing and confirmed numbers from your realtor. VERA extracts the data, sends it to the calculator, and returns your real numbers.</div>
+  <div class="title">Your Property Details</div>
 
   <div id="step-paste">
     <div class="hint">
       <div class="hint-t">What to paste</div>
-      The listing from Realtor.ca + confirmed numbers from your realtor: rents per unit, annual property tax, insurance, and your financing terms (rate, down payment, amortization).
+      Paste the listing and confirmed numbers from your realtor. VERA extracts the data, sends it to the calculator, and returns your As-Is Analysis verdict: whether this property is BRRRR potential, Turnkey potential, or a No-Go.<br><br>
+      The property details must include: the property income (rents per unit and any other income if applicable), the property operating expenses (annual property tax, insurance, heat, electricity, water, etc.), and your financing terms (rate, down payment, amortization).
     </div>
     <textarea id="paste-area" placeholder="Example:&#10;&#10;44 Albert St, Saint John NB — $290,000&#10;Triplex · 3 units&#10;Unit 1: 3-bed — $1,200/mo (confirmed)&#10;Unit 2: 3-bed — $1,100/mo (confirmed)&#10;Unit 3: 3-bed — $1,100/mo (confirmed)&#10;Annual property tax: $3,189&#10;Insurance: $2,400/yr&#10;Financing: 20% down | 5% rate | 25yr amort"></textarea>
     <button class="btn" id="read-btn" onclick="readListing()">Read this listing →</button>
@@ -411,34 +476,71 @@ input[id^="edit_"]{background:var(--amber-bg) !important;border:1px solid var(--
     <button onclick="resetAll()" style="width:100%;margin-top:10px;padding:11px;background:transparent;border:1px solid rgba(14,14,12,0.15);border-radius:10px;color:rgba(14,14,12,0.45);font-size:13px;font-weight:500;cursor:pointer;font-family:Inter,sans-serif;">← Start over with a new listing</button>
   </div>
 
-  <div id="step-confirm" style="display:none">
-    <div class="sh">What VERA found</div><div style="font-size:11px;color:rgba(14,14,12,0.45);margin-bottom:12px"><span style="color:#3A8B5F">✓ confirmed from listing</span> &nbsp;·&nbsp; <span style="color:#C4972A">~ assumed by VERA — editable</span></div>
-    <div class="miss" id="miss-box" style="display:none">
-      <div class="miss-t">⚠ These fields were not found — VERA will use defaults</div>
-      <div class="miss-i" id="miss-list"></div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.28);margin-top:7px;line-height:1.65">You can edit the assumed values below before sending, or re-paste with more details.</div>
+  <div id="property-summary" style="display:none">
+    <div id="listing-vera-insights" style="margin-bottom:14px"></div>
+    <div class="cta no-print" id="property-cta">
+      <div class="cta-t">See whether this deal is Turnkey, BRRRR, or a No-Go</div>
+      <div class="cta-s">VERA has what it needs to run the numbers — confirm the assumptions on the As-Is Analysis tab, then send it to the calculator.</div>
+      <button class="cta-b" onclick="showToolTab('analysis')">See As-Is analysis →</button>
     </div>
-    <div class="ex-box" id="extracted-box"></div>
-    <div style="margin-top:8px">
-      <button onclick="togglePayload()" style="font-size:10px;color:rgba(14,14,12,0.45);background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;padding:0">▶ Show full payload sent to Google Sheet</button>
-      <pre id="payload-box" style="display:none;font-size:10px;font-family:monospace;color:rgba(14,14,12,0.5);background:rgba(14,14,12,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:10px;margin-top:6px;overflow-x:auto;white-space:pre-wrap;max-height:300px;overflow-y:auto"></pre>
-    </div>
-    <div id="confidence-bar" style="margin:12px 0 6px"></div>
-    <div id="financing-note" style="font-size:11px;color:rgba(14,14,12,0.5);margin-bottom:10px;line-height:1.6"></div>
-    <button class="btn-green" id="run-btn" onclick="runNumbers()">Send to calculator & run analysis →</button>
   </div>
 
   <div id="step-results" style="display:none"></div>
+  <button class="no-print" onclick="resetAll()" style="width:100%;margin-top:20px;padding:10px;background:transparent;border:1px solid rgba(14,14,12,0.12);border-radius:10px;color:rgba(14,14,12,0.4);font-size:12px;cursor:pointer;font-family:Inter,sans-serif">← Analyse another property</button>
 </div>
     </div>
     <div id="tp-analysis">
       <div style="max-width:920px;margin:0 auto;padding:24px 20px 40px">
 
         <div class="an-topbar no-print">
-          <div class="an-topbar-t">Your analysis</div>
+          <div class="an-topbar-t">Your As-Is Analysis</div>
           <button class="print-btn" onclick="window.print()">🖨 Save PDF</button>
         </div>
 
+        <div class="hint">
+          <div class="hint-t">What this is</div>
+          <div style="margin-bottom:12px">As-Is Analysis takes the property exactly as it is today — the listing's current rents and expenses, no renovation assumed — and checks it against the following targets. The result is one of three verdicts: Turnkey (already clears every target as-is), BRRRR Potential (falls short as-is, but has a clear, fixable path — like undervalued rent or owner-paid utilities that could shift to tenants), or No-Go (falls short with no clear fix).</div>
+          <table class="yr-table" style="margin:0">
+            <tr><th>Criteria</th><th>Turnkey</th><th>BRRRR Potential</th><th>No-Go</th></tr>
+            <tr><td>Cap rate</td><td>5-6%+</td><td>3-5%</td><td>Below 3%</td></tr>
+            <tr><td>Cash flow / unit</td><td>$200+/mo</td><td>Below $200, may be slightly negative</td><td>Deeply negative</td></tr>
+            <tr><td>Total ROI</td><td>20%+</td><td>10-20%</td><td>Below 10%</td></tr>
+            <tr><td>DSCR</td><td>1.20+</td><td>0-1.20</td><td>Below 0</td></tr>
+            <tr><td>Gross rent</td><td>Break-even+</td><td>May be below break-even</td><td>Deeply below break-even</td></tr>
+            <tr><td>1% rule</td><td>1.00%+</td><td>0.75%+</td><td>Below 0.75%</td></tr>
+          </table>
+          <div style="font-size:11px;color:rgba(14,14,12,0.4);margin-top:8px">These are guidelines, not hard rules — you're always free to move forward however you see fit. They're here to give you guardrails that keep your investment as safe as possible. Turnkey needs all three of cap rate, cash flow/unit, and total ROI. BRRRR Potential is expected to fall in the middle band — that's the point of the renovation. No-Go: cap rate below 3%, cash flow negative with no fixable cause, total ROI below 10%, DSCR below 0, or 1% rule below 0.75%.</div>
+        </div>
+
+        <div id="step-confirm" style="display:none">
+          <div class="sh">What VERA found</div><div style="font-size:11px;color:rgba(14,14,12,0.45);margin-bottom:12px"><span style="color:#3A8B5F">✓ confirmed from listing</span> &nbsp;·&nbsp; <span style="color:#C4972A">~ assumed by VERA — editable</span></div>
+          <div class="miss" id="miss-box" style="display:none">
+            <div class="miss-t">⚠ These fields were not found — VERA will use defaults</div>
+            <div class="miss-i" id="miss-list"></div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.28);margin-top:7px;line-height:1.65">You can edit the assumed values below before sending, or re-paste with more details.</div>
+          </div>
+          <div class="ex-box" id="extracted-box"></div>
+          <div style="margin-top:8px">
+            <button onclick="togglePayload()" style="font-size:10px;color:rgba(14,14,12,0.45);background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;padding:0">▶ Show full data sent for analysis</button>
+            <pre id="payload-box" style="display:none;font-size:10px;font-family:monospace;color:rgba(14,14,12,0.5);background:rgba(14,14,12,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:10px;margin-top:6px;overflow-x:auto;white-space:pre-wrap;max-height:300px;overflow-y:auto"></pre>
+          </div>
+          <div id="confidence-bar" style="margin:12px 0 6px"></div>
+          <div id="financing-note" style="font-size:11px;color:rgba(14,14,12,0.5);margin-bottom:10px;line-height:1.6"></div>
+          <div id="run-load-area" style="display:none;margin-bottom:14px">
+            <div class="load">
+              <div class="dot" style="animation-delay:0ms"></div>
+              <div class="dot" style="animation-delay:150ms"></div>
+              <div class="dot" style="animation-delay:300ms"></div>
+              <span class="load-t" id="run-load-msg">Analyzing the numbers…</span>
+            </div>
+          </div>
+          <div id="run-err-area" style="display:none;margin-bottom:14px">
+            <div class="err"><div class="err-t">⚠ Error</div><div class="err-s" id="run-err-msg"></div></div>
+          </div>
+          <button class="btn-green" id="run-btn" onclick="runNumbers()">Run As-Is Analysis →</button>
+        </div>
+
+        <div id="level1-results-wrap" style="display:none;margin-top:24px">
         <div class="verd" id="verd-box">
           <div class="verd-t" id="verd-type"></div>
           <div class="verd-tt" id="verd-title"></div>
@@ -450,6 +552,17 @@ input[id^="edit_"]{background:var(--amber-bg) !important;border:1px solid var(--
         <div class="an-card">
           <div class="an-hdr"><div class="an-hdr-ic">◆</div><div class="an-hdr-t">Property summary</div></div>
           <div class="tbl" id="summary-tbl" style="margin:0;border:none;border-radius:0"></div>
+        </div>
+
+        <div class="an-card">
+          <div class="an-hdr"><div class="an-hdr-ic">$</div><div class="an-hdr-t">Total cash required — the math</div></div>
+          <div class="tbl" id="cashreq-tbl" style="margin:0;border:none;border-radius:0"></div>
+        </div>
+
+        <!-- GDS & TDS for this specific property — read from Section 7 of the GDS&TDS sheet, populated via the Projected Financials formula link -->
+        <div class="an-card" id="gds-tds-analysis-card" style="display:none">
+          <div class="an-hdr"><div class="an-hdr-ic">◆</div><div class="an-hdr-t" id="gds-tds-analysis-title">Can They Afford This Property?</div></div>
+          <div id="gds-tds-analysis-body" style="padding:16px 20px"></div>
         </div>
 
         <!-- Hero cash-flow number, full width — the headline figure -->
@@ -498,28 +611,273 @@ input[id^="edit_"]{background:var(--amber-bg) !important;border:1px solid var(--
           <pre id="response-box" style="display:none;font-size:10px;font-family:monospace;color:rgba(14,14,12,0.5);background:rgba(14,14,12,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:10px;margin-top:6px;overflow-x:auto;white-space:pre-wrap;max-height:300px;overflow-y:auto"></pre>
         </div>
 
-        <a class="sheet-link no-print" href="https://docs.google.com/spreadsheets/d/1LVEdltKDfDO3mN3Ibr8QZ3BAYQ7FQKZ0X-ZK3xQWjP0/edit" target="_blank">📊 Open full Google Sheet ↗</a>
+        <button class="sheet-link no-print" onclick="showUpgradePrompt()" style="cursor:pointer;background:none;border:1px solid var(--border);font-family:inherit">🔒 Open full Google Sheet — Upgrade to unlock</button>
         <div class="cta no-print">
           <div class="cta-t" id="cta-title"></div>
           <div class="cta-s" id="cta-sub"></div>
           <button class="cta-b" id="cta-btn"></button>
         </div>
-        <button class="no-print" onclick="saveToMyAnalyses()" style="width:100%;margin-top:12px;padding:12px;background:var(--gold);border:none;border-radius:10px;color:var(--ink);font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">💾 Save analysis</button>
         <button class="no-print" onclick="resetAll()" style="width:100%;margin-top:8px;padding:10px;background:transparent;border:1px solid rgba(14,14,12,0.12);border-radius:10px;color:rgba(14,14,12,0.4);font-size:12px;cursor:pointer;font-family:Inter,sans-serif">← Analyse another property</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="tp-level2" style="display:none">
+      <div style="max-width:920px;margin:0 auto;padding:24px 20px 60px">
+        <div class="an-topbar no-print">
+          <div class="an-topbar-t">Your Post-Reno Analysis</div>
+          <button class="print-btn" onclick="window.print()">🖨 Save PDF</button>
+        </div>
+
+        <div id="level2-hint"></div>
+
+        <div id="level2-form"></div>
+        <button class="btn-green" id="level2-run-btn" onclick="runLevel2Analysis()" style="margin-top:16px">Run Post-Reno analysis →</button>
+        <div id="level2-load" style="display:none;margin-top:16px"></div>
+
+        <div id="level2-results-wrap" style="display:none;margin-top:24px">
+
+          <div class="verd" id="verd-box-l2">
+            <div class="verd-t" id="verd-type-l2"></div>
+            <div class="verd-tt" id="verd-title-l2"></div>
+            <div class="verd-r" id="verd-insight-l2"></div>
+            <table class="yr-table" id="verd-criteria-l2" style="margin-top:12px"></table>
+          </div>
+
+          <div class="an-card">
+            <div class="an-hdr"><div class="an-hdr-ic">◆</div><div class="an-hdr-t">Property summary</div></div>
+            <div class="tbl" id="summary-tbl-l2" style="margin:0;border:none;border-radius:0"></div>
+          </div>
+
+          <div class="an-card">
+            <div class="an-hdr"><div class="an-hdr-ic">$</div><div class="an-hdr-t">Total cash required — the math</div></div>
+            <div class="tbl" id="cashreq-tbl-l2" style="margin:0;border:none;border-radius:0"></div>
+          </div>
+
+          <div class="cf-hero">
+            <div>
+              <div class="cf-hero-lbl">Net monthly cash flow</div>
+              <div class="cf-hero-num" id="cf-big-l2"></div>
+              <div class="cf-hero-sub">After mortgage &amp; expenses</div>
+            </div>
+          </div>
+
+          <div class="report-grid" style="grid-template-columns:repeat(2,1fr)">
+            <div class="an-card">
+              <div class="an-hdr"><div class="an-hdr-ic num">1</div><div class="an-hdr-t">Monthly cash flow</div></div>
+              <div class="tbl" id="cashflow-tbl-l2" style="margin:0;border:none;border-radius:0"></div>
+            </div>
+
+            <div class="an-card">
+              <div class="an-hdr"><div class="an-hdr-ic num">2</div><div class="an-hdr-t">Out-of-pocket risk</div></div>
+              <div class="tbl" id="risk-tbl-l2" style="margin:0;border:none;border-radius:0"></div>
+              <div class="an-total-row"><span>Total risk</span><span id="risk-total-l2"></span></div>
+            </div>
+          </div>
+
+          <div class="an-card">
+            <div class="an-hdr"><div class="an-hdr-ic">↗</div><div class="an-hdr-t">Year 1 ROI Breakdown</div></div>
+            <div class="kgrid" id="roi-grid-l2" style="padding:14px 16px;margin:0;grid-template-columns:repeat(auto-fit,minmax(110px,1fr))"></div>
+          </div>
+
+          <div class="an-card">
+            <div class="an-hdr"><div class="an-hdr-ic num">3</div><div class="an-hdr-t">5-Year Projected Gains</div></div>
+            <div style="padding:14px 16px 4px">
+              <div class="wealth-chart" id="wealth-chart-l2"></div>
+              <table class="yr-table" id="wealth-yr-tbl-l2"></table>
+            </div>
+            <div class="an-total-row"><span>Year 5 projected gain</span><span id="wealth-total-l2"></span></div>
+            <div class="an-total-row" style="border-top:none;padding-top:0"><span>Year 5 projected ROI</span><span id="wealth-roi-l2"></span></div>
+            <div class="an-foot" id="wealth-foot-l2"></div>
+          </div>
+
+        <div class="cta no-print" style="margin-top:8px">
+            <div class="cta-t">See what this looks like refinanced</div>
+            <div class="cta-s">The point of BRRRR is pulling your cash back out — see how much comes back, and whether the deal still cash-flows after the refinance.</div>
+            <button class="cta-b" onclick="showToolTab('refi')">See Refinance Projection →</button>
+          </div>
+          <button class="no-print" onclick="resetAll()" style="width:100%;margin-top:8px;padding:10px;background:transparent;border:1px solid rgba(14,14,12,0.12);border-radius:10px;color:rgba(14,14,12,0.4);font-size:12px;cursor:pointer;font-family:Inter,sans-serif">← Analyse another property</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="tp-refi" style="display:none">
+      <div style="max-width:920px;margin:0 auto;padding:24px 20px 40px">
+        <div class="an-topbar no-print">
+          <div class="an-topbar-t">Your Refinance Projection</div>
+          <button class="print-btn" onclick="window.print()">🖨 Save PDF</button>
+        </div>
+
+        <div class="hint">
+          <div class="hint-t">What this is</div>
+          <div style="margin-bottom:12px">The point of BRRRR is, after renovating, to refinance at the new, higher after-repair value (ARV) and pull cash back out. Enter the ARV estimate below — the refinance projection estimates how much cash comes back and is checked against the following targets. The result is one of three verdicts: Perfect BRRRR (you recover 100%+ of your initial investment — for seasoned investors), Good BRRRR (you recover 80%+ of your initial investment — for experienced investors), or Beginner BRRRR (you recover 60%+ of your initial investment — a solid deal for beginner BRRRR investors). If less than 60% of your initial investment is returned, it's essential to pause and evaluate your options: adjust your renovation plans, negotiate a lower offer price, or move on to another property.</div>
+          <table class="yr-table" style="margin:0">
+          <tr><th>Verdict</th><th>Cash recovered</th></tr>
+          <tr><td>Perfect BRRRR</td><td>100%+</td></tr>
+          <tr><td>Good BRRRR</td><td>80%+</td></tr>
+          <tr><td>Beginner BRRRR</td><td>60%+</td></tr>
+          <tr><td>Below minimum</td><td>Below 60%</td></tr>
+          </table>
+        </div>
+
+        <div id="refi-form"></div>
+        <button class="btn-green" id="refi-run-btn" onclick="runRefinanceProjection()" style="margin-top:16px">Run refinance projection →</button>
+        <div id="refi-load" style="display:none;margin-top:16px"></div>
+        <div id="refi-results" style="margin-top:20px"></div>
+
+        <div class="cta no-print" id="refi-postrefi-cta" style="display:none;margin-top:20px">
+          <div class="cta-t">See what it looks like post-refinance</div>
+          <div class="cta-s">The point of BRRRR is pulling your cash back out — see whether this deal still cash-flows once the refinance is actually reflected in the numbers.</div>
+          <button class="cta-b" onclick="showToolTab('postrefi')">See what it looks like post-refinance →</button>
+        </div>
+        <button class="no-print" onclick="resetAll()" style="width:100%;margin-top:20px;padding:10px;background:transparent;border:1px solid rgba(14,14,12,0.12);border-radius:10px;color:rgba(14,14,12,0.4);font-size:12px;cursor:pointer;font-family:Inter,sans-serif">← Analyse another property</button>
+
+      </div>
+    </div>
+
+    <div id="tp-postrefi" style="display:none">
+      <div style="max-width:920px;margin:0 auto;padding:24px 20px 40px">
+        <div class="an-topbar no-print">
+          <div class="an-topbar-t">Your Post-Refi Analysis</div>
+          <button class="print-btn" onclick="window.print()">🖨 Save PDF</button>
+        </div>
+
+        <div id="refi3-section" style="display:none;margin-top:28px">
+          <div class="hint">
+            <div class="hint-t">What this is</div>
+            <div style="margin-bottom:12px">Same property, same math — but priced at the ARV instead of the original purchase price, reflecting the position you're actually in once the refinance is complete. The post-refi analysis is checked against the following targets. The result is one of two verdicts: Turnkey (the property still meets the turnkey criteria after reno), or No-Go (the property doesn't clear the turnkey criteria after refi, and it's not worth the investment).</div>
+            <table class="yr-table" style="margin:0">
+            <tr><th>Criteria</th><th>Meets turnkey post-refi</th></tr>
+            <tr><td>Cap rate</td><td>5-6%+</td></tr>
+            <tr><td>Cash flow / unit</td><td>$200+/mo</td></tr>
+            <tr><td>Total ROI</td><td>20%+</td></tr>
+            <tr><td>DSCR</td><td>1.20+</td></tr>
+            <tr><td>Gross rent</td><td>Break-even+</td></tr>
+            <tr><td>1% rule</td><td>1.00%+</td></tr>
+            </table>
+          </div>
+          <div id="refi3-form"></div>
+          <button class="btn-green" id="refi3-run-btn" onclick="runPostRefiProjection()" style="margin-top:16px">Run post-refi projection →</button>
+          <div id="refi3-load" style="display:none;margin-top:16px"></div>
+
+          <div id="refi3-results-wrap" style="display:none;margin-top:24px">
+            <div class="verd" id="verd-box-refi3">
+              <div class="verd-t" id="verd-type-refi3"></div>
+              <div class="verd-tt" id="verd-title-refi3"></div>
+              <div class="verd-r" id="verd-insight-refi3"></div>
+              <table class="yr-table" id="verd-criteria-refi3" style="margin-top:12px"></table>
+            </div>
+
+            <div class="an-card">
+              <div class="an-hdr"><div class="an-hdr-ic">◆</div><div class="an-hdr-t">Property summary</div></div>
+              <div class="tbl" id="summary-tbl-refi3" style="margin:0;border:none;border-radius:0"></div>
+            </div>
+
+            <div class="an-card" id="capital-recovery-card-refi3">
+              <div class="an-hdr"><div class="an-hdr-ic">↺</div><div class="an-hdr-t">Capital recovery</div></div>
+              <div class="tbl" id="capital-recovery-tbl-refi3" style="margin:0;border:none;border-radius:0"></div>
+            </div>
+
+            <div class="cf-hero">
+              <div>
+                <div class="cf-hero-lbl">Net monthly cash flow</div>
+                <div class="cf-hero-num" id="cf-big-refi3"></div>
+                <div class="cf-hero-sub">After mortgage &amp; expenses</div>
+              </div>
+            </div>
+
+            <div class="report-grid" style="grid-template-columns:repeat(2,1fr)">
+              <div class="an-card">
+                <div class="an-hdr"><div class="an-hdr-ic num">1</div><div class="an-hdr-t">Monthly cash flow</div></div>
+                <div class="tbl" id="cashflow-tbl-refi3" style="margin:0;border:none;border-radius:0"></div>
+              </div>
+
+              <div class="an-card">
+                <div class="an-hdr"><div class="an-hdr-ic num">2</div><div class="an-hdr-t">Out-of-pocket risk</div></div>
+                <div class="tbl" id="risk-tbl-refi3" style="margin:0;border:none;border-radius:0"></div>
+                <div class="an-total-row"><span>Total risk</span><span id="risk-total-refi3"></span></div>
+              </div>
+            </div>
+
+            <div class="an-card">
+              <div class="an-hdr"><div class="an-hdr-ic">↗</div><div class="an-hdr-t">Year 1 ROI Breakdown</div></div>
+              <div class="kgrid" id="roi-grid-refi3" style="padding:14px 16px;margin:0;grid-template-columns:repeat(auto-fit,minmax(110px,1fr))"></div>
+            </div>
+
+            <div class="an-card">
+              <div class="an-hdr"><div class="an-hdr-ic num">3</div><div class="an-hdr-t">5-Year Projected Gains</div></div>
+              <div style="padding:14px 16px 4px">
+                <div class="wealth-chart" id="wealth-chart-refi3"></div>
+                <table class="yr-table" id="wealth-yr-tbl-refi3"></table>
+              </div>
+              <div class="an-total-row"><span>Year 5 projected gain</span><span id="wealth-total-refi3"></span></div>
+              <div class="an-total-row" style="border-top:none;padding-top:0"><span id="wealth-roi-label-refi3">Year 5 projected ROI</span><span id="wealth-roi-refi3"></span></div>
+              <div class="an-foot" id="wealth-foot-refi3"></div>
+            </div>
+
+            <div class="cta no-print" style="margin-top:8px">
+              <div class="cta-t">Now confirm these assumptions</div>
+              <div class="cta-s">This entire analysis rests on the rent, renovation, and financing assumptions above — before moving forward, confirm each one with your realtor.</div>
+              <button class="cta-b" onclick="showToolTab('request')">Confirm assumptions →</button>
+            </div>
+            <button class="no-print" onclick="resetAll()" style="width:100%;margin-top:8px;padding:10px;background:transparent;border:1px solid rgba(14,14,12,0.12);border-radius:10px;color:rgba(14,14,12,0.4);font-size:12px;cursor:pointer;font-family:Inter,sans-serif">← Analyse another property</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tp-request">
+      <div style="max-width:920px;margin:0 auto;padding:24px 20px 40px">
+        <div id="request-content"></div>
+        <button class="no-print" onclick="resetAll()" style="width:100%;margin-top:20px;padding:10px;background:transparent;border:1px solid rgba(14,14,12,0.12);border-radius:10px;color:rgba(14,14,12,0.4);font-size:12px;cursor:pointer;font-family:Inter,sans-serif">← Analyse another property</button>
       </div>
     </div>
   </div>
 
   <div id="panel-search" style="flex:1;display:none;flex-direction:column;overflow:hidden">
-    <iframe src="vera-search.html" style="width:100%;height:100%;border:none" id="search-iframe"></iframe>
+    <iframe src="vera-realtor.html" style="width:100%;height:100%;border:none" id="search-iframe"></iframe>
   </div>
 
   <div id="panel-market" style="flex:1;display:none;flex-direction:column;overflow:hidden">
     <iframe src="vera-market.html" style="width:100%;height:100%;border:none" id="market-iframe"></iframe>
   </div>
 
+  <!-- MY TEAM PANEL -->
+  <div id="panel-team">
+    <iframe src="vera-search.html" style="width:100%;height:100%;border:none" id="team-iframe"></iframe>
+  </div>
+
+  <!-- DOCUMENTS PANEL -->
+  <div id="panel-documents">
+    <iframe src="vera-documents.html" style="width:100%;height:100%;border:none" id="documents-iframe"></iframe>
+  </div>
+
+  <!-- FINANCIALS PANEL -->
+  <div id="panel-financials">
+    <iframe src="vera-financials.html" style="width:100%;height:100%;border:none" id="financials-iframe"></iframe>
+  </div>
+
+  <!-- QUOTES PANEL (placeholder) -->
+  <div id="panel-quotes">
+    <div style="font-size:32px">🔨</div>
+    <div style="font-size:15px;font-weight:600;color:var(--ink)">Find a Contractor</div>
+    <div style="font-size:13px">Coming soon.</div>
+  </div>
+
+  <!-- PRE-APPROVED PANEL (placeholder) -->
+  <div id="panel-preapproved">
+    <div class="kyc-wrap"><div class="kyc-inner" id="kyc-form"></div></div>
+  </div>
+
   <!-- DATABASE PANEL -->
   <div id="panel-database">
+    <div class="tool-tabs">
+      <button class="ttab active" id="dbtab-list" onclick="showDbTab('list')">📋 My Analyses</button>
+      <button class="ttab" id="dbtab-preapproval" onclick="showDbTab('preapproval')" disabled>✅ Pre-Approval Form</button>
+      <button class="ttab" id="dbtab-documents" onclick="showDbTab('documents')">📁 Documents</button>
+    </div>
+
+    <div id="db-tab-list">
     <div class="db-bar">
       <div class="db-bar-left">
         <button class="vt active" onclick="setVerdict('all',this)">All<span class="ct" id="ct-all">0</span></button>
@@ -554,10 +912,74 @@ input[id^="edit_"]{background:var(--amber-bg) !important;border:1px solid var(--
         <button class="anne-btn" onclick="window.open('https://calendly.com/anne-chauvin-8twelve/15min','_blank')">Book a free 20-min call →</button>
       </div>
     </div>
+    </div>
+
+    <div id="db-tab-preapproval" style="display:none">
+      <div style="max-width:720px;margin:0 auto;padding:24px 20px 60px" id="preapproval-content"></div>
+    </div>
+
+    <div id="db-tab-documents" style="display:none">
+      <div style="max-width:640px;margin:0 auto;padding:24px 20px 60px">
+        <div style="font-size:11px;color:rgba(14,14,12,0.4);margin-bottom:16px">Connect Google Drive once — every VERA tool reads your documents from here.</div>
+
+        <div class="drive-status" id="drive-status-row" style="display:flex;align-items:center;gap:12px;background:white;border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:16px">
+          <div class="drive-icon disconnected" id="drive-icon" style="width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🔌</div>
+          <div>
+            <div id="drive-status-t" style="font-size:13px;font-weight:700">Not connected</div>
+            <div id="drive-status-s" style="font-size:11.5px;color:rgba(14,14,12,0.5);margin-top:2px">Connect your Google Drive so VERA can read your documents</div>
+          </div>
+          <button id="drive-btn" onclick="connectDrive()" style="padding:9px 18px;border:none;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;margin-left:auto;background:var(--gold);color:white">Connect Google Drive</button>
+        </div>
+
+        <div id="banner"></div>
+
+        <div class="checklist" style="margin-bottom:12px;border-color:var(--gold-bd);background:var(--gold-bg);border:1px solid var(--border);border-radius:10px;padding:16px 18px">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);margin-bottom:10px">Before you connect</div>
+          <div style="font-size:12.5px;color:rgba(14,14,12,0.7);line-height:1.7">Create a folder in your Google Drive named exactly <b>"VERA Financials"</b>, then create these subfolders inside it and upload the matching documents into each. VERA reads each step's documents from its own subfolder — nothing else in your Drive is visible to it.</div>
+        </div>
+        <div class="checklist" style="background:white;border:1px solid var(--border);border-radius:10px;padding:16px 18px">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(14,14,12,0.4);margin-bottom:10px">Recommended folder structure</div>
+          <ul style="list-style:none;font-size:12.5px;color:rgba(14,14,12,0.65);line-height:2">
+            <li style="padding-left:14px;text-indent:-14px">— 2. 3 recent pay stubs</li>
+            <li style="padding-left:14px;text-indent:-14px">— 6. Equifax or TransUnion credit report</li>
+            <li style="padding-left:14px;text-indent:-14px">— 7. 90-day bank statement — full transaction detail, not just a balance (used for assets and debts)</li>
+            <li style="padding-left:14px;text-indent:-14px">— 9. Assets (investment/RRSP statements)</li>
+            <li style="padding-left:14px;text-indent:-14px">— 10. Loan and credit statements (for debts)</li>
+            <li style="padding-left:14px;text-indent:-14px">— 11. Budget app category summary — export or screenshot from your budget app's expense breakdown</li>
+          </ul>
+          <div style="font-size:11px;color:rgba(14,14,12,0.4);margin-top:10px;line-height:1.6">Not needed yet: ID, T4, T1 General, NOA, and employment letter — these are collected later, at pre-approval.</div>
+        </div>
+        <div class="checklist" style="margin-top:12px;background:white;border:1px solid var(--border);border-radius:10px;padding:16px 18px">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(14,14,12,0.4);margin-bottom:10px">For later — pre-approval documents</div>
+          <ul style="list-style:none;font-size:12.5px;color:rgba(14,14,12,0.65);line-height:2">
+            <li style="padding-left:14px;text-indent:-14px">— 1. 2 pieces of ID</li>
+            <li style="padding-left:14px;text-indent:-14px">— 3. 2-years T4 slips</li>
+            <li style="padding-left:14px;text-indent:-14px">— 4. 2-years T1 General (if self-employed)</li>
+            <li style="padding-left:14px;text-indent:-14px">— 5. 2-years NOA</li>
+            <li style="padding-left:14px;text-indent:-14px">— 8. Employment letter</li>
+          </ul>
+        </div>
+
+        <div style="margin-top:16px" id="docs-content"></div>
+      </div>
+    </div>
   </div>
 
 </div><!-- /main -->
 </div><!-- /layout -->
+
+<!-- UPGRADE MODAL -->
+<div class="overlay" id="upgrade-modal">
+  <div class="modal">
+    <div style="padding:28px 28px 20px;text-align:center">
+      <div style="font-size:32px;margin-bottom:10px">🔒</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:19px;color:var(--ink);margin-bottom:8px">This is a Pro feature</div>
+      <div style="font-size:13px;color:rgba(14,14,12,0.6);line-height:1.7;margin-bottom:22px">Upgrade to unlock full access to your calculator — every formula, every assumption, fully editable in your own Google Sheet, not just the results VERA shows you here.</div>
+      <button class="anne-btn" style="width:100%;justify-content:center" onclick="window.open('mailto:anne.chauvin@8twelve.mortgage?subject=Upgrade%20to%20VERA%20Pro','_blank')">Talk to Anne to upgrade →</button>
+      <button style="width:100%;margin-top:10px;padding:9px;background:transparent;border:none;color:rgba(14,14,12,0.4);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif" onclick="document.getElementById('upgrade-modal').classList.remove('open')">Not now</button>
+    </div>
+  </div>
+</div>
 
 <!-- EMAIL MODAL -->
 <div class="overlay" id="modal">
@@ -579,6 +1001,17 @@ input[id^="edit_"]{background:var(--amber-bg) !important;border:1px solid var(--
 </div>
 
 <script>
+function showUpgradePrompt() {
+  document.getElementById('upgrade-modal').classList.add('open');
+}
+function openPreApproval(a) {
+  extractedData = { PropertyAddress: a.addr || '' };
+  document.getElementById('dbtab-preapproval').disabled = false;
+  showDbTab('preapproval');
+}
+</script>
+
+<script>
 // ── ACCOUNT AUTH ──
 const ACCOUNT_LIMIT = 999999;
 
@@ -589,7 +1022,7 @@ const ACCOUNT_LIMIT = 999999;
 // but a URL param does, so this makes login work regardless of hosting setup.
 (function bridgeEmailFromURL(){
   const params = new URLSearchParams(window.location.search);
-  const urlEmail = params.get('email');
+  const urlEmail = (params.get('email') || '').toLowerCase();
   if (urlEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(urlEmail)) {
     localStorage.setItem('vera_email', urlEmail);
     // Clean the email out of the visible URL without reloading the page
@@ -626,12 +1059,30 @@ function logout() {
   window.location.href = 'index.html';
 }
 
+function toggleSettingsMenu(e) {
+  if (e) e.stopPropagation();
+  const menu = document.getElementById('settings-menu');
+  if (!menu) return;
+  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+}
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('settings-menu');
+  const btn = document.getElementById('settings-btn');
+  if (menu && menu.style.display === 'block' && e.target !== btn && !menu.contains(e.target)) {
+    menu.style.display = 'none';
+  }
+});
+function openSettingsItem(item) {
+  toggleSettingsMenu();
+  const labels = { profile: 'Profile', admin: 'Admin', notifications: 'Notifications', help: 'Help & Support' };
+  alert((labels[item] || item) + ' isn\'t set up yet — this is a placeholder for now.');
+}
+
 // Guard — redirect if not logged in
 if (!getEmail()) window.location.href = 'index.html';
 
 // Init topbar
 document.getElementById('top-email').textContent = getEmail()||'';
-document.getElementById('top-used').textContent = getCount();
 document.getElementById('sb-used').textContent = getCount()+' / '+ACCOUNT_LIMIT;
 document.getElementById('sb-left').textContent = Math.max(0, ACCOUNT_LIMIT - getCount());
 
@@ -642,29 +1093,226 @@ function showPanel(panel, btn) {
   document.getElementById('panel-home').classList.remove('active');
   document.getElementById('panel-analyse').classList.remove('active');
   document.getElementById('panel-database').classList.remove('active');
+  document.getElementById('panel-team').classList.remove('active');
+  document.getElementById('panel-documents').classList.remove('active');
+  document.getElementById('panel-financials').classList.remove('active');
+  document.getElementById('panel-quotes').classList.remove('active');
+  document.getElementById('panel-preapproved').classList.remove('active');
   document.getElementById('panel-market').style.display = 'none';
   document.getElementById('panel-search').style.display = 'none';
   document.getElementById('panel-'+panel).classList.add('active');
   if (panel === 'database') { loadAnalysesFromSheet(); }
+  if (panel === 'preapproved') { renderKycForm(); }
   if (panel === 'search') {
     document.getElementById('panel-search').style.display = 'flex';
-    const iframe = document.getElementById('search-iframe');
-    if (iframe) iframe.src = iframe.src;
   }
   if (panel === 'market') {
     document.getElementById('panel-market').style.display = 'flex';
+  }
+  if (panel === 'team') {
+    // No forced reload here — was previously wiping out in-progress search
+    // results every time this tab was revisited. The iframe keeps its
+    // existing state now, exactly like every other tool.
   }
 }
 
 // ── TOOL TABS ──
 function showToolTab(tab) {
-  document.querySelectorAll('.ttab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('#panel-analyse .ttab').forEach(b=>b.classList.remove('active'));
   document.getElementById('ttab-'+tab).classList.add('active');
   document.getElementById('tp-input').style.display  = tab==='input'  ? 'block' : 'none';
   document.getElementById('tp-analysis').style.display = tab==='analysis' ? 'block' : 'none';
+  document.getElementById('tp-level2').style.display = tab==='level2' ? 'block' : 'none';
+  document.getElementById('tp-refi').style.display = tab==='refi' ? 'block' : 'none';
+  document.getElementById('tp-postrefi').style.display = tab==='postrefi' ? 'block' : 'none';
+  document.getElementById('tp-request').style.display = tab==='request' ? 'block' : 'none';
+  if (tab==='request') renderRequestTab();
+  if (tab==='level2') renderLevel2Form();
+  if (tab==='refi') renderRefiForm();
+  if (tab==='postrefi') renderPostRefiForm();
+}
+function showDbTab(tab) {
+  document.querySelectorAll('#panel-database .ttab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('dbtab-'+tab).classList.add('active');
+  document.getElementById('db-tab-list').style.display = tab==='list' ? 'block' : 'none';
+  document.getElementById('db-tab-preapproval').style.display = tab==='preapproval' ? 'block' : 'none';
+  document.getElementById('db-tab-documents').style.display = tab==='documents' ? 'block' : 'none';
+  if (tab==='preapproval') renderPreapprovalTab();
+  if (tab==='documents' && !window._driveInitDone) { window._driveInitDone = true; initDriveConnection(); }
+}
+
+// ── Documents tab — Google Drive connection, ported from the former
+// standalone vera-documents.html. Token stored in localStorage, shared
+// across all VERA tool pages on this same origin. ──
+const DRIVE_CLIENT_ID = '268645094838-ahos0o5e9aiqbk15j8sfivuj3gn78862.apps.googleusercontent.com';
+const DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.readonly';
+const VERA_FOLDER_NAME = 'VERA Financials';
+let driveTokenClient = null;
+let driveAccessToken = null;
+let driveFiles = [];
+let veraSubfolders = [];
+let subfolderFilesCache = {};
+
+function initDriveConnection() {
+  const savedToken = localStorage.getItem('vera_drive_token');
+  const savedExpiry = localStorage.getItem('vera_drive_token_expiry');
+  if (savedToken && savedExpiry && Date.now() < Number(savedExpiry)) {
+    driveAccessToken = savedToken;
+    onDriveConnected();
+  } else {
+    localStorage.removeItem('vera_drive_token');
+    localStorage.removeItem('vera_drive_token_expiry');
+    renderDocsEmpty();
+  }
+
+  const initGis = setInterval(function() {
+    if (window.google && google.accounts && google.accounts.oauth2) {
+      clearInterval(initGis);
+      driveTokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: DRIVE_CLIENT_ID,
+        scope: DRIVE_SCOPE,
+        callback: function(resp) {
+          if (resp.error) { alert('Google sign-in failed: ' + resp.error); return; }
+          driveAccessToken = resp.access_token;
+          const expiryMs = Date.now() + (Number(resp.expires_in || 3600) * 1000) - 60000;
+          localStorage.setItem('vera_drive_token', driveAccessToken);
+          localStorage.setItem('vera_drive_token_expiry', String(expiryMs));
+          onDriveConnected();
+        }
+      });
+    }
+  }, 200);
+}
+
+function connectDrive() {
+  if (!driveTokenClient) { alert('Still loading Google sign-in — try again in a moment.'); return; }
+  driveTokenClient.requestAccessToken();
+}
+
+function disconnectDrive() {
+  if (driveAccessToken && window.google && google.accounts.oauth2.revoke) {
+    google.accounts.oauth2.revoke(driveAccessToken, function() {});
+  }
+  driveAccessToken = null;
+  localStorage.removeItem('vera_drive_token');
+  localStorage.removeItem('vera_drive_token_expiry');
+  updateDriveStatusUI(false);
+  driveFiles = [];
+  veraSubfolders = [];
+  subfolderFilesCache = {};
+  setBanner('');
+  renderDocsEmpty();
+}
+
+function onDriveConnected() {
+  updateDriveStatusUI(true);
+  loadDriveFiles();
+}
+
+function updateDriveStatusUI(connected) {
+  document.getElementById('drive-icon').className = 'drive-icon ' + (connected ? 'connected' : 'disconnected');
+  document.getElementById('drive-icon').style.background = connected ? 'var(--green-bg)' : 'rgba(14,14,12,0.05)';
+  document.getElementById('drive-icon').textContent = connected ? '✓' : '🔌';
+  document.getElementById('drive-status-t').textContent = connected ? 'Connected' : 'Not connected';
+  document.getElementById('drive-status-s').textContent = connected ? 'VERA can read your documents' : 'Connect your Google Drive so VERA can read your documents';
+  const btn = document.getElementById('drive-btn');
+  if (connected) {
+    btn.textContent = 'Disconnect';
+    btn.style.background = 'white';
+    btn.style.border = '1px solid var(--border)';
+    btn.style.color = 'rgba(14,14,12,0.5)';
+    btn.onclick = disconnectDrive;
+  } else {
+    btn.textContent = 'Connect Google Drive';
+    btn.style.background = 'var(--gold)';
+    btn.style.border = 'none';
+    btn.style.color = 'white';
+    btn.onclick = connectDrive;
+  }
+}
+
+function setBanner(html) { const el = document.getElementById('banner'); if (el) el.innerHTML = html; }
+
+async function loadDriveFiles() {
+  setBanner('<div class="load" style="display:flex;align-items:center;gap:8px;justify-content:center;padding:24px 0"><div class="dot" style="width:7px;height:7px;border-radius:50%;background:var(--gold)"></div><div class="dot" style="width:7px;height:7px;border-radius:50%;background:var(--gold)"></div><div class="dot" style="width:7px;height:7px;border-radius:50%;background:var(--gold)"></div></div>');
+  try {
+    const folderQuery = "name='" + VERA_FOLDER_NAME + "' and mimeType='application/vnd.google-apps.folder' and trashed=false";
+    const folderRes = await fetch('https://www.googleapis.com/drive/v3/files?fields=files(id,name)&q=' + encodeURIComponent(folderQuery), {
+      headers: { Authorization: 'Bearer ' + driveAccessToken }
+    });
+    if (!folderRes.ok) throw new Error('Drive API error ' + folderRes.status);
+    const folderData = await folderRes.json();
+    const folders = folderData.files || [];
+
+    if (!folders.length) {
+      renderNoFolderFound();
+      return;
+    }
+
+    const folderId = folders[0].id;
+    const topQuery = "'" + folderId + "' in parents and trashed=false";
+    const res = await fetch('https://www.googleapis.com/drive/v3/files?pageSize=50&fields=files(id,name,mimeType,modifiedTime)&orderBy=name&q=' + encodeURIComponent(topQuery), {
+      headers: { Authorization: 'Bearer ' + driveAccessToken }
+    });
+    if (!res.ok) throw new Error('Drive API error ' + res.status);
+    const data = await res.json();
+    const topItems = data.files || [];
+    const topFiles = topItems.filter(function(f){ return f.mimeType !== 'application/vnd.google-apps.folder'; });
+    veraSubfolders = topItems.filter(function(f){ return f.mimeType === 'application/vnd.google-apps.folder'; });
+
+    subfolderFilesCache = {};
+    for (const sf of veraSubfolders) {
+      const sfQuery = "'" + sf.id + "' in parents and mimeType!='application/vnd.google-apps.folder' and trashed=false";
+      const sfRes = await fetch('https://www.googleapis.com/drive/v3/files?pageSize=50&fields=files(id,name,mimeType,modifiedTime)&orderBy=modifiedTime desc&q=' + encodeURIComponent(sfQuery), {
+        headers: { Authorization: 'Bearer ' + driveAccessToken }
+      });
+      if (sfRes.ok) {
+        const sfData = await sfRes.json();
+        subfolderFilesCache[sf.id] = sfData.files || [];
+      } else {
+        subfolderFilesCache[sf.id] = [];
+      }
+    }
+
+    driveFiles = topFiles.concat(Object.values(subfolderFilesCache).flat());
+
+    if (!driveFiles.length) {
+      setBanner('<div class="empty-card" style="background:white;border:1px dashed var(--border);border-radius:10px;padding:32px 24px;text-align:center;font-size:12.5px;color:rgba(14,14,12,0.5);line-height:1.7">Found your "' + VERA_FOLDER_NAME + '" folder, but no files yet — in it directly, or in any of its subfolders. Upload your documents, then <button onclick="loadDriveFiles()" style="display:inline;margin:0;padding:6px 12px;font-size:11.5px;border:none;border-radius:8px;background:var(--gold);color:white;font-weight:600;cursor:pointer;font-family:inherit">↻ Refresh</button></div>');
+      renderDocsList();
+      return;
+    }
+    setBanner('');
+    renderDocsList();
+  } catch(err) {
+    setBanner('<div class="err" style="background:var(--red-bg);border:1px solid rgba(224,82,82,0.2);border-radius:9px;padding:12px 14px;font-size:12px;color:rgba(14,14,12,0.6);margin-bottom:14px">Could not load Drive files: ' + err.message + '</div>');
+  }
+}
+
+function renderDocsEmpty() {
+  const el = document.getElementById('docs-content');
+  if (el) el.innerHTML = '<div class="empty-card" style="background:white;border:1px dashed var(--border);border-radius:10px;padding:32px 24px;text-align:center;font-size:12.5px;color:rgba(14,14,12,0.5);line-height:1.7">Connect Google Drive above — VERA will look for a "' + VERA_FOLDER_NAME + '" folder and list what\'s inside it here.</div>';
+}
+
+function renderDocsList() {
+  const el = document.getElementById('docs-content');
+  if (!el) return;
+  if (!driveFiles.length) {
+    el.innerHTML = '<div class="empty-card" style="background:white;border:1px dashed var(--border);border-radius:10px;padding:32px 24px;text-align:center;font-size:12.5px;color:rgba(14,14,12,0.5);line-height:1.7">No files found yet. Upload your documents into the "' + VERA_FOLDER_NAME + '" folder, then refresh.</div>';
+    return;
+  }
+  el.innerHTML = driveFiles.map(function(f) {
+    const icon = f.mimeType === 'application/pdf' ? '📄' : (f.mimeType.indexOf('image/') === 0 ? '🖼' : '📁');
+    return '<div class="doc-row" style="display:flex;align-items:center;gap:12px;background:white;border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:8px"><div class="doc-icon" style="width:32px;height:32px;border-radius:8px;background:var(--gold-bg);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">' + icon + '</div>'
+      + '<div><div class="doc-name" style="font-size:12.5px;font-weight:600">' + f.name + '</div><div class="doc-type" style="font-size:11px;color:rgba(14,14,12,0.45);margin-top:2px">' + new Date(f.modifiedTime).toLocaleDateString() + '</div></div></div>';
+  }).join('') + '<div class="step-context-note" style="font-size:11.5px;color:rgba(14,14,12,0.45);line-height:1.6;margin-top:10px">This is a reference list of everything VERA can see — Set a Budget and Get Pre-Approved read from these same documents.</div>';
+}
+
+function renderNoFolderFound() {
+  setBanner('<div class="empty-card" style="background:white;border:1px dashed var(--border);border-radius:10px;padding:32px 24px;text-align:center;font-size:12.5px;color:rgba(14,14,12,0.5);line-height:1.7">VERA looks for a folder named exactly <b>"' + VERA_FOLDER_NAME + '"</b> in your Drive, and only reads files inside it — your other Drive files stay private.<br><br>Create that folder, upload your documents into it, then refresh.<div><button onclick="loadDriveFiles()" style="margin-top:12px;padding:9px 18px;border:none;border-radius:8px;background:var(--gold);color:white;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit">↻ Refresh</button></div></div>');
 }
 function showAnalysisTab() {
   document.getElementById('ttab-analysis').disabled = false;
+  document.getElementById('ttab-level2').disabled = false;
   showToolTab('analysis');
 }
 
@@ -706,7 +1354,33 @@ function hide(id){document.getElementById(id).style.display='none';}
 function setLoad(msg){document.getElementById('load-msg').textContent=msg;}
 function showErr(msg){document.getElementById('err-msg').textContent=msg;show('err-area');}
 function hideErr(){hide('err-area');}
+function setRunLoad(msg){document.getElementById('run-load-msg').textContent=msg;}
+function showRunErr(msg){document.getElementById('run-err-msg').textContent=msg;show('run-err-area');}
+function hideRunErr(){hide('run-err-area');}
 
+
+// Shared market-rent estimator — used both to fill genuinely-missing rent
+// data, and to test what a vacant/under-rented property could realistically
+// achieve after renovation (the actual BRRRR thesis: buy under market,
+// improve, rent at market).
+function estimateMarketRentForUnit(neighborhood, unitType, listingDescription, forceMarketTier) {
+  const hood = (neighborhood || '').toLowerCase();
+  const desc = (listingDescription || '').toLowerCase();
+  const tier = hood.includes('uptown') ? 'uptown' : 'city';
+  const isTurnkey2 = /turnkey|renovated|updated|move.in|heat pump|new roof|freshly/.test(desc);
+  const hasUnder = /below market|long.term tenant|as.is|fixer|estate|needs work|potential|savvy/.test(desc);
+  const level = forceMarketTier ? 'MARKET' : ((isTurnkey2 && !hasUnder) ? 'MARKET' : 'UNDER');
+  const RENTS = {
+    city:   { UNDER: {s:950,b1:1000,b2:1200,b3:1350,b4:1500}, MARKET: {s:1200,b1:1150,b2:1400,b3:1570,b4:1730} },
+    uptown: { UNDER: {s:1000,b1:1050,b2:1250,b3:1450,b4:1600}, MARKET: {s:1150,b1:1200,b2:1500,b3:1650,b4:1850} }
+  };
+  const t = RENTS[tier][level];
+  const m = (unitType||'').match(/(\d+)/);
+  const beds = m ? parseInt(m[1]) : 2;
+  if (!beds || beds <= 0) return t.s;
+  if (beds === 1) return t.b1; if (beds === 2) return t.b2;
+  if (beds === 3) return t.b3; return t.b4;
+}
 
 function applyAssumptions(d) {
   const units   = Number(d.NumberofUnits) || 1;
@@ -764,21 +1438,9 @@ function applyAssumptions(d) {
   }
 
   // 11. Rents — Saint John defaults by unit type if not confirmed
-  const hood  = (d.PropertyNeighborhood || '').toLowerCase();
-  const tier  = hood.includes('uptown') ? 'uptown' : 'city';
-  const isTurnkey2 = /turnkey|renovated|updated|move.in|heat pump|new roof|freshly/.test(desc);
-  const hasUnder   = /below market|long.term tenant|as.is|fixer|estate|needs work|potential|savvy/.test(desc);
-  const level = (isTurnkey2 && !hasUnder) ? 'MARKET' : 'UNDER';
-
-  const RENTS = {
-    city:   { UNDER: {s:950,b1:1000,b2:1200,b3:1350,b4:1500}, MARKET: {s:1200,b1:1150,b2:1400,b3:1570,b4:1730} },
-    uptown: { UNDER: {s:1000,b1:1050,b2:1250,b3:1450,b4:1600}, MARKET: {s:1150,b1:1200,b2:1500,b3:1650,b4:1850} }
-  };
   function rentForBeds(beds) {
-    const t = RENTS[tier][level];
-    if (!beds || beds <= 0) return t.s;
-    if (beds === 1) return t.b1; if (beds === 2) return t.b2;
-    if (beds === 3) return t.b3; return t.b4;
+    // Reconstruct a fake unitType string since estimateMarketRentForUnit takes bed count via a type string
+    return estimateMarketRentForUnit(d.PropertyNeighborhood, beds ? (beds+'-bed') : null, d.ListingDescription, false);
   }
   function bedsFromType(type) {
     if (!type) return 2;
@@ -786,10 +1448,11 @@ function applyAssumptions(d) {
     return m ? parseInt(m[1]) : 2;
   }
   const cap = Math.min(units, 4);
-  if (!d.AsIsRent1) d.AsIsRent1 = rentForBeds(bedsFromType(d.Unit1Type));
-  if (cap >= 2 && !d.AsIsRent2) d.AsIsRent2 = rentForBeds(bedsFromType(d.Unit2Type));
-  if (cap >= 3 && !d.AsIsRent3) d.AsIsRent3 = rentForBeds(bedsFromType(d.Unit3Type));
-  if (cap >= 4 && !d.AsIsRent4) d.AsIsRent4 = rentForBeds(bedsFromType(d.Unit4Type));
+  function isMissing(v) { return v == null || v === ''; }
+  if (isMissing(d.AsIsRent1)) d.AsIsRent1 = rentForBeds(bedsFromType(d.Unit1Type));
+  if (cap >= 2 && isMissing(d.AsIsRent2)) d.AsIsRent2 = rentForBeds(bedsFromType(d.Unit2Type));
+  if (cap >= 3 && isMissing(d.AsIsRent3)) d.AsIsRent3 = rentForBeds(bedsFromType(d.Unit3Type));
+  if (cap >= 4 && isMissing(d.AsIsRent4)) d.AsIsRent4 = rentForBeds(bedsFromType(d.Unit4Type));
   if (cap < 4) d.AsIsRent4 = 0;
   if (cap < 3) d.AsIsRent3 = 0;
   if (cap < 2) d.AsIsRent2 = 0;
@@ -809,6 +1472,432 @@ function applyAssumptions(d) {
   return d;
 }
 
+// ── Post-Reno Analysis — same field set as As-Is Analysis, shown
+// as-is (read-only, reference) alongside a fully editable post-reno
+// column. Defaults every post-reno field to its As-Is value, so the
+// user only has to touch what actually changes after renovation. ──
+function level2Row(label, key, asIsValue, isPercent, isDollar, suggestedValue, changeLabel) {
+  const userEdited = window._level2Values && window._level2Values[key] != null;
+  const stored = userEdited ? window._level2Values[key] : (suggestedValue != null ? suggestedValue : asIsValue);
+  const hasChanged = stored !== '' && stored != null && Number(stored) !== Number(asIsValue || 0);
+  const suffix = isPercent ? '%' : (isDollar ? '' : '');
+  const prefix = isDollar ? '$' : '';
+  return '<div style="display:grid;grid-template-columns:1fr 130px 130px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">'
+    + '<span style="font-size:12.5px;color:rgba(14,14,12,0.6)">' + label + (hasChanged && changeLabel ? ' <span style="font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:20px;background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd);margin-left:8px">' + changeLabel + '</span>' : '') + '</span>'
+    + '<span style="font-size:12.5px;color:rgba(14,14,12,0.4);text-align:right">' + (prefix + Number(asIsValue||0).toLocaleString() + suffix) + '</span>'
+    + '<span style="display:flex;align-items:center;gap:2px;justify-content:flex-end">' + (isDollar ? '<span style="font-size:11px;color:var(--gold)">$</span>' : '')
+    + '<input type="number" data-level2-key="' + key + '" value="' + stored + '" style="width:90px;padding:5px 7px;border:1px solid var(--gold-bd);background:var(--gold-bg);border-radius:5px;font-family:monospace;font-size:12px;color:var(--gold);text-align:right">'
+    + (isPercent ? '<span style="font-size:11px;color:var(--gold)">%</span>' : '') + '</span>'
+    + '</div>';
+}
+
+// The renovation budget is never left silently at $0 for a BRRRR property —
+// if the deal already cash-flows at market rents with no renovation spend,
+// it either wasn't a true BRRRR to begin with, or the numbers are being
+// over-optimistic somewhere else. VERA doesn't try to guess this figure —
+// it makes clear the field genuinely needs the user's own estimate, and
+// lets the actual Google Sheet calculator render whatever results that
+// number produces once entered.
+function renoBadgeHtml(isFilled) {
+  return isFilled
+    ? '<span style="font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:20px;background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd);margin-left:8px">Entered</span>'
+    : '<span style="font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:20px;background:rgba(224,82,82,0.08);color:var(--red);border:1px solid rgba(224,82,82,0.25);margin-left:8px">Required</span>';
+}
+
+function renoRow(asIsValue) {
+  const userEdited = window._level2Values && window._level2Values.RenovationEstimate != null;
+  const stored = userEdited ? window._level2Values.RenovationEstimate : '';
+  const isFilled = stored !== '' && stored != null && Number(stored) > 0;
+  return '<div id="reno-budget-row" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)">'
+    + '<span style="font-size:12.5px;color:rgba(14,14,12,0.6);display:flex;align-items:center">Renovation budget<span id="reno-badge">' + renoBadgeHtml(isFilled) + '</span></span>'
+    + '<div style="display:flex;align-items:center;gap:16px">'
+    + '<span style="font-size:12.5px;color:rgba(14,14,12,0.4);width:130px;text-align:right">$' + Number(asIsValue||0).toLocaleString() + '</span>'
+    + '<span style="display:flex;align-items:center;gap:2px;width:130px;justify-content:flex-end"><span style="font-size:11px;color:var(--gold)">$</span>'
+    + '<input type="number" id="reno-budget-input" data-level2-key="RenovationEstimate" placeholder="enter estimate" oninput="updateRenoBadge()" value="' + stored + '" style="width:90px;padding:5px 7px;border:1px solid var(--gold-bd);background:var(--gold-bg);border-radius:5px;font-family:monospace;font-size:12px;color:var(--gold);text-align:right">'
+    + '</span>'
+    + '</div>'
+    + '</div>';
+}
+
+function updateRenoBadge() {
+  const input = document.getElementById('reno-budget-input');
+  const badge = document.getElementById('reno-badge');
+  if (!input || !badge) return;
+  const isFilled = input.value !== '' && Number(input.value) > 0;
+  badge.innerHTML = renoBadgeHtml(isFilled);
+}
+
+function renderLevel2Form() {
+  const el = document.getElementById('level2-form');
+  if (!el || !withAssumptions) return;
+  const a = withAssumptions;
+  const units = Number(a.NumberofUnits) || 1;
+  const utilFix = window._lastUtilFix;
+  const isBrrrr = window._lastVerdictType === 'BRRRR';
+
+  // One combined bubble — the static "what this is" explanation always
+  // shows, and the property-specific strategy (when there is one) appears
+  // inside the same box, not a second stacked one.
+  const hintEl = document.getElementById('level2-hint');
+  if (hintEl) {
+    let hintHtml = '<div class="hint">'
+      + '<div class="hint-t">What this is</div>'
+      + '<div style="margin-bottom:12px">Same property, same math — but for what it looks like after renovation. As-Is values stay fixed as reference; edit the Post-Reno column with your updated rent, expenses, and price, then re-run the numbers. The post-reno analysis is checked against the following targets. The result is one of two verdicts: Turnkey (the property\'s improvements meet the turnkey criteria after reno), or No-Go (the property\'s improvements still don\'t clear the turnkey criteria after reno, and it\'s not worth the investment).</div>'
+      + '<table class="yr-table" style="margin:0">'
+      + '<tr><th>Criteria</th><th>Meets turnkey post-reno</th></tr>'
+      + '<tr><td>Cap rate</td><td>5-6%+</td></tr>'
+      + '<tr><td>Cash flow / unit</td><td>$200+/mo</td></tr>'
+      + '<tr><td>Total ROI</td><td>20%+</td></tr>'
+      + '<tr><td>DSCR</td><td>1.20+</td></tr>'
+      + '<tr><td>Gross rent</td><td>Break-even+</td></tr>'
+      + '<tr><td>1% rule</td><td>1.00%+</td></tr>'
+      + '</table>'
+      + '</div>';
+    if (isBrrrr && window._lastInsightLines && window._lastInsightLines.length) {
+      hintHtml += '<div class="hint">'
+        + '<div class="hint-t">🔨 The reno strategy for this property</div>'
+        + '<div>' + window._lastInsightLines.map(function(l,i){ return '<div style="' + (i>0?'margin-top:6px':'') + '">' + (i>0?'• ':'') + l + '</div>'; }).join('') + '</div>'
+        + '</div>';
+    }
+    hintEl.innerHTML = hintHtml;
+  }
+
+  let html = '';
+  html += '<div style="display:grid;grid-template-columns:1fr 130px 130px;gap:10px;padding:0 0 8px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:rgba(14,14,12,0.4)">'
+    + '<span></span><span style="text-align:right">As-Is</span><span style="text-align:right">Post-Reno</span></div>';
+
+  html += '<div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(14,14,12,0.35);padding:10px 0 5px">Property</div>';
+  html += level2Row('Purchase price', 'PropertyPuchasePrice', a.PropertyPuchasePrice, false, true, null, 'price reduced');
+
+  html += '<div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(14,14,12,0.35);padding:10px 0 5px">Income</div>';
+  function suggestedRent(asIsRent, unitType) {
+    const marketEstimate = estimateMarketRentForUnit(a.PropertyNeighborhood, unitType, a.ListingDescription, true);
+    return (Number(asIsRent)||0) < marketEstimate ? marketEstimate : null;
+  }
+  html += level2Row('Unit 1 rent/mo', 'AsIsRent1', a.AsIsRent1, false, true, suggestedRent(a.AsIsRent1, a.Unit1Type), 'rent increased to market rent');
+  if (units >= 2) html += level2Row('Unit 2 rent/mo', 'AsIsRent2', a.AsIsRent2, false, true, suggestedRent(a.AsIsRent2, a.Unit2Type), 'rent increased to market rent');
+  if (units >= 3) html += level2Row('Unit 3 rent/mo', 'AsIsRent3', a.AsIsRent3, false, true, suggestedRent(a.AsIsRent3, a.Unit3Type), 'rent increased to market rent');
+  if (units >= 4) html += level2Row('Unit 4 rent/mo', 'AsIsRent4', a.AsIsRent4, false, true, suggestedRent(a.AsIsRent4, a.Unit4Type), 'rent increased to market rent');
+  html += level2Row('Other income/mo', 'OtherMonthlyIncome', a.OtherMonthlyIncome, false, true);
+  html += level2Row('Vacancy', 'VacancyRate', a.VacancyRate, true, false);
+
+  html += '<div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(14,14,12,0.35);padding:10px 0 5px">Operating expenses</div>';
+  html += level2Row('Property tax/yr', 'PropertyTax', a.PropertyTax, false, true, null, 'expense adjusted');
+  html += level2Row('Insurance/yr', 'Insurance', a.Insurance, false, true, null, 'expense adjusted');
+  html += level2Row('Water/yr', 'Utilities_Water', a.Utilities_Water, false, true, null, 'expense adjusted');
+  html += level2Row('Electricity/yr', 'Utilities_Electricity', a.Utilities_Electricity, false, true, utilFix ? 0 : null, 'shifted to tenants');
+  html += level2Row('Heat/yr', 'Utilities_Heat', a.Utilities_Heat, false, true, utilFix ? 0 : null, 'shifted to tenants');
+  html += level2Row('Rentals/yr', 'Rentals_WaterTanks_HeatPumps', a.Rentals_WaterTanks_HeatPumps, false, true, null, 'expense adjusted');
+  html += level2Row('Repairs & maint', 'RepairsAndMaintenanceRate', a.RepairsAndMaintenanceRate, true, false, null, 'expense adjusted');
+  html += level2Row('Prop. mgmt', 'PropertyManagementRate', a.PropertyManagementRate, true, false, null, 'expense adjusted');
+  html += level2Row('Lawn & snow/yr', 'LawnAndSnowMaintenance', a.LawnAndSnowMaintenance, false, true, null, 'expense adjusted');
+  html += level2Row('Pest control/yr', 'PestControl', a.PestControl, false, true, null, 'expense adjusted');
+  html += level2Row('Other expenses/yr', 'OtherExpenses', a.OtherExpenses, false, true, null, 'expense adjusted');
+
+  html += '<div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(14,14,12,0.35);padding:10px 0 5px">Financing</div>';
+  html += level2Row('Down payment', 'DownpaymentPercentage', a.DownpaymentPercentage, true, false);
+  html += level2Row('Interest rate', 'InterestRate', a.InterestRate, true, false);
+  html += level2Row('Amortization (yrs)', 'AmortizationPeriod', a.AmortizationPeriod, false, false);
+  html += level2Row('Closing costs', 'ClosingCostsRate', a.ClosingCostsRate, true, false);
+
+  html += '<div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(14,14,12,0.35);padding:10px 0 5px">Renovation</div>';
+  html += renoRow(a.RenovationEstimate||0);
+
+  el.innerHTML = html;
+}
+
+async function runLevel2Analysis() {
+  const renoInput = document.getElementById('reno-budget-input');
+  const renoEmpty = renoInput && renoInput.value.trim() === '';
+  if (renoEmpty) {
+    alert('Enter a renovation budget before running Post-Reno Analysis — it can\'t run without a high-level estimate for the renovation work.');
+    if (renoInput) renoInput.focus();
+    return;
+  }
+
+  const btn = document.getElementById('level2-run-btn');
+  const loadEl = document.getElementById('level2-load');
+  const resultsWrap = document.getElementById('level2-results-wrap');
+  btn.disabled = true;
+  loadEl.style.display = 'block';
+  loadEl.innerHTML = '<div style="font-size:12px;color:rgba(14,14,12,0.5)">Analyzing the post-reno numbers…</div>';
+  resultsWrap.style.display = 'none';
+
+  // Collect every edited post-reno value from the form
+  window._level2Values = {};
+  document.querySelectorAll('[data-level2-key]').forEach(function(input) {
+    window._level2Values[input.dataset.level2Key] = input.value;
+  });
+
+  // Start from the same base data As-Is Analysis used, then overlay the post-reno edits —
+  // same calculator, same sheet, different input values.
+  const level2Payload = Object.assign({}, withAssumptions, window._level2Values);
+  const finalPayload = applyAssumptions(level2Payload);
+  finalPayload.userEmail = getEmail() || '';
+  finalPayload.AnalysisStage = 'post-reno';
+
+  try {
+    const resp = await fetch(PROXY_URL, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(finalPayload)
+    });
+    if (!resp.ok) { const t = await resp.text(); throw new Error('Proxy error ' + resp.status + ': ' + t.slice(0,200)); }
+    const result = await resp.json();
+    if (result.error) throw new Error('Sheet error: ' + result.error);
+
+    window._level2LastResult = result;
+    window._level2FinalPayload = finalPayload;
+    resultsWrap.style.display = 'block';
+    renderResults(result, '-l2', finalPayload);
+    document.getElementById('ttab-refi').disabled = false;
+  } catch (err) {
+    resultsWrap.style.display = 'block';
+    document.getElementById('verd-insight-l2').innerHTML = '<div class="err" style="background:rgba(224,82,82,0.08);border:1px solid rgba(224,82,82,0.2);border-radius:9px;padding:12px 14px;font-size:12px;color:rgba(14,14,12,0.7)">Could not run Post-Reno Analysis: ' + err.message + '</div>';
+  } finally {
+    btn.disabled = false;
+    loadEl.style.display = 'none';
+  }
+}
+
+// ── Refinance Projection — the actual point of BRRRR: after renovating,
+// refinance at the new value and pull cash back out. Only unlocks once
+// Post-Reno Analysis has run, since the sheet's "Purchase Price"/"Renovations" on
+// this tab reflect whatever the most recent /analyze call wrote — which
+// needs to be the post-reno numbers, not the as-is ones. ──
+function renderRefiForm() {
+  const el = document.getElementById('refi-form');
+  if (!el) return;
+  const userEdited = window._refiArv != null;
+  const stored = userEdited ? window._refiArv : '';
+  el.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)">'
+    + '<span style="font-size:12.5px;color:rgba(14,14,12,0.6);display:flex;align-items:center">After-repair value (ARV)<span style="font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:20px;background:rgba(224,82,82,0.08);color:var(--red);border:1px solid rgba(224,82,82,0.25);margin-left:8px" id="refi-arv-badge">Required</span></span>'
+    + '<span style="display:flex;align-items:center;gap:2px"><span style="font-size:11px;color:var(--gold)">$</span>'
+    + '<input type="number" id="refi-arv-input" placeholder="enter estimate" oninput="updateRefiArvBadge()" value="' + stored + '" style="width:110px;padding:5px 7px;border:1px solid var(--gold-bd);background:var(--gold-bg);border-radius:5px;font-family:monospace;font-size:12px;color:var(--gold);text-align:right">'
+    + '</span></div>';
+  updateRefiArvBadge();
+}
+
+function updateRefiArvBadge() {
+  const input = document.getElementById('refi-arv-input');
+  const badge = document.getElementById('refi-arv-badge');
+  if (!input || !badge) return;
+  const filled = input.value !== '' && Number(input.value) > 0;
+  badge.textContent = filled ? 'Entered' : 'Required';
+  badge.style.background = filled ? 'var(--green-bg)' : 'rgba(224,82,82,0.08)';
+  badge.style.color = filled ? 'var(--green)' : 'var(--red)';
+  badge.style.borderColor = filled ? 'var(--green-bd)' : 'rgba(224,82,82,0.25)';
+}
+
+async function runRefinanceProjection() {
+  const arvInput = document.getElementById('refi-arv-input');
+  if (!arvInput || arvInput.value.trim() === '') {
+    alert('Enter an ARV estimate before running the refinance projection — this is what the refinance is based on.');
+    if (arvInput) arvInput.focus();
+    return;
+  }
+  window._refiArv = arvInput.value;
+
+  const btn = document.getElementById('refi-run-btn');
+  const loadEl = document.getElementById('refi-load');
+  const resultsEl = document.getElementById('refi-results');
+  btn.disabled = true;
+  loadEl.style.display = 'block';
+  loadEl.innerHTML = '<div style="font-size:12px;color:rgba(14,14,12,0.5)">Calculating the refinance projection…</div>';
+  resultsEl.innerHTML = '';
+
+  try {
+    const resp = await fetch('https://vera-proxy.onrender.com/refinance-projection', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ arv: arvInput.value })
+    });
+    if (!resp.ok) { const t = await resp.text(); throw new Error('Proxy error ' + resp.status + ': ' + t.slice(0,200)); }
+    const r = await resp.json();
+    if (r.error) throw new Error('Sheet error: ' + r.error);
+    renderRefiResults(r);
+    document.getElementById('refi3-section').style.display = 'block';
+    document.getElementById('ttab-postrefi').disabled = false;
+    document.getElementById('refi-postrefi-cta').style.display = 'block';
+    renderPostRefiForm();
+  } catch (err) {
+    resultsEl.innerHTML = '<div class="err" style="background:rgba(224,82,82,0.08);border:1px solid rgba(224,82,82,0.2);border-radius:9px;padding:12px 14px;font-size:12px;color:rgba(14,14,12,0.7)">Could not run refinance projection: ' + err.message + '</div>';
+  } finally {
+    btn.disabled = false;
+    loadEl.style.display = 'none';
+  }
+}
+
+function renderRefiResults(r) {
+  window._lastRefiResult = r;
+  const el = document.getElementById('refi-results');
+  const cheque = Number(r.refinanceCheque) || 0;
+  const pctReturned = Number(r.pctFundsReturned) || 0; // sheet always returns this as a fraction, e.g. 0.683 or 1.6527 for 165.27%
+  const pctDisplay = pctReturned * 100;
+  const purchasePrice = Number(r.purchasePrice) || 0;
+  const maxPP = Number(r.maxPurchasePrice) || 0;
+  const withinMaxPP = maxPP === 0 || purchasePrice <= maxPP;
+
+  // Book benchmarks: Perfect (100%+), Good (80%+), Beginner (60%+), below
+  // 60% means pause and reconsider — not a simple pass/fail at one line.
+  let tierLabel, verdictColor, verdictIcon;
+  if (pctDisplay >= 100) { tierLabel = 'Perfect BRRRR'; verdictColor = 'var(--green)'; verdictIcon = '✓'; }
+  else if (pctDisplay >= 80) { tierLabel = 'Good BRRRR'; verdictColor = 'var(--green)'; verdictIcon = '✓'; }
+  else if (pctDisplay >= 60) { tierLabel = 'Beginner BRRRR'; verdictColor = 'var(--gold)'; verdictIcon = '✓'; }
+  else { tierLabel = 'Below the minimum — reconsider'; verdictColor = 'var(--red)'; verdictIcon = '✗'; }
+
+  el.innerHTML = '<div style="background:white;border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:16px">'
+    + '<div style="font-size:14px;font-weight:700;color:' + verdictColor + ';margin-bottom:4px">' + verdictIcon + ' ' + tierLabel + ' — ' + pctDisplay.toFixed(1) + '% of your initial funds returned</div>'
+    + '<div style="font-size:12px;color:rgba(14,14,12,0.5);margin-bottom:16px">Perfect: 100%+ · Good: 80%+ · Beginner: 60%+ minimum' + (pctDisplay < 60 ? ' — below this, reconsider the renovation scope, financing, or the deal itself' : '') + '</div>'
+    + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;font-size:12.5px">'
+    + '<div><div style="color:rgba(14,14,12,0.45)">Refinance cheque (cash back)</div><div style="font-weight:700;font-size:16px;margin-top:2px;color:var(--gold)">' + fmt$(Math.abs(cheque)) + '</div></div>'
+    + '<div><div style="color:rgba(14,14,12,0.45)">Total initial funds invested</div><div style="font-weight:700;font-size:15px;margin-top:2px">' + fmt$(Number(r.initialFunds && r.initialFunds.totalInitialFunds)||0) + '</div></div>'
+    + '<div><div style="color:rgba(14,14,12,0.45)">1st mortgage (original)</div><div style="font-weight:700;font-size:15px;margin-top:2px">' + fmt$(Number(r.firstMortgage)||0) + '</div></div>'
+    + '<div><div style="color:rgba(14,14,12,0.45)">2nd mortgage (post-refi, 80% LTV)</div><div style="font-weight:700;font-size:15px;margin-top:2px">' + fmt$(Number(r.secondMortgage)||0) + '</div></div>'
+    + '<div><div style="color:rgba(14,14,12,0.45)">ARV entered</div><div style="font-weight:700;font-size:15px;margin-top:2px">' + fmt$(Number(r.arv)||0) + '</div></div>'
+    + '<div><div style="color:rgba(14,14,12,0.45)">Invested amount in property</div><div style="font-weight:700;font-size:15px;margin-top:2px">' + fmt$(Number(r.investedAmount)||0) + '</div></div>'
+    + '</div></div>'
+    + (maxPP ? '<div style="background:white;border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:16px">'
+      + '<div style="font-size:12.5px;font-weight:700;color:' + (withinMaxPP?'var(--green)':'var(--red)') + '">' + (withinMaxPP?'✓':'✗') + ' Purchase price rule of thumb</div>'
+      + '<div style="font-size:12px;color:rgba(14,14,12,0.55);margin-top:6px">Max purchase price (ARV × 0.8 − costs): ' + fmt$(maxPP) + ' — actual purchase price: ' + fmt$(purchasePrice) + (withinMaxPP ? ' (within the rule of thumb)' : ' (above the rule of thumb — this deal relies more heavily on the ARV assumption)') + '</div>'
+      + '</div>' : '')
+    + '<div style="font-size:11px;color:rgba(14,14,12,0.4);line-height:1.6">This entire projection depends on the ARV holding up — that\'s an estimate, not a confirmed appraisal. Confirm it with your realtor or an appraiser before relying on this.</div>'
+    + '<div style="margin-top:10px"><button onclick="toggleRefiDebug()" style="font-size:10px;color:rgba(14,14,12,0.45);background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;padding:0" id="refi-debug-btn">▶ Show raw refinance response</button>'
+    + '<pre id="refi-debug-payload" style="display:none;font-size:10px;background:rgba(14,14,12,0.04);padding:10px;border-radius:6px;margin-top:6px;white-space:pre-wrap;word-break:break-all">' + JSON.stringify(r, null, 2).replace(/</g,'&lt;') + '</pre></div>';
+}
+function toggleRefiDebug() {
+  const el = document.getElementById('refi-debug-payload');
+  const btn = document.getElementById('refi-debug-btn');
+  const show = el.style.display === 'none';
+  el.style.display = show ? 'block' : 'none';
+  btn.textContent = show ? '▼ Hide raw refinance response' : '▶ Show raw refinance response';
+}
+
+// ── Post-Refi Projection — entirely new, isolated code. Does not call,
+// modify, or share any function with level2Row/renoRow/renderLevel2Form/
+// runLevel2Analysis — those stay exactly as they are. This lives only
+// inside the Refinance Projection tab, and only appears once the
+// refinance cheque calculation above has actually run. ──
+function refi3Row(label, key, level2Value, isPercent, isDollar) {
+  const userEdited = window._refi3Values && window._refi3Values[key] != null;
+  const stored = userEdited ? window._refi3Values[key] : level2Value;
+  const suffix = isPercent ? '%' : (isDollar ? '' : '');
+  const prefix = isDollar ? '$' : '';
+  return '<div style="display:grid;grid-template-columns:1fr 130px 130px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">'
+    + '<span style="font-size:12.5px;color:rgba(14,14,12,0.6)">' + label + '</span>'
+    + '<span style="font-size:12.5px;color:rgba(14,14,12,0.4);text-align:right">' + (prefix + Number(level2Value||0).toLocaleString() + suffix) + '</span>'
+    + '<span style="display:flex;align-items:center;gap:2px;justify-content:flex-end">' + (isDollar ? '<span style="font-size:11px;color:var(--gold)">$</span>' : '')
+    + '<input type="number" data-refi3-key="' + key + '" value="' + stored + '" style="width:90px;padding:5px 7px;border:1px solid var(--gold-bd);background:var(--gold-bg);border-radius:5px;font-family:monospace;font-size:12px;color:var(--gold);text-align:right">'
+    + (isPercent ? '<span style="font-size:11px;color:var(--gold)">%</span>' : '') + '</span>'
+    + '</div>';
+}
+
+function renderPostRefiForm() {
+  const el = document.getElementById('refi3-form');
+  if (!el) return;
+  const base = window._level2FinalPayload || withAssumptions || {};
+  const arv = Number(window._refiArv) || 0;
+  const units = Number(base.NumberofUnits) || 1;
+
+  let html = '<div style="display:grid;grid-template-columns:1fr 130px 130px;gap:10px;padding:0 0 8px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:rgba(14,14,12,0.4)">'
+    + '<span></span><span style="text-align:right">Post-Reno</span><span style="text-align:right">Post-Refi</span></div>';
+
+  html += '<div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(14,14,12,0.35);padding:10px 0 5px">Property</div>';
+  // Purchase price defaults to the ARV here specifically — that's the whole point of this projection.
+  const userEditedPP = window._refi3Values && window._refi3Values.PropertyPuchasePrice != null;
+  const ppValue = userEditedPP ? window._refi3Values.PropertyPuchasePrice : arv;
+  html += '<div style="display:grid;grid-template-columns:1fr 130px 130px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">'
+    + '<span style="font-size:12.5px;color:rgba(14,14,12,0.6)">Purchase price <span style="font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:20px;background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd);margin-left:4px">set to ARV</span></span>'
+    + '<span style="font-size:12.5px;color:rgba(14,14,12,0.4);text-align:right">$' + Number(base.PropertyPuchasePrice||0).toLocaleString() + '</span>'
+    + '<span style="display:flex;align-items:center;gap:2px;justify-content:flex-end"><span style="font-size:11px;color:var(--gold)">$</span>'
+    + '<input type="number" data-refi3-key="PropertyPuchasePrice" value="' + ppValue + '" style="width:90px;padding:5px 7px;border:1px solid var(--gold-bd);background:var(--gold-bg);border-radius:5px;font-family:monospace;font-size:12px;color:var(--gold);text-align:right"></span>'
+    + '</div>';
+
+  html += '<div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(14,14,12,0.35);padding:10px 0 5px">Income</div>';
+  html += refi3Row('Unit 1 rent/mo', 'AsIsRent1', base.AsIsRent1, false, true);
+  if (units >= 2) html += refi3Row('Unit 2 rent/mo', 'AsIsRent2', base.AsIsRent2, false, true);
+  if (units >= 3) html += refi3Row('Unit 3 rent/mo', 'AsIsRent3', base.AsIsRent3, false, true);
+  if (units >= 4) html += refi3Row('Unit 4 rent/mo', 'AsIsRent4', base.AsIsRent4, false, true);
+  html += refi3Row('Other income/mo', 'OtherMonthlyIncome', base.OtherMonthlyIncome, false, true);
+  html += refi3Row('Vacancy', 'VacancyRate', base.VacancyRate, true, false);
+
+  html += '<div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(14,14,12,0.35);padding:10px 0 5px">Operating expenses</div>';
+  html += refi3Row('Property tax/yr', 'PropertyTax', base.PropertyTax, false, true);
+  html += refi3Row('Insurance/yr', 'Insurance', base.Insurance, false, true);
+  html += refi3Row('Water/yr', 'Utilities_Water', base.Utilities_Water, false, true);
+  html += refi3Row('Electricity/yr', 'Utilities_Electricity', base.Utilities_Electricity, false, true);
+  html += refi3Row('Heat/yr', 'Utilities_Heat', base.Utilities_Heat, false, true);
+  html += refi3Row('Rentals/yr', 'Rentals_WaterTanks_HeatPumps', base.Rentals_WaterTanks_HeatPumps, false, true);
+  html += refi3Row('Repairs & maint', 'RepairsAndMaintenanceRate', base.RepairsAndMaintenanceRate, true, false);
+  html += refi3Row('Prop. mgmt', 'PropertyManagementRate', base.PropertyManagementRate, true, false);
+  html += refi3Row('Lawn & snow/yr', 'LawnAndSnowMaintenance', base.LawnAndSnowMaintenance, false, true);
+  html += refi3Row('Pest control/yr', 'PestControl', base.PestControl, false, true);
+  html += refi3Row('Other expenses/yr', 'OtherExpenses', base.OtherExpenses, false, true);
+
+  html += '<div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(14,14,12,0.35);padding:10px 0 5px">Financing</div>';
+  html += refi3Row('Down payment', 'DownpaymentPercentage', base.DownpaymentPercentage, true, false);
+  html += refi3Row('Interest rate', 'InterestRate', base.InterestRate, true, false);
+  html += refi3Row('Amortization (yrs)', 'AmortizationPeriod', base.AmortizationPeriod, false, false);
+  html += refi3Row('Closing costs', 'ClosingCostsRate', base.ClosingCostsRate, true, false);
+
+  html += '<div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(14,14,12,0.35);padding:10px 0 5px">Renovation</div>';
+  html += refi3Row('Renovation budget', 'RenovationEstimate', base.RenovationEstimate||0, false, true);
+
+  const chequeUsed = Number(window._lastRefiResult && window._lastRefiResult.refinanceCheque) || 0;
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">'
+    + '<span style="font-size:12.5px;color:rgba(14,14,12,0.6)">Refinance cheque <span style="font-size:10px;color:rgba(14,14,12,0.35);font-weight:600">(from Refinance Projection, used in this analysis)</span></span>'
+    + '<span style="font-size:12.5px;font-weight:700;color:var(--gold)">' + fmt$(chequeUsed) + '</span>'
+    + '</div>';
+
+  el.innerHTML = html;
+}
+
+async function runPostRefiProjection() {
+  const btn = document.getElementById('refi3-run-btn');
+  const loadEl = document.getElementById('refi3-load');
+  const resultsWrap = document.getElementById('refi3-results-wrap');
+  btn.disabled = true;
+  loadEl.style.display = 'block';
+  loadEl.innerHTML = '<div style="font-size:12px;color:rgba(14,14,12,0.5)">Analyzing the post-refi numbers…</div>';
+  resultsWrap.style.display = 'none';
+
+  window._refi3Values = {};
+  document.querySelectorAll('[data-refi3-key]').forEach(function(input) {
+    window._refi3Values[input.dataset.refi3Key] = input.value;
+  });
+
+  const base = window._level2FinalPayload || withAssumptions || {};
+  const refi3Payload = Object.assign({}, base, window._refi3Values);
+  refi3Payload.PropertyAskingPrice = refi3Payload.PropertyPuchasePrice; // ARV becomes the new asking price too
+
+  // The plain refinance cheque amount, exactly as the sheet calculated it —
+  // no sign flip here. The sheet's own formulas handle whether/how this
+  // reduces total cash required.
+  const refiChequeAmt = Number(window._lastRefiResult && window._lastRefiResult.refinanceCheque) || 0;
+  refi3Payload.RefinanceCheque = refiChequeAmt;
+
+  const finalPayload = applyAssumptions(refi3Payload);
+  finalPayload.userEmail = getEmail() || '';
+  finalPayload.AnalysisStage = 'post-refi';
+  window._refi3FinalPayload = finalPayload;
+
+  try {
+    const resp = await fetch(PROXY_URL, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(finalPayload)
+    });
+    if (!resp.ok) { const t = await resp.text(); throw new Error('Proxy error ' + resp.status + ': ' + t.slice(0,200)); }
+    const result = await resp.json();
+    if (result.error) throw new Error('Sheet error: ' + result.error);
+
+    resultsWrap.style.display = 'block';
+    renderResults(result, '-refi3', finalPayload);
+  } catch (err) {
+    resultsWrap.style.display = 'block';
+    document.getElementById('verd-insight-refi3').innerHTML = '<div class="err" style="background:rgba(224,82,82,0.08);border:1px solid rgba(224,82,82,0.2);border-radius:9px;padding:12px 14px;font-size:12px;color:rgba(14,14,12,0.7)">Could not run post-refi projection: ' + err.message + '</div>';
+  } finally {
+    btn.disabled = false;
+    loadEl.style.display = 'none';
+  }
+}
 
 async function readListing() {
   const paste = document.getElementById('paste-area').value.trim();
@@ -952,10 +2041,6 @@ async function readListing() {
     html += row('Closing costs', dispPct(withAssumptions.ClosingCostsRate), isConfirmed('ClosingCostsRate'), 'ClosingCostsRate', 'number');
     html += row('CMHC premium',  withAssumptions.CMHCInsurancePremium > 0 ? fmt$(withAssumptions.CMHCInsurancePremium) : '$0', isConfirmed('CMHCInsurancePremium'), 'CMHCInsurancePremium', 'number');
 
-    // RENOVATION
-    html += secHdr('Renovation');
-    html += row('Renovation budget', fmt$(withAssumptions.RenovationEstimate||0), false, 'RenovationEstimate', 'number');
-
     document.getElementById('extracted-box').innerHTML = html;
 
     // Calculate confidence score
@@ -995,8 +2080,6 @@ async function readListing() {
       {key:'AmortizationPeriod',           confirmed: isConfirmed('AmortizationPeriod')},
       {key:'ClosingCostsRate',             confirmed: isConfirmed('ClosingCostsRate')},
       {key:'CMHCInsurancePremium',         confirmed: isConfirmed('CMHCInsurancePremium')},
-      // Renovation
-      {key:'RenovationEstimate',           confirmed: false},                              // always assumed
     ];
     const relevantFields = screenFields;
     const confirmedCount = screenFields.filter(f => f.confirmed).length;
@@ -1028,10 +2111,13 @@ async function readListing() {
     }
     // Never block — always allow sending
     document.getElementById('run-btn').disabled = false;
-    document.getElementById('run-btn').textContent = 'Send to calculator & run analysis →';
+    document.getElementById('run-btn').textContent = 'Run As-Is Analysis →';
 
     hide('load-area');
     show('step-confirm');
+    show('property-summary');
+    document.getElementById('ttab-analysis').disabled = false;
+    getVeraInsights();
 
   } catch(e) {
     hide('load-area');
@@ -1042,10 +2128,10 @@ async function readListing() {
 
 async function runNumbers() {
   if(!extractedData) return;
-  hideErr();
+  hideRunErr();
   hide('step-results');
-  show('load-area');
-  setLoad('Sending to your Google Sheet… this may take up to 30 seconds on first use.');
+  show('run-load-area');
+  setRunLoad('Analyzing the numbers… this may take up to 30 seconds on first use.');
   document.getElementById('run-btn').disabled = true;
 
   // Apply all assumptions — send complete payload, no nulls
@@ -1055,6 +2141,7 @@ async function runNumbers() {
   Object.assign(baseData, editedAssumptions);
   const payload = applyAssumptions(baseData);
   payload.userEmail = getEmail() || '';
+  payload.AnalysisStage = 'as-is';
 
   try {
     const resp = await fetch(PROXY_URL, {
@@ -1073,23 +2160,27 @@ async function runNumbers() {
     window._lastRawResult = result;
     console.log('VERA calculator raw response:', result);
 
+    document.getElementById('level1-results-wrap').style.display = 'block';
     renderResults(result);
+    fetchAndRenderGdsTdsForProperty();
     window._lastResult = result;
     saveAnalysis(withAssumptions, result);
-    hide('load-area');
     showAnalysisTab();
     document.getElementById('tp-analysis').scrollTop = 0;
 
   } catch(e) {
-    hide('load-area');
-    showErr(e.message);
+    showRunErr(e.message);
+  } finally {
+    hide('run-load-area');
     document.getElementById('run-btn').disabled = false;
   }
 }
 
-function renderResults(r) {
-  const units  = Number(extractedData.NumberofUnits)||1;
-  const reno   = Number(extractedData.RenovationEstimate)||0;
+function renderResults(r, suffix, dataOverride) {
+  suffix = suffix || '';
+  const srcData = dataOverride || extractedData;
+  const units  = Number(srcData.NumberofUnits)||1;
+  const reno   = Number(srcData.RenovationEstimate)||0;
 
   // Read from the calculator's actual output: the original nested structure
   // (r.roi.cashOnCash, r.capRate, r.financing.mortgageAmount, etc.)
@@ -1107,7 +2198,7 @@ function renderResults(r) {
   const dscr = monthlyMtg>0 ? (noi/(monthlyMtg*12)) : 0;
 
   // ── Property inputs not returned by the calculator — pulled from confirmed listing data ──
-  const a = withAssumptions || extractedData || {};
+  const a = dataOverride || withAssumptions || extractedData || {};
   const purchasePrice = Number(a.PropertyPuchasePrice||a.PropertyAskingPrice)||0;
   const amortYears   = Number(a.AmortizationYears||a.AmortizationPeriod||r.financing?.amortizationPeriod)||25;
   const interestPct  = Number(a.InterestRate)||5; // whole-number percent, e.g. 5 means 5%
@@ -1181,31 +2272,52 @@ function renderResults(r) {
   }
 
   // ── Verdict, per your book's Ch.15 "Level 1 Property Analysis" criteria ──
-  // Turnkey requires ALL FIVE: cap rate 5-6%+, cash flow/unit $200-$600/mo, annual cash flow 10%+ of purchase price,
-  // cash-on-cash 7%+, total ROI 20%+ (25%+ in a favorable market).
-  // BRRRR (has a renovation budget) is judged against higher post-reno targets: cap 6%+, CoC 10%+, ROI 25%+, same 10%+ annual CF bar.
-  // 1% rule: relaxes to 0.75%+ for BRRRR properties specifically (book's explicit stretch allowance).
-  // Floor for any GO verdict: monthly cash flow can't be negative, and cap rate can't be below 3%.
+  // Turnkey requires ALL THREE: cap rate 5-6%+, cash flow/unit $200+/mo (no cap), total ROI 20%+.
+  // Cash-on-cash was removed as a separate criterion — it overlaps with cash flow/unit
+  // as the same underlying signal in different units, so the metric is kept for informational
+  // display in the ROI breakdown, but is no longer part of the pass/fail gate.
+  // (Annual cash flow as a % of price is deliberately not used — it duplicates cash flow/unit as a signal.)
+  // BRRRR (has a renovation budget, or a clear path to one) is judged against higher post-reno targets on
+  // cap rate and cash-on-cash — total ROI target is the same 20%+ used for turnkey, not a higher bar.
+  // 1% rule relaxes to 0.75%+ for BRRRR properties specifically (book's explicit stretch allowance).
+  // No-Go floor: total ROI below 20%, 1% rule below 0.75%, or DSCR below 0.75 — any one of these means
+  // the property isn't fundamentally viable, regardless of renovation potential.
   // Note: your book also screens Price per Unit against local market zones (Upper Luxury / Median / Lower Median / War-Ghetto) —
   // that isn't wired in below since the app doesn't have a price-per-unit market-zone data source yet.
   const tkCapRate  = cap    >= 0.05;
   const tkCFUnit   = cfUnit >= 200;
-  const tkCOC      = coc    >= 0.07;
   const tkTotalROI = totROI >= 0.20;
-  const tkAnnualCF = purchasePrice>0 && annualCFYr1 >= 0.10*purchasePrice;
-  const meetsTurnkey = tkCapRate && tkCFUnit && tkCOC && tkTotalROI && tkAnnualCF;
+  const meetsTurnkey = tkCapRate && tkCFUnit && tkTotalROI;
 
   const brrrrCapAfter = cap    >= 0.06;
-  const brrrrCOC       = coc   >= 0.10;
-  const brrrrTotalROI  = totROI>= 0.25;
+  const brrrrTotalROI  = totROI>= 0.20;
+
+  // Explicit No-Go floor — fails if ANY of these fundamental viability checks fail.
+  // Explicit No-Go floor — a BRRRR candidate is EXPECTED to fall short of
+  // turnkey on cap rate, cash flow, total ROI, and DSCR (that's the entire
+  // point of the renovation). What actually disqualifies a property into
+  // No-Go is cash-on-cash well below the old 7% bar — a sign the numbers
+  // don't work even as a starting point for a renovation story.
+  //
+  // NOTE: "gross rent deeply below break-even" was also specified as a
+  // No-Go signal, but break-even rent is defined as grossRent - monthlyCF,
+  // which makes "gross rent < break-even" mathematically identical to
+  // "cash flow < 0" — already handled in its own branch above (with the
+  // utility-fix carve-out). Flagging this rather than shipping a check
+  // that can never actually fire at this point in the logic.
+  // No-Go floor: cash-on-cash well below 7%, total ROI well below 20% (using
+  // half the target — 10% — as a concrete number for "well below"; flagging
+  // this interpretation rather than guessing silently), DSCR below 0 (the
+  // property doesn't even cover its own operating expenses), or 1% rule
+  // below 0.75% (the relaxed BRRRR floor itself, not the stricter 1.00%
+  // turnkey target).
+  const failsNoGoFloor = totROI < 0.10 || dscr < 0 || (onePctRule!=null && onePctRule < 0.75);
 
   // Specific, numbers-first descriptions of whatever's missing — used in NO-GO insight text
   // so the coaching is concrete ("$188/mo vs $200+ target") instead of just naming the category.
   const missDetail = [
     !tkCapRate  && `cap rate (${fmtP(cap)} vs 5%+ target)`,
     !tkCFUnit   && `cash flow per unit (${fmt$(cfUnit)}/mo vs $200+ target)`,
-    !tkAnnualCF && `annual cash flow (${fmt$(annualCFYr1)} vs ${fmt$(purchasePrice*0.10)}+ target)`,
-    !tkCOC      && `cash-on-cash (${fmtP(coc)} vs 7%+ target)`,
     !tkTotalROI && `total ROI (${fmtP(totROI)} vs 20%+ target)`,
   ].filter(Boolean);
 
@@ -1214,104 +2326,370 @@ function renderResults(r) {
   // grading against turnkey thresholds.
   function brrrrStrategyLines(){
     const lines = [];
+
+    // Explicit, itemized parameters worth adjusting — named directly, not
+    // just implied by the metric-by-metric breakdown below.
+    const recommended = [];
+    if ((Number(a.Utilities_Heat)||0) > 0 || (Number(a.Utilities_Electricity)||0) > 0) recommended.push('Shift electricity and heat to tenant-metered billing');
+    if (!tkCFUnit) recommended.push('Increase rent toward market rate');
+    if (!tkCFUnit || dscr < 1.2) recommended.push('Reduce operating expenses where possible');
+    if (!brrrrCapAfter || !brrrrTotalROI) recommended.push('Negotiate a lower purchase price');
+    if (recommended.length) {
+      lines.push(`Recommended parameters to improve: ${recommended.join('; ')}.`);
+    }
+
     lines.push(brrrrCapAfter
       ? `Cap rate is already ${fmtP(cap)} — above the 6%+ post-stabilization target.`
       : `Cap rate is ${fmtP(cap)} as-is — expected pre-renovation. Target 6%+ after stabilization, through renovation and rent optimization.`);
-    const cfOk = tkCFUnit && tkAnnualCF;
-    lines.push(cfOk
-      ? `Cash flow already clears turnkey-level benchmarks (${fmt$(cfUnit)}/unit/mo, ${fmt$(annualCFYr1)}/yr) even before renovation.`
-      : `Cash flow is ${fmt$(cfUnit)}/unit/mo (${fmt$(annualCFYr1)}/yr) as-is — normal during the renovation phase, as long as income at least covers expenses. Time your purchase to avoid high seasonal costs, like winter heating, during a vacant reno period. Target post-renovation: 10%+ of purchase price annually.`);
-    lines.push(brrrrCOC
-      ? `Cash-on-cash ROI is already ${fmtP(coc)} — above the 10%+ post-improvement target.`
-      : `Cash-on-cash ROI is ${fmtP(coc)} as-is — expected to be low pre-stabilization given renovation costs. Target 10%+ once improvements are complete.`);
+    lines.push(tkCFUnit
+      ? `Cash flow already clears the turnkey benchmark (${fmt$(cfUnit)}/unit/mo) even before renovation.`
+      : noi >= 0
+      ? `Cash flow is ${fmt$(cfUnit)}/unit/mo as-is — below target, but income still covers operating expenses during the renovation period. Time your purchase to avoid high seasonal costs, like winter heating, during a vacant reno period. Target post-renovation: $200+/unit/mo.`
+      : `Cash flow is ${fmt$(cfUnit)}/unit/mo as-is, and income doesn't fully cover operating expenses yet — worth planning for that gap during the renovation period rather than assuming it self-corrects. Target post-renovation: $200+/unit/mo.`);
     lines.push(brrrrTotalROI
-      ? `Total ROI is already ${fmtP(totROI)} — above the 25%+ post-renovation target.`
-      : `Total ROI is ${fmtP(totROI)} as-is — likely modest before renovation. Target 25%+ post-renovation if your numbers and the local market align.`);
+      ? `Total ROI is already ${fmtP(totROI)} — above the 20%+ post-renovation target.`
+      : `Total ROI is ${fmtP(totROI)} as-is — likely modest before renovation. Target 20%+ post-renovation if your numbers and the local market align.`);
+    lines.push(dscr>=1.2
+      ? `DSCR is already ${dscr.toFixed(2)} — above the 1.20+ lender benchmark.`
+      : `DSCR is ${dscr.toFixed(2)} as-is — below the 1.20+ lenders typically look for. Should improve alongside cash flow once rent and expenses are optimized.`);
     const pzLine = priceZoneLine();
     if (pzLine) lines.push(pzLine);
     return lines;
   }
 
-  let type,icon,color,bg,border,title,insight;
-  if(moCF<0 || cap<0.03){
+  let type,icon,color,bg,border,title,insight,utilAlreadyCovered=false;
+  let heatCost=0, elecCost=0, utilAnnual=0, moCFAfterUtilFix=moCF;
+  let level2MeetsTurnkey = null; // set only inside the isLevel2 branch below
+
+  // Cap rate below 3% is a genuine structural floor — UNLESS it's driven by
+  // vacancy or significant under-renting that renovation and a rent reset to
+  // market would fix. That's the actual BRRRR thesis for a vacant or
+  // family-occupied property, not a dead deal — VERA was previously only
+  // checking whether utility costs could be shifted to tenants, and never
+  // considered the equally common rent-optimization path.
+  const isAsIsForRentCheck = suffix === '';
+  let marketRentTotal = 0, rentGapMonthly = 0, capAtMarketRent = cap, moCFAtMarketRent = moCF;
+  if (isAsIsForRentCheck) {
+    marketRentTotal = ['Unit1Type','Unit2Type','Unit3Type','Unit4Type']
+      .slice(0, Math.min(Number(a.NumberofUnits)||1, 4))
+      .reduce((s,k) => s + estimateMarketRentForUnit(a.PropertyNeighborhood, a[k], a.ListingDescription, true), 0);
+    rentGapMonthly = Math.max(0, marketRentTotal - grossRentMo);
+    capAtMarketRent = purchasePrice > 0 ? (noi + rentGapMonthly*12) / purchasePrice : cap;
+    moCFAtMarketRent = moCF + rentGapMonthly;
+  }
+  const rentOptimizationFixesIt = isAsIsForRentCheck && rentGapMonthly > 0 && capAtMarketRent >= 0.03 && moCFAtMarketRent >= 0;
+
+  if(cap<0.03 && !rentOptimizationFixesIt){
     type='NO-GO';icon='✗';color='#E05252';bg='rgba(180,50,50,0.1)';border='rgba(180,50,50,0.3)';
     title='This deal does not meet the criteria';
-    insight = [moCF<0
-      ? `Negative monthly cash flow (${fmt$(moCF)}/mo) fails the minimum bar before any other criteria are considered.`
-      : `Cap rate of ${fmtP(cap)} is below the 3% minimum floor required before any other criteria are considered.`];
+    insight = [`Cap rate of ${fmtP(cap)} is below the 3% minimum floor required before any other criteria are considered.`];
+  } else if(cap<0.03 && rentOptimizationFixesIt){
+    type='BRRRR';icon='⟳';color='#C4972A';bg='rgba(196,151,42,0.08)';border='rgba(196,151,42,0.3)';
+    title='Vacant or under-rented — but a fixable cause';
+    insight = [`As-is rent is ${fmt$(grossRentMo)}/mo, which is why cap rate (${fmtP(cap)}) and cash flow look severely negative — but comparable units in the area rent for roughly ${fmt$(marketRentTotal)}/mo combined. At that market rent, cap rate would move to roughly ${fmtP(capAtMarketRent)} and monthly cash flow to roughly ${fmt$(moCFAtMarketRent)} — the core BRRRR thesis here is renovating a vacant or under-rented property up to market rent, not fixing an operating problem. Confirm the real achievable rent for this area before ruling this one out.`];
+    utilAlreadyCovered = false;
+  } else if(moCF<0){
+    // Negative cash flow alone isn't automatically fatal — check whether it's
+    // specifically driven by owner-paid utilities that could realistically be
+    // shifted to tenants. If fixing that alone would flip it positive, this is
+    // a genuine value-add opportunity, not a dead deal — same reasoning VERA's
+    // own chat correctly walked through when asked directly.
+    heatCost = Number(a.Utilities_Heat)||0;
+    elecCost = Number(a.Utilities_Electricity)||0;
+    utilAnnual = heatCost + elecCost;
+    moCFAfterUtilFix = utilAnnual > 0 ? moCF + (utilAnnual/12) : moCF;
+
+    if (utilAnnual > 0 && moCFAfterUtilFix >= 0) {
+      type='BRRRR';icon='⟳';color='#C4972A';bg='rgba(196,151,42,0.08)';border='rgba(196,151,42,0.3)';
+      title='Negative cash flow — but a fixable cause';
+      insight = [`As-is, monthly cash flow is ${fmt$(moCF)} — negative. But the owner is currently paying ${fmt$(utilAnnual)}/yr in utilities that are typically tenant-paid in comparable buildings. If that's shifted to tenant-metered billing, cash flow would move to roughly ${fmt$(moCFAfterUtilFix)}/mo — cash-flow positive without touching rent. Worth investigating the metering situation before ruling this one out.`];
+      utilAlreadyCovered = true;
+    } else {
+      type='NO-GO';icon='✗';color='#E05252';bg='rgba(180,50,50,0.1)';border='rgba(180,50,50,0.3)';
+      title='This deal does not meet the criteria';
+      insight = [`Negative monthly cash flow (${fmt$(moCF)}/mo) fails the minimum bar before any other criteria are considered.` + (utilAnnual > 0 ? ` Even shifting the ${fmt$(utilAnnual)}/yr in owner-paid utilities to tenants wouldn't fully close the gap.` : '')];
+      if (utilAnnual > 0) utilAlreadyCovered = true;
+    }
   } else if(meetsTurnkey){
     type='TURNKEY';icon='✓';color='#3A8B5F';bg='rgba(42,107,74,0.08)';border='rgba(42,107,74,0.3)';
     title='Turnkey — meets investment criteria';
-    insight = [`Clears all five turnkey thresholds day one: cap rate (${fmtP(cap)}), cash flow per unit (${fmt$(cfUnit)}/mo), annual cash flow (${fmt$(annualCFYr1)}), cash-on-cash (${fmtP(coc)}), and total ROI (${fmtP(totROI)}).`];
+    insight = [`Clears all three turnkey thresholds day one: cap rate (${fmtP(cap)}), cash flow per unit (${fmt$(cfUnit)}/mo), and total ROI (${fmtP(totROI)}).`];
     { const pzLine = priceZoneLine(); if (pzLine) insight.push(pzLine); }
   } else if(reno>0){
     type='BRRRR';icon='⟳';color='#C4972A';bg='rgba(196,151,42,0.08)';border='rgba(196,151,42,0.3)';
     title='BRRRR play — renovation budget entered';
     insight = [`A ${fmt$(reno)} renovation budget means this is evaluated as a BRRRR play, not turnkey. Here's the strategy, metric by metric:`, ...brrrrStrategyLines()];
   } else if(missDetail.length===1){
-    // Misses exactly one of the five turnkey criteria — that's not a renovation
+    // Misses exactly one of the four turnkey criteria — that's not a renovation
     // thesis, it's a strong deal with one soft spot. Say so honestly rather than
     // dressing a near-turnkey deal up as a BRRRR play with no actual reno signal.
     type='TURNKEY';icon='✓';color='#3A8B5F';bg='rgba(42,107,74,0.08)';border='rgba(42,107,74,0.3)';
     title='Turnkey — strong deal, one metric short';
-    insight = [`Clears cap rate, cash flow per unit, cash-on-cash, and total ROI convincingly. The only shortfall: ${missDetail[0]} — common at this price point, and it doesn't offset how strong the rest of this deal is.`];
+    insight = [`Clears cap rate, cash flow per unit, and total ROI convincingly. The only shortfall: ${missDetail[0]} — common at this price point, and it doesn't offset how strong the rest of this deal is.`];
     { const pzLine = priceZoneLine(); if (pzLine) insight.push(pzLine); }
-  } else if(missDetail.length<=4){
-    // Multiple criteria fall short with no renovation budget entered — genuinely
-    // worth evaluating as a BRRRR play, per-metric strategy from the book.
+  } else if(!failsNoGoFloor){
+    // Multiple turnkey criteria fall short with no renovation budget entered, but
+    // the property still clears the fundamental viability floor (ROI, 1% rule,
+    // DSCR) — genuinely worth evaluating as a BRRRR play, per-metric strategy
+    // from the book.
     type='BRRRR';icon='⟳';color='#C4972A';bg='rgba(196,151,42,0.08)';border='rgba(196,151,42,0.3)';
     title='Renovation could close the gap';
     insight = [`Doesn't clear every turnkey threshold as-is — short on ${missDetail.join(', ')}. Here's the strategy, metric by metric:`, ...brrrrStrategyLines()];
   } else {
     type='NO-GO';icon='✗';color='#E05252';bg='rgba(180,50,50,0.1)';border='rgba(180,50,50,0.3)';
-    title='Does not meet turnkey criteria';
-    insight = [`Cash flow and cap rate clear the minimum floor, but this falls short on every turnkey benchmark: ${missDetail.join(', ')}. Not enough here to build a renovation thesis on.`];
+    title='Does not meet the criteria';
+    const floorMiss = [
+      totROI < 0.10 && `total ROI (${fmtP(totROI)} vs 10%+ floor)`,
+      dscr < 0 && `DSCR (${dscr.toFixed(2)} — doesn't even cover operating expenses)`,
+      (onePctRule!=null && onePctRule < 0.75) && `1% rule (${onePctRule.toFixed(2)}% vs 0.75%+ floor)`,
+    ].filter(Boolean);
+    insight = [`Falls short on every turnkey benchmark (${missDetail.join(', ')}), and doesn't clear the fundamental viability floor either: ${floorMiss.join(', ')}. Not enough here to build a BRRRR strategy on.`];
   }
 
-  const vb = document.getElementById('verd-box');
-  vb.style.background=bg; vb.style.borderColor=border;
-  document.getElementById('verd-type').style.color=color;
-  document.getElementById('verd-type').textContent=`${icon} ${type}`;
-  document.getElementById('verd-title').style.color=color;
-  document.getElementById('verd-title').textContent=title;
-  { const utilLine = utilityOpportunityLine(); if (utilLine) insight.push(utilLine); }
-  document.getElementById('verd-insight').innerHTML = insight.map((line,i)=>`<div style="${i>0?'margin-top:7px':''}">${i>0?'• ':''}${line}</div>`).join('');
+  const vb = document.getElementById('verd-box'+suffix);
+  const isLevel2 = suffix === '-l2';
 
-  // ── Key criteria checklist — the exact figures the verdict above was decided on. Targets switch to BRRRR post-reno thresholds when applicable ──
+  if (isLevel2 && window._lastResult) {
+    const l1 = window._lastResult;
+    const l1Data = withAssumptions || {};
+    const l1Cap = Number(l1.capRate) || 0;
+    const l1CF = Number(l1.monthlyCashflow) || 0;
+    const l1ROI = Number(l1.roi && l1.roi.totalROI) || 0;
+
+    // What actually changed between As-Is Analysis's assumptions and Post-Reno Analysis's —
+    // this is the real "strategy" summary, built from real deltas, not a
+    // generic label.
+    const changes = [];
+    let rentDelta = 0;
+    for (let i = 1; i <= units; i++) {
+      const before = Number(l1Data['AsIsRent'+i]) || 0;
+      const after = Number(a['AsIsRent'+i]) || 0;
+      if (after !== before) rentDelta += (after - before);
+    }
+    if (rentDelta > 0) changes.push(`rent increased by ${fmt$(rentDelta)}/mo total`);
+    else if (rentDelta < 0) changes.push(`rent reduced by ${fmt$(Math.abs(rentDelta))}/mo total`);
+
+    const expenseFields = ['PropertyTax','Insurance','Utilities_Water','Utilities_Electricity','Utilities_Heat','Rentals_WaterTanks_HeatPumps','OtherExpenses'];
+    let expenseDelta = 0;
+    expenseFields.forEach(f => { expenseDelta += (Number(a[f])||0) - (Number(l1Data[f])||0); });
+    if (expenseDelta < 0) changes.push(`operating expenses reduced by ${fmt$(Math.abs(expenseDelta))}/yr`);
+    else if (expenseDelta > 0) changes.push(`operating expenses increased by ${fmt$(expenseDelta)}/yr`);
+
+    const priceDelta = (Number(a.PropertyPuchasePrice)||0) - (Number(l1Data.PropertyPuchasePrice)||0);
+    if (priceDelta < 0) changes.push(`purchase price reduced by ${fmt$(Math.abs(priceDelta))}`);
+    else if (priceDelta > 0) changes.push(`purchase price increased by ${fmt$(priceDelta)}`);
+
+    const renoAmt = Number(a.RenovationEstimate) || 0;
+    changes.push(`assumed a ${fmt$(renoAmt)} renovation budget`);
+
+    const cfDelta = moCF - l1CF;
+    const capDelta = cap - l1Cap;
+    const roiDelta = totROI - l1ROI;
+
+    // Binary verdict for Post-Reno: does the renovation actually get this
+    // property to turnkey criteria? Same three gating criteria used
+    // everywhere else (cap rate, cash flow/unit, total ROI), now checked
+    // against the post-reno numbers.
+    const meetsTurnkeyPostReno = tkCapRate && tkCFUnit && tkTotalROI;
+    level2MeetsTurnkey = meetsTurnkeyPostReno;
+
+    title = meetsTurnkeyPostReno
+      ? 'Turnkey — the renovation gets you there'
+      : 'No-Go — still short of turnkey after renovation';
+    color = meetsTurnkeyPostReno ? '#3A8B5F' : '#E05252';
+    icon = meetsTurnkeyPostReno ? '✓' : '✗';
+    bg = meetsTurnkeyPostReno ? 'rgba(42,107,74,0.08)' : 'rgba(180,50,50,0.1)';
+    border = meetsTurnkeyPostReno ? 'rgba(42,107,74,0.3)' : 'rgba(180,50,50,0.3)';
+
+    const cfTurnedPositive = l1CF < 0 && moCF >= 0;
+    const cfLine = cfTurnedPositive
+      ? `cash flow turned from negative (${fmt$(l1CF)}) to positive (${fmt$(moCF)})`
+      : `monthly cash flow moved from ${fmt$(l1CF)} to ${fmt$(moCF)} (${cfDelta>=0?'+':''}${fmt$(cfDelta)})`;
+
+    insight = [
+      `Changes made: ${changes.join(', ')}.`,
+      `Result: ${cfLine}, cap rate from ${fmtP(l1Cap)} to ${fmtP(cap)} (${capDelta>=0?'+':''}${fmtP(Math.abs(capDelta))}), total ROI from ${fmtP(l1ROI)} to ${fmtP(totROI)} (${roiDelta>=0?'+':''}${fmtP(Math.abs(roiDelta))}).`,
+      meetsTurnkeyPostReno
+        ? `These improvements get the property to turnkey criteria post-renovation — worth the investment, pending confirmation of the assumptions above.`
+        : `Even with these improvements, the property still doesn't clear turnkey criteria post-renovation — not worth the investment on these assumptions. See the criteria table below for exactly where it falls short.`
+    ];
+  }
+
+  const isRefi3 = suffix === '-refi3';
+  if (isRefi3) {
+    // The real question at this stage isn't the generic BRRRR/Turnkey
+    // criteria table — it's specifically: after taking on the new, larger
+    // mortgage from refinancing at ARV, does this property still cash-flow
+    // positive? If not, the BRRRR doesn't work, no matter how good the
+    // refinance cheque itself was — that cash came out, but if it's now
+    // being eaten by a negative monthly position, this isn't a good deal.
+    const refi = window._lastRefiResult || {};
+    const cheque = Number(refi.refinanceCheque) || 0;
+    const pctReturnedRaw = Number(refi.pctFundsReturned) || 0; // sheet always returns this as a fraction, e.g. 0.683 or 1.6527 for 165.27%
+    const pctReturned = pctReturnedRaw * 100;
+    const stillCashflowPositive = moCF >= 0;
+
+    title = stillCashflowPositive
+      ? 'Cash-flow positive post-refi — this BRRRR works'
+      : 'Cash-flow negative post-refi — this BRRRR is a No-Go';
+    color = stillCashflowPositive ? '#3A8B5F' : '#E05252';
+    icon = stillCashflowPositive ? '✓' : '✗';
+    bg = stillCashflowPositive ? 'rgba(42,107,74,0.08)' : 'rgba(180,50,50,0.1)';
+    border = stillCashflowPositive ? 'rgba(42,107,74,0.3)' : 'rgba(180,50,50,0.3)';
+
+    const benchmarkLine = pctReturned >= 100
+      ? `Perfect BRRRR — 100%+ of your initial investment recouped (${pctReturned.toFixed(1)}%).`
+      : pctReturned >= 80
+      ? `Good BRRRR — ${pctReturned.toFixed(1)}% of your initial investment recouped.`
+      : pctReturned >= 60
+      ? `Beginner BRRRR — ${pctReturned.toFixed(1)}% of your initial investment recouped, above the 60% minimum.`
+      : `Below the 60% minimum — only ${pctReturned.toFixed(1)}% of your initial investment recouped.`;
+
+    // ROI typically jumps here — not because the deal itself changed, but
+    // because the capital base it's measured against just shrank. Pulling
+    // cash out via the refinance means the same dollar return is now
+    // divided by a smaller amount of money actually left in the deal.
+    let roiJumpLine = '';
+    const l2Roi = Number(window._level2LastResult && window._level2LastResult.roi && window._level2LastResult.roi.totalROI) || 0;
+    if (l2Roi > 0 && totROI > l2Roi) {
+      roiJumpLine = `Total ROI moved from ${fmtP(l2Roi)} to ${fmtP(totROI)} — not because the deal got better, but because refinancing pulled cash back out, leaving less of your own money still tied up. The same dollar return, measured against a smaller amount invested, is a higher percentage return.`;
+    }
+
+    insight = stillCashflowPositive
+      ? [
+          `At the new post-refi mortgage, monthly cash flow is ${fmt$(moCF)} — still positive.`,
+          `Refinance cheque: ${fmt$(Math.abs(cheque))}. ${benchmarkLine}`,
+          roiJumpLine,
+          `This is the real test of a BRRRR: pulling cash out AND staying cash-flow positive on the new loan. This one clears it.`
+        ].filter(Boolean)
+      : [
+          `At the new post-refi mortgage, monthly cash flow is ${fmt$(moCF)} — negative.`,
+          `Refinance cheque: ${fmt$(Math.abs(cheque))}. ${benchmarkLine}`,
+          `Even with cash returned via the refinance, the property can't carry the new, larger mortgage payment month to month. On these assumptions, this BRRRR doesn't work — the refinance would need a smaller loan (lower ARV or LTV), higher rent, or lower expenses to fix this.`
+        ];
+  }
+
+  vb.style.background=bg; vb.style.borderColor=border;
+  document.getElementById('verd-type'+suffix).style.color=color;
+
+  const typeLabel = isLevel2
+    ? (level2MeetsTurnkey ? 'Verdict: Turnkey' : 'Verdict: No-Go')
+    : suffix === '-refi3'
+    ? 'Post-Refinance Position'
+    : (type === 'BRRRR' ? 'Verdict: BRRRR Potential' : type === 'TURNKEY' ? 'Verdict: Turnkey' : 'Verdict: No-Go');
+  document.getElementById('verd-type'+suffix).textContent=`${icon} ${typeLabel}`;
+  document.getElementById('verd-title'+suffix).style.color=color;
+  document.getElementById('verd-title'+suffix).textContent=title;
+  if (!utilAlreadyCovered) { const utilLine = utilityOpportunityLine(); if (utilLine) insight.push(utilLine); }
+  document.getElementById('verd-insight'+suffix).innerHTML = insight.map((line,i)=>`<div style="${i>0?'margin-top:7px':''}">${i>0?'• ':''}${line}</div>`).join('');
+  if (!isLevel2 && suffix !== '-refi3') {
+    window._lastVerdictType = type;
+    window._lastInsightLines = insight;
+    window._lastUtilFix = utilAnnual > 0 ? { heatCost, elecCost, utilAnnual, moCFAfterUtilFix } : null;
+  } else if (isLevel2) {
+    window._level2Insight = insight;
+    window._level2MeetsTurnkey = level2MeetsTurnkey;
+  } else if (suffix === '-refi3') {
+    window._refi3Insight = insight;
+  }
+
+  // ── Key criteria checklist — the exact figures the verdict above was decided on.
+  // For As-Is specifically, the ENTIRE target set switches to match the actual
+  // verdict, not just individual rows — comparing a BRRRR-classified property
+  // against turnkey-level targets across the board is confusing and was the
+  // actual bug here: cap rate correctly switched to the post-reno target, but
+  // cash flow, ROI, DSCR, and gross rent silently stayed at turnkey levels.
+  // No-Go uses the same BRRRR-floor target set, since No-Go is defined by
+  // failing that floor — showing it explains exactly why.
   const isBRRRRview = type==='BRRRR';
-  const critRows = [
+  const isAsIs = !isLevel2 && !isRefi3;
+  const asIsUsesBrrrrTargets = isAsIs && (type === 'BRRRR' || type === 'NO-GO');
+  const critRows = isAsIs ? [
+    ['Cap rate', fmtP(cap), asIsUsesBrrrrTargets?'3-5%':'5-6%+', asIsUsesBrrrrTargets ? cap>=0.03 : tkCapRate],
+    ['Cash flow / unit', fmt$(cfUnit)+'/mo', asIsUsesBrrrrTargets?'May be below $200, even slightly negative':'$200+/mo', type==='BRRRR' ? true : (asIsUsesBrrrrTargets ? moCF>=0 : tkCFUnit)],
+    ['Total ROI', fmtP(totROI), asIsUsesBrrrrTargets?'10-20%':'20%+', asIsUsesBrrrrTargets ? totROI>=0.10 : tkTotalROI],
+    ['DSCR', dscr.toFixed(2), asIsUsesBrrrrTargets?'0-1.20':'1.20+', asIsUsesBrrrrTargets ? dscr>=0 : dscr>=1.2],
+    ['Gross rent', fmt$(grossRentMo), asIsUsesBrrrrTargets?'May be below break-even':`Break-even: ${fmt$(breakEvenRent)}`, type==='BRRRR' ? true : grossRentMo>=breakEvenRent],
+    ['1% rule', onePctRule!=null?onePctRule.toFixed(2)+'%':'—', asIsUsesBrrrrTargets?'0.75%+':'1.00%+', onePctRule!=null && onePctRule>=(asIsUsesBrrrrTargets?0.75:1)],
+  ] : [
     ['Cap rate', fmtP(cap), isBRRRRview?'6%+ (post-reno)':'5-6%+', isBRRRRview?brrrrCapAfter:tkCapRate],
-    ['Cash flow / unit', fmt$(cfUnit)+'/mo', '$200-$600/mo', tkCFUnit],
-    ['Annual cash flow', fmt$(annualCFYr1), purchasePrice>0?`10%+ of price (${fmt$(purchasePrice*0.10)})`:'10%+ of price', tkAnnualCF],
-    ['Cash-on-cash', fmtP(coc), isBRRRRview?'10%+ (post-reno)':'7%+', isBRRRRview?brrrrCOC:tkCOC],
-    ['Total ROI', fmtP(totROI), isBRRRRview?'25%+ (post-reno)':'20%+', isBRRRRview?brrrrTotalROI:tkTotalROI],
+    ['Cash flow / unit', fmt$(cfUnit)+'/mo', '$200+/mo', tkCFUnit],
+    ['Total ROI', fmtP(totROI), '20%+', tkTotalROI],
     ['DSCR', dscr.toFixed(2), '1.20+', dscr>=1.2],
     ['Gross rent', fmt$(grossRentMo), `Break-even: ${fmt$(breakEvenRent)}`, grossRentMo>=breakEvenRent],
     ['1% rule', onePctRule!=null?onePctRule.toFixed(2)+'%':'—', isBRRRRview?'0.75%+':'1.00%+', onePctRule!=null && onePctRule>=(isBRRRRview?0.75:1)],
   ];
-  document.getElementById('verd-criteria').innerHTML =
-    `<tr><th>Criteria</th><th>Actual</th><th>Target</th><th></th></tr>` +
+  document.getElementById('verd-criteria'+suffix).innerHTML =
+    `<tr><th>Criteria</th><th>${isLevel2 ? 'Post-Reno' : isRefi3 ? 'Post-Refi' : 'As-Is'}</th><th>Target</th><th></th></tr>` +
     critRows.map(([l,v,t,pass])=>`<tr><td>${l}</td><td>${v}</td><td style="color:rgba(14,14,12,0.45)">${t}</td><td style="text-align:center;color:${pass?'#3A8B5F':'#E05252'};font-weight:700">${pass?'✓':'✗'}</td></tr>`).join('');
 
   const cfBreak = r.cashflowBreakdown || {};
   const risk = r.risk || {};
 
   // ── Property summary ──
-  document.getElementById('summary-tbl').innerHTML=[
+  const summaryRows = [
     ['Address', a.PropertyAddress||'—'],
     ['Purchase price', fmt$(purchasePrice)],
     ['Down payment', fmt$(downAmt)+(a.DownpaymentPercentage!=null?` (${a.DownpaymentPercentage}%)`:'')],
     ['Mortgage amount', fmt$(mortgageAmt)],
     ['Interest rate', interestPct+'%'],
     ['Amortization', amortYears+' years'],
-    ['Closing costs', fmt$(closingCosts)],
-  ].map(([l,v])=>`<div class="trow"><span class="trl">${l}</span><span class="trv">${v}</span></div>`).join('')
-   + `<div class="trow emph"><span class="trl">Total cash required</span><span class="trv">${fmt$(totalCashReq)}</span></div>`;
+  ];
+  document.getElementById('summary-tbl'+suffix).innerHTML = summaryRows
+   .map(([l,v])=>`<div class="trow"><span class="trl">${l}</span><span class="trv">${v}</span></div>`).join('');
+
+  // ── Total cash required — the math. Shown on As-Is and Post-Reno only, so
+  // the number above is never a mystery lump sum: it's built transparently
+  // from down payment + closing costs (+ renovation, post-reno only), each
+  // shown as its own line.
+  if (!isRefi3) {
+    const renoForCashReq = Number(risk.renovationEstimate)||0;
+    const cashReqRows = [
+      ['Down payment', fmt$(downAmt)],
+      ['Closing costs', fmt$(closingCosts)],
+    ];
+    if (isLevel2) cashReqRows.push(['Renovation budget', fmt$(renoForCashReq)]);
+    const cashReqTotal = downAmt + closingCosts + (isLevel2 ? renoForCashReq : 0);
+    const cashreqEl = document.getElementById('cashreq-tbl'+suffix);
+    if (cashreqEl) {
+      cashreqEl.innerHTML = cashReqRows
+        .map(([l,v])=>`<div class="trow"><span class="trl">${l}</span><span class="trv">${v}</span></div>`).join('')
+        + `<div class="trow emph"><span class="trl">Total cash required ${isLevel2 ? 'post-reno' : 'as-is'}</span><span class="trv">${fmt$(cashReqTotal)}</span></div>`;
+    }
+  }
+
+  // ── Capital recovery — Post-Refi only. Every number here is already
+  // computed by the sheet (down payment, closing costs, renovation from the
+  // original Post-Reno run; refinance cheque from Refinance Projection) —
+  // this only adds/subtracts those existing figures, it doesn't recompute
+  // anything the sheet itself is responsible for.
+  if (isRefi3 && window._level2LastResult && window._lastRefiResult) {
+    const l2 = window._level2LastResult;
+    const origDown = Number(l2.cashRequired && l2.cashRequired.downpaymentAmount) || 0;
+    const origClosing = Number(l2.cashRequired && l2.cashRequired.closingCosts) || 0;
+    const origReno = Number(l2.risk && l2.risk.renovationEstimate) || 0;
+    const origInvested = origDown + origClosing + origReno;
+    const cheque = Math.abs(Number(window._lastRefiResult.refinanceCheque) || 0);
+    const stillTiedUp = origInvested - cheque;
+    const fullyRecovered = stillTiedUp <= 0;
+
+    let capHtml = [
+      ['Original capital invested (down payment + closing + renovation)', fmt$(origInvested)],
+      ['Refinance cheque received', fmt$(cheque)],
+    ].map(([l,v])=>`<div class="trow"><span class="trl">${l}</span><span class="trv">${v}</span></div>`).join('')
+      + `<div class="trow emph"><span class="trl">${fullyRecovered ? 'Capital recovered' : 'Capital still tied up in this deal'}</span><span class="trv" style="${fullyRecovered?'color:#3A8B5F':''}">${fullyRecovered ? fmt$(origInvested) + ' of ' + fmt$(origInvested) : fmt$(stillTiedUp)}</span></div>`;
+
+    if (fullyRecovered) {
+      const excessCash = Math.abs(stillTiedUp);
+      capHtml += `<div style="font-size:11.5px;color:#3A8B5F;padding:10px 14px 12px;line-height:1.6">This is a full-recovery BRRRR — every dollar of your original investment has come back out` + (excessCash > 0 ? `, plus an extra ${fmt$(excessCash)} in cash` : '') + `. From here, equity growth, cash flow, and appreciation are all pure gain on capital that's no longer tied up in this deal.</div>`;
+    }
+    document.getElementById('capital-recovery-tbl-refi3').innerHTML = capHtml;
+  }
 
   // ── Monthly cash flow — read straight from the sheet ──
-  document.getElementById('cf-big').textContent = fmt$(moCF);
-  document.getElementById('cf-big').style.color = moCF>=0?'#5FBF87':'#F0776E';
-  document.getElementById('cashflow-tbl').innerHTML=[
+  document.getElementById('cf-big'+suffix).textContent = fmt$(moCF);
+  document.getElementById('cf-big'+suffix).style.color = moCF>=0?'#5FBF87':'#F0776E';
+  document.getElementById('cashflow-tbl'+suffix).innerHTML=[
     ['Effective gross income (inc. vacancy loss)', fmt$(Number(cfBreak.effectiveGrossIncome)||0)],
     ['Total operating expenses', '-'+fmt$(Number(cfBreak.totalOperatingExpenses)||0)],
     ['Mortgage (P&I)', '-'+fmt$(monthlyMtg)],
@@ -1323,26 +2701,60 @@ function renderResults(r) {
   const annualRepairMaint = Number(risk.annualRepairMaintenance)||0;
   const renoEstimate      = Number(risk.renovationEstimate)||0;
   const negativeCFRisk    = annualCFYr1<0 ? Math.abs(annualCFYr1) : 0;
-  const totalRisk = annualVacancyLoss + annualRepairMaint + renoEstimate + negativeCFRisk;
-  document.getElementById('risk-tbl').innerHTML=[
+  const showReno = isLevel2;
+  const totalRisk = annualVacancyLoss + annualRepairMaint + (showReno ? renoEstimate : 0) + negativeCFRisk;
+  document.getElementById('risk-tbl'+suffix).innerHTML=[
     ['Annual vacancy loss', '-'+fmt$(annualVacancyLoss)],
     ['Annual repair & maintenance', '-'+fmt$(annualRepairMaint)],
-    ['Renovation (est.)', '-'+fmt$(renoEstimate)],
+    ...(showReno ? [['Renovation (est.)', '-'+fmt$(renoEstimate)]] : []),
     ...(negativeCFRisk>0 ? [['Negative annual cash flow', '-'+fmt$(negativeCFRisk)]] : []),
   ].map(([l,v])=>`<div class="trow"><span class="trl">${l}</span><span class="trv" style="color:#E05252">${v}</span></div>`).join('');
-  document.getElementById('risk-total').textContent = fmt$(totalRisk);
+  document.getElementById('risk-total'+suffix).textContent = fmt$(totalRisk);
 
   // ── ROI breakdown — all four figures the calculator returns for Year 1 ──
   const equityROI = Number(r.roi?.equityROI) || 0;
   const apprROI    = Number(r.roi?.appreciationROI) || 0;
-  document.getElementById('roi-grid').innerHTML=[
-    [fmtP(coc),'Cash-on-cash ROI',coc>=0.07?'#3A8B5F':'#C4972A'],
-    [fmtP(equityROI),'Equity ROI',null],
-    [fmtP(apprROI),'Appreciation ROI',null],
-    [fmtP(totROI),'Total ROI',totROI>=0.20?'#3A8B5F':'#C4972A'],
-  ].map(([v,l,c])=>
-    `<div class="kpi"><div class="kv" style="color:${c||'#0E0E0C'}">${v}</div><div class="kl">${l}</div></div>`
-  ).join('');
+
+  // Once capital invested hits zero or below (a full-recovery BRRRR), any
+  // "return on capital" percentage is mathematically undefined — dividing
+  // real gains by zero or negative capital produces the wild, meaningless
+  // swings seen upstream. Rather than show "Infinite" (confusing without a
+  // finance background) or a broken negative percentage (actively
+  // misleading), swap to the actual Year 1 dollar gains here instead —
+  // those numbers stay meaningful no matter what the capital base is.
+  let roiFullyRecovered = false;
+  if (isRefi3 && window._level2LastResult && window._lastRefiResult) {
+    const l2r = window._level2LastResult;
+    const origDown2 = Number(l2r.cashRequired && l2r.cashRequired.downpaymentAmount) || 0;
+    const origClosing2 = Number(l2r.cashRequired && l2r.cashRequired.closingCosts) || 0;
+    const origReno2 = Number(l2r.risk && l2r.risk.renovationEstimate) || 0;
+    const chequeAbs2 = Math.abs(Number(window._lastRefiResult.refinanceCheque) || 0);
+    roiFullyRecovered = (origDown2 + origClosing2 + origReno2 - chequeAbs2) <= 0;
+  }
+
+  if (roiFullyRecovered) {
+    const yr1CF = Number(r.fiveYear && r.fiveYear.annualCashflow && r.fiveYear.annualCashflow[0]) || 0;
+    const yr1Equity = Number(r.fiveYear && r.fiveYear.equity && r.fiveYear.equity[0]) || 0;
+    const yr1Appr = Number(r.fiveYear && r.fiveYear.appreciationGain && r.fiveYear.appreciationGain[0]) || 0;
+    const yr1Total = yr1CF + yr1Equity + yr1Appr;
+    document.getElementById('roi-grid'+suffix).innerHTML=[
+      [fmt$(yr1CF),'Cash flow gain'],
+      [fmt$(yr1Equity),'Equity gain'],
+      [fmt$(yr1Appr),'Appreciation gain'],
+      [fmt$(yr1Total),'Total Year 1 gain'],
+    ].map(([v,l])=>
+      `<div class="kpi"><div class="kv" style="color:#3A8B5F">${v}</div><div class="kl">${l}</div></div>`
+    ).join('') + `<div style="grid-column:1/-1;font-size:11px;color:rgba(14,14,12,0.45);margin-top:2px">No capital is left invested here to measure a percentage return against — these are the actual dollar gains instead.</div>`;
+  } else {
+    document.getElementById('roi-grid'+suffix).innerHTML=[
+      [fmtP(coc),'Cash-on-cash ROI',coc>=0.10?'#3A8B5F':'#C4972A'],
+      [fmtP(equityROI),'Equity ROI',null],
+      [fmtP(apprROI),'Appreciation ROI',null],
+      [fmtP(totROI),'Total ROI',totROI>=0.20?'#3A8B5F':'#C4972A'],
+    ].map(([v,l,c])=>
+      `<div class="kpi"><div class="kv" style="color:${c||'#0E0E0C'}">${v}</div><div class="kl">${l}</div></div>`
+    ).join('');
+  }
 
   // ── 5-year wealth plan — read straight from your sheet's own 5-year projection table, no calculations ──
   const fy = r.fiveYear || {};
@@ -1378,30 +2790,424 @@ function renderResults(r) {
       <text x="${x+barW/2}" y="${yTop-6}" text-anchor="middle" font-size="10" font-family="'DM Mono',monospace" fill="#0E0E0C" font-weight="600">${fmt$(y.totalReturn)}</text>
       <text x="${x+barW/2}" y="${chartH-4}" text-anchor="middle" font-size="10" font-family="Inter,sans-serif" fill="rgba(14,14,12,0.45)">Yr ${y.year}</text>`;
   }).join('');
-  document.getElementById('wealth-chart').innerHTML =
+  document.getElementById('wealth-chart'+suffix).innerHTML =
     `<svg viewBox="0 0 ${chartW} ${chartH}" style="width:100%;height:auto;display:block"><line x1="${padL-8}" y1="${chartH-padB}" x2="${chartW}" y2="${chartH-padB}" stroke="#E5E0D5"/>${bars}</svg>`;
 
   // Year-by-year table
-  document.getElementById('wealth-yr-tbl').innerHTML =
-    `<tr><th>Year</th><th>Cash flow</th><th>Equity</th><th>Appreciation gain</th><th>Total return</th></tr>` +
+  document.getElementById('wealth-yr-tbl'+suffix).innerHTML =
+    `<tr><th>Year</th><th>Cash flow</th><th>Equity Gain</th><th>Appreciation gain</th><th>Total return</th></tr>` +
     years.map(y=>`<tr><td>Year ${y.year}</td><td>${fmt$(y.cf)}</td><td>${fmt$(y.equity)}</td><td>${fmt$(y.apprGain)}</td><td>${fmt$(y.totalReturn)}</td></tr>`).join('');
 
-  document.getElementById('wealth-total').textContent = fmt$(yr5Gain);
-  document.getElementById('wealth-roi').textContent = fmtPFrac(yr5ROI);
-  document.getElementById('wealth-foot').textContent = `5 year wealth plan calculations are based on the following assumptions: Property value grows at ${avgAppr} avg. annual appreciation; cash flow grows at ${avgGrowth} avg. annual rent growth. Equity = principal paydown in that year. Total wealth = equity (principal paydown) + cumulative cash flow to date + property value increase to date.`;
+  document.getElementById('wealth-total'+suffix).textContent = fmt$(yr5Gain);
+  if (isRefi3 && roiFullyRecovered) {
+    const chequeForWealth = Math.abs(Number(window._lastRefiResult && window._lastRefiResult.refinanceCheque) || 0);
+    document.getElementById('wealth-roi-label'+suffix).textContent = 'Refinance cheque received';
+    document.getElementById('wealth-roi'+suffix).textContent = fmt$(chequeForWealth);
+  } else {
+    const roiLabelEl = document.getElementById('wealth-roi-label'+suffix);
+    if (roiLabelEl) roiLabelEl.textContent = 'Year 5 projected ROI';
+    document.getElementById('wealth-roi'+suffix).textContent = fmtPFrac(yr5ROI);
+  }
+  document.getElementById('wealth-foot'+suffix).textContent = `5 year wealth plan calculations are based on the following assumptions: Property value grows at ${avgAppr} avg. annual appreciation; cash flow grows at ${avgGrowth} avg. annual rent growth. Equity = principal paydown in that year. Total wealth = equity (principal paydown) + cumulative cash flow to date + property value increase to date.`;
 
 
-  const ctaMap = {
-    'NO-GO': ['This property didn\'t pass — but the right one is out there','Before you analyse more properties, make sure you have the right budget, market, and data.','Talk to Anne →'],
-    BRRRR:   ['BRRRR deal — you need the full renovation and refi analysis','A BRRRR deal needs contractor quotes, ARV comps, and a refi simulation before you know if it truly works.','Get the full BRRRR analysis →'],
-    TURNKEY: ['This property passes — ready to move forward?','To move forward you need the right financing in place. Anne specialises in investor mortgages for Canadian multifamily.','Get pre-approved for this property →'],
+  if (!isLevel2 && suffix !== '-refi3') {
+    const ctaMap = {
+      'NO-GO': ['This property didn\'t pass — but the right one is out there','Before you analyse more properties, make sure you have the right budget, market, and data.','Talk to Anne →'],
+      BRRRR:   ['BRRRR deal — see what it could look like renovated','VERA can suggest a renovation strategy and re-run the numbers post-reno to see if this deal actually works.','See Post-Reno analysis →'],
+      TURNKEY: ['This property passes — ready to move forward?','This entire analysis rests on the assumptions VERA made — before moving forward, confirm each one with the right person.','Confirm assumptions →'],
+    };
+    const [ct,cs,cb] = ctaMap[type];
+    document.getElementById('cta-title'+suffix).textContent = ct;
+    document.getElementById('cta-sub'+suffix).textContent = cs;
+    const btn = document.getElementById('cta-btn'+suffix);
+    btn.textContent = cb;
+    btn.onclick = type === 'BRRRR'
+      ? () => showToolTab('level2')
+      : type === 'TURNKEY'
+      ? () => showToolTab('request')
+      : () => window.open('mailto:anne.chauvin@8twelve.mortgage','_blank');
+  }
+}
+
+// Fetches this specific property's GDS & TDS from Section 7 of the
+// GDS&TDS sheet — populated via the Projected Financials formula link,
+// which is already updated by the time the main analysis completes above.
+// Read-only: never writes anything, just reads what that link produced.
+async function fetchAndRenderGdsTdsForProperty() {
+  const card = document.getElementById('gds-tds-analysis-card');
+  const body = document.getElementById('gds-tds-analysis-body');
+  if (!card || !body) return;
+  function fmtDollar(n) { return '$' + Math.round(Number(n) || 0).toLocaleString(); }
+
+  try {
+    const res = await fetch('https://vera-proxy.onrender.com/read-gds-tds-specific-property', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({})
+    });
+    if (!res.ok) { card.style.display = 'none'; return; }
+    const r = await res.json();
+    if (r.error || !r.success || !r.hasData) { card.style.display = 'none'; return; }
+
+    const gdsOk = r.gds <= 39;
+    const tdsOk = r.tds <= 44;
+    const qualifies = gdsOk && tdsOk;
+
+    let html = '<div style="font-size:17px;font-weight:700;color:' + (qualifies?'#2D7A4F':'#E05252') + ';margin-bottom:4px">' + (qualifies ? '✓ Yes, they can afford this property' : '⚠ No, this is above what they qualify for') + '</div>';
+    html += '<div style="font-size:12px;color:rgba(14,14,12,0.5);margin-bottom:12px">' + fmtDollar(r.askingPrice) + ' asking price, ' + fmtDollar(r.mortgageAmount) + ' mortgage, ' + fmtDollar(r.monthlyMortgagePayment) + '/mo payment</div>';
+    html += '<div style="display:flex;gap:24px">'
+      + '<div><div style="font-size:11px;color:rgba(14,14,12,0.45)">GDS</div><div style="font-size:20px;font-weight:700;color:' + (gdsOk?'#2D7A4F':'#E05252') + '">' + r.gds + '%</div><div style="font-size:10.5px;color:rgba(14,14,12,0.4)">limit 39%</div></div>'
+      + '<div><div style="font-size:11px;color:rgba(14,14,12,0.45)">TDS</div><div style="font-size:20px;font-weight:700;color:' + (tdsOk?'#2D7A4F':'#E05252') + '">' + r.tds + '%</div><div style="font-size:10.5px;color:rgba(14,14,12,0.4)">limit 44%</div></div>'
+      + '</div>';
+    body.innerHTML = html;
+    card.style.display = '';
+  } catch (err) {
+    card.style.display = 'none'; // fail silently — this is a bonus display, not core to the analysis
+  }
+}
+
+// ── VERA's take — same book-grounded insight pattern as the search page,
+// now generated automatically for every full analysis run here too. ──
+function getCheckFields(raw) {
+  const units = Number(raw.NumberofUnits) || 1;
+  const fields = [
+    {key:'PropertyNeighborhood', label:'Neighbourhood'},
+    {key:'PropertyUsage', label:'Usage'},
+    {key:'AsIsRent1', label:'Unit 1 rent'},
+  ];
+  if (units >= 2) fields.push({key:'AsIsRent2', label:'Unit 2 rent'});
+  if (units >= 3) fields.push({key:'AsIsRent3', label:'Unit 3 rent'});
+  if (units >= 4) fields.push({key:'AsIsRent4', label:'Unit 4 rent'});
+  fields.push({key:'OtherMonthlyIncome', label:'Other income'});
+  fields.push({key:'PropertyTax', label:'Property tax'});
+  fields.push({key:'Insurance', label:'Insurance'});
+  fields.push({key:'Utilities_Water', label:'Water cost'});
+  fields.push({key:'Utilities_Electricity', label:'Electricity cost', positiveOnly:true});
+  fields.push({key:'Utilities_Heat', label:'Heat cost', positiveOnly:true});
+  fields.push({key:'RentalsTanksPumps', label:'Rentals (tanks/pumps)'});
+  fields.push({key:'RepairsMaintenance', label:'Repairs & maintenance'});
+  fields.push({key:'ManagementFee', label:'Management fee'});
+  fields.push({key:'LawnSnow', label:'Lawn & snow'});
+  fields.push({key:'PestControl', label:'Pest control'});
+  fields.push({key:'OtherExpenses', label:'Other expenses'});
+  return fields;
+}
+function isFieldConfirmed(raw, f) {
+  const v = raw[f.key];
+  const present = v !== null && v !== undefined && v !== '';
+  return f.positiveOnly ? (present && v > 0) : present;
+}
+function mdToHtml(text) {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br>');
+}
+
+var veraQuestions = []; // follow-up questions derived from insights, consumed by the Request tab
+
+async function getVeraInsights() {
+  const box = document.getElementById('listing-vera-insights');
+  if (!box || !extractedData) return;
+  box.innerHTML = '<div class="insights-loading" style="font-size:12px;color:rgba(14,14,12,0.4);padding:10px 0">💡 VERA is reviewing this listing…</div>';
+
+  const checkFields = getCheckFields(extractedData);
+  const missing = checkFields.filter(f => !isFieldConfirmed(extractedData, f)).map(f => f.label);
+  const confirmedLines = checkFields
+    .filter(f => isFieldConfirmed(extractedData, f))
+    .map(f => f.label + ': ' + extractedData[f.key]);
+  const address = extractedData.PropertyAddress || 'this property';
+  const units = Number(extractedData.NumberofUnits) || 1;
+
+  const prompt = 'You are VERA, coaching a Canadian real estate investor through reviewing a property listing at ' + address + ' (' + units + ' units). Use your knowledge of what to look for in a rental property listing.'
+    + '\n\nData confirmed from the listing:\n' + (confirmedLines.length ? confirmedLines.join('\n') : '(very little confirmed yet)')
+    + '\n\nData missing from the listing:\n' + (missing.length ? missing.join(', ') : '(nothing missing)')
+    + '\n\nReturn ONLY valid JSON, no markdown, no code fences:\n'
+    + '{\n'
+    + '  "observations": ["3 to 5 short, specific, practical observations about THIS property based on the actual numbers above — do the rents look high or low for typical Canadian rental markets, does heat or electricity look unusually high in a way worth investigating (such as a shared system that could be split to individual tenant metering), does tax or insurance look reasonable for the price point. Water and sewer costs are set by the municipality, vary enormously by city, and are almost always a landlord expense rather than something split to individual tenant meters — do NOT flag water/sewer as unusually high or suggest tenant-metering it unless the listing itself says so explicitly. Each is a single plain sentence, no markdown, no numbering, conversational and concise like a coach pointing out what to notice."],\n'
+    + '  "questions": ["2 to 4 specific, pointed questions to ask the realtor that follow DIRECTLY from the observations above — e.g. if heat looks unusually high, ask whether it is a shared heating system and whether splitting it to individual tenant metering has been considered. Each must be a complete, answerable question, not a generic one."]\n'
+    + '}';
+
+  try {
+    const resp = await fetch('https://vera-proxy.onrender.com/insights', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: prompt, category: 'Analyse a property', mode: 'insights' })
+    });
+    if (!resp.ok) { const t = await resp.text(); throw new Error('Error ' + resp.status + ': ' + t.slice(0,300)); }
+    const data = await resp.json();
+    let parsed = data;
+    if (data.answer) {
+      const m = data.answer.match(/\{[\s\S]*\}/);
+      parsed = m ? JSON.parse(m[0]) : { observations: [data.answer], questions: [] };
+    }
+    const observations = parsed.observations || [];
+    veraQuestions = parsed.questions || [];
+
+    box.innerHTML = observations.length
+      ? '<div class="insights-card" style="background:var(--gold-bg);border:1px solid var(--gold-bd);border-radius:12px;padding:16px 18px"><div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px">💡 VERA\'s take</div><div style="font-size:12.5px;line-height:1.6;color:var(--ink)">' + observations.map(o => '<div style="margin-bottom:6px">' + mdToHtml(o) + '</div>').join('') + '</div></div>'
+      : '';
+
+    document.getElementById('ttab-request').disabled = false;
+  } catch(err) {
+    console.error('VERA insights error:', err.message);
+    box.innerHTML = '<div class="insights-card" style="background:var(--gold-bg);border:1px solid var(--gold-bd);border-radius:12px;padding:16px 18px"><div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px">💡 VERA\'s take</div><div style="font-size:12px;color:rgba(14,14,12,0.4)">Could not load insights right now — try re-analysing.</div></div>';
+    document.getElementById('ttab-request').disabled = false;
+  }
+}
+
+// ── Request missing data tab — same logic as the search page, adapted for
+// a single specific property (not a general market inquiry). ──
+function buildSmartRequest() {
+  const raw = extractedData || {};
+  const checkFields = getCheckFields(raw);
+  const missingItems = checkFields.filter(f => !isFieldConfirmed(raw, f)).map(f => f.label);
+  const alwaysAsk = [
+    'Whether the units offer separate or shared laundry facilities',
+    'Any parking accommodations, such as a garage or designated spots',
+    'Recent assessments for necessary renovations or repairs, and any known structural issues — a rough sense of what work is needed is helpful, though I\'ll confirm actual costs with a contractor',
+    'Your estimate of the potential rental rate and property value after renovations',
+    'What you\'d suggest as a reasonable offer price for this property',
+    'What vacancy rate would be realistic to budget for in this area'
+  ];
+  return { missingItems: missingItems, alwaysAsk: alwaysAsk };
+}
+
+function buildRequestEmailTemplate() {
+  const myName = localStorage.getItem('vera_user_name') || '';
+  const myEmail = getEmail() || '';
+  const myPhone = localStorage.getItem('vera_user_phone') || '';
+  const req = buildSmartRequest();
+  const address = (extractedData && extractedData.PropertyAddress) || '[Property Address]';
+
+  // Strategy assumptions — the specific, number-backed assumptions VERA
+  // made while building out the BRRRR strategy (not just what's missing
+  // from the original listing), so the realtor is asked to confirm the
+  // exact figures the analysis actually relies on, not a vague question.
+  const strategyAsks = [];
+  if (window._level2FinalPayload) {
+    const units = Number(extractedData && extractedData.NumberofUnits) || 1;
+    for (let i = 1; i <= units; i++) {
+      const asIsRent = Number(extractedData['AsIsRent'+i]) || 0;
+      const postRenoRent = Number(window._level2FinalPayload['AsIsRent'+i]) || 0;
+      if (postRenoRent !== asIsRent) {
+        strategyAsks.push(`I've assumed Unit ${i} could rent for ${fmt$(postRenoRent)}/mo after renovation — can you confirm this is realistic for the area?`);
+      }
+    }
+  }
+  if (window._refiArv) {
+    strategyAsks.push(`I've estimated an after-repair value (ARV) of ${fmt$(Number(window._refiArv))} — could you send comparable sold listings to help confirm this?`);
+  }
+  const alwaysAskFiltered = strategyAsks.length
+    ? req.alwaysAsk.filter(l => !l.includes('potential rental rate and property value after renovations'))
+    : req.alwaysAsk;
+
+  const missingBlock = req.missingItems.length
+    ? 'Specifically, I\'m missing the following details for this listing:\n' + req.missingItems.map(l => '- '+l).join('\n') + '\n\n'
+    : '';
+  const smartBlock = veraQuestions.length
+    ? 'A couple of specific things I noticed and wanted to ask about:\n' + veraQuestions.map(q => '- '+q).join('\n') + '\n\n'
+    : '';
+  const strategyBlock = strategyAsks.length
+    ? 'I\'m also working through a renovation/refinance strategy on this property, and wanted to verify a few assumptions with you:\n' + strategyAsks.map(l => '- '+l).join('\n') + '\n\n'
+    : '';
+
+  const body = 'Hi [Agent\'s Name],\n\n'
+    + 'I\'m interested in your listing at ' + address + ' and have some questions before I can complete my full analysis.\n\n'
+    + missingBlock
+    + smartBlock
+    + strategyBlock
+    + 'I\'d also appreciate if you could let me know:\n'
+    + alwaysAskFiltered.map(l => '- '+l).join('\n') + '\n\n'
+    + 'Please feel free to reach me at ' + (myPhone || '[Your Phone Number]') + ' during [Preferred Contact Times].\n\n'
+    + 'Thank you very much for your assistance. I look forward to your reply.\n\n'
+    + 'Best regards,\n' + (myName || '[Your Name]') + '\n[Your Contact Number]\n' + (myEmail || '[Your Email Address]');
+
+  return { subject: 'Request for Property Information - ' + address, body: body, missingItems: req.missingItems };
+}
+
+function renderRequestTab() {
+  const el = document.getElementById('request-content');
+  if (!el) return;
+  if (!extractedData) {
+    el.innerHTML = '<div class="an-topbar-t" style="margin-bottom:14px">Your Assumptions</div><div style="font-size:12.5px;color:rgba(14,14,12,0.5)">Run a full analysis first — VERA needs to know what\'s already confirmed before it can ask your realtor for what\'s missing.</div>';
+    return;
+  }
+  const t = buildRequestEmailTemplate();
+  window._requestTmpl = t;
+  const summary = t.missingItems.length
+    ? 'This email lists exactly what\'s missing from the listing: <strong>' + t.missingItems.join(', ') + '</strong>.'
+    : 'Every checkable field was already confirmed from the listing — VERA still included the standard due-diligence questions a listing alone can\'t answer.';
+
+  // Strategy summary — ties together whichever stages have actually been
+  // run (some users will only have done As-Is before reaching this tab,
+  // others will have gone all the way through refinance), so this only
+  // ever shows what genuinely happened, not blank/broken sections for
+  // stages that were skipped.
+  let strategyHtml = '';
+  const vType = window._lastVerdictType;
+  if (vType) {
+    const verdictLabel = vType === 'BRRRR' ? 'BRRRR Potential' : vType === 'TURNKEY' ? 'Turnkey' : 'No-Go';
+    let lines = [`<strong>As-Is verdict: ${verdictLabel}.</strong>`];
+    if (window._lastInsightLines && window._lastInsightLines.length) {
+      const firstLine = window._lastInsightLines.find(l => l && !l.startsWith('Recommended parameters')) || window._lastInsightLines[0];
+      lines.push(firstLine);
+    }
+    if (window._level2LastResult && window._level2Insight) {
+      const postRenoLabel = window._level2MeetsTurnkey ? 'Turnkey' : 'No-Go';
+      lines.push(`<strong>Post-Reno verdict: ${postRenoLabel}.</strong> ${window._level2Insight.join(' ')}`);
+    }
+    if (window._lastRefiResult) {
+      const rr = window._lastRefiResult;
+      const pctRet = (Number(rr.pctFundsReturned)||0) * 100;
+      const chequeAmt = Math.abs(Number(rr.refinanceCheque)||0);
+      lines.push(`<strong>Refinance projection:</strong> ${fmt$(chequeAmt)} cash back, recovering ${pctRet.toFixed(1)}% of your initial investment.`);
+    }
+    if (window._refi3Insight && window._refi3Insight.length) {
+      lines.push(`<strong>Post-Refi Analysis:</strong> ${window._refi3Insight.join(' ')}`);
+    }
+    strategyHtml = '<div class="hint"><div class="hint-t">Strategy summary</div>'
+      + lines.map((l,i)=>`<div style="${i>0?'margin-top:6px':''}">${l}</div>`).join('')
+      + '</div>';
+  }
+
+  // Contractor checklist — the renovation budget and overall strategy
+  // belong here, not in the realtor email, since a realtor can't quote
+  // renovation costs and a contractor needs to know the target to scope
+  // the work correctly.
+  let contractorHtml = '';
+  if (window._level2FinalPayload) {
+    const renoAmt = Number(window._level2FinalPayload.RenovationEstimate) || 0;
+    const units2 = Number(extractedData && extractedData.NumberofUnits) || 1;
+    const targetRentSet = new Set();
+    for (let i = 1; i <= units2; i++) {
+      const r2 = Number(window._level2FinalPayload['AsIsRent'+i]) || 0;
+      if (r2 > 0) targetRentSet.add(fmt$(r2));
+    }
+    const targetRents = Array.from(targetRentSet);
+    const rentPhrase = targetRents.length === 1
+      ? `${targetRents[0]}/mo per unit`
+      : targetRents.length > 1
+      ? `${targetRents.slice(0,-1).join('/mo, ')}/mo and ${targetRents[targetRents.length-1]}/mo depending on the unit`
+      : '';
+
+    // Scope of work — the one concrete, contractor-relevant item VERA
+    // actually knows about is a utility-metering conversion, when that's
+    // part of the strategy. Beyond that, the scope is described honestly
+    // as general unit renovation to reach the target rent, since VERA
+    // doesn't have room-by-room detail to offer.
+    const scopeItems = [];
+    if (window._lastUtilFix) {
+      scopeItems.push('converting the heating and electrical systems from owner-paid to individual tenant-metered billing');
+    }
+    scopeItems.push(`general unit renovation (finishes, fixtures, condition) needed to support ${rentPhrase || 'market rent'} after the work is done`);
+
+    contractorHtml = '<div class="hint"><div class="hint-t">🔨 Talk to your contractor</div>'
+      + `<div>This analysis assumes a ${fmt$(renoAmt)} renovation budget, covering: ${scopeItems.join('; ')}.</div>`
+      + `<div style="margin-top:6px">Bring this scope to a contractor for an actual quote before committing to the deal — the numbers above depend on this budget holding up.</div>`
+      + '</div>';
+  }
+
+  // Mortgage agent checklist — the financing assumptions the whole analysis
+  // rests on (down payment, rate, amortization) need pre-approval
+  // confirmation, which is the mortgage agent's job, not the realtor's.
+  let mortgageHtml = '';
+  const dpPct = extractedData && extractedData.DownpaymentPercentage;
+  const rate = extractedData && extractedData.InterestRate;
+  const amort = extractedData && extractedData.AmortizationPeriod;
+  if (dpPct != null || rate != null || amort != null) {
+    const terms = [];
+    if (dpPct != null) terms.push(`${dpPct}% down payment`);
+    if (rate != null) terms.push(`${rate}% interest rate`);
+    if (amort != null) terms.push(`${amort}-year amortization`);
+    mortgageHtml = '<div class="hint"><div class="hint-t">🏦 Confirm with your mortgage agent</div>'
+      + `<div>This analysis assumes ${terms.join(', ')} — get pre-approved on these exact terms before relying on this deal working the way it's modeled here.</div>`
+      + '</div>';
+  }
+
+  // Overall assumptions table — every field the analysis actually used,
+  // side by side across whichever stages were run. This is the literal
+  // list of assumptions the whole "confirm before moving forward" ask is
+  // about, not just a few headline metrics.
+  const asIs = withAssumptions || extractedData || {};
+  const l2 = window._level2FinalPayload;
+  const r3 = window._refi3FinalPayload;
+  const units3 = Number(asIs.NumberofUnits) || 1;
+
+  const fmtField = (v, kind) => {
+    if (v == null || v === '') return '—';
+    const n = Number(v);
+    if (isNaN(n)) return String(v);
+    if (kind === '$') return fmt$(n);
+    if (kind === '%') return n + '%';
+    if (kind === 'yr') return n + ' years';
+    return String(n);
   };
-  const [ct,cs,cb] = ctaMap[type];
-  document.getElementById('cta-title').textContent = ct;
-  document.getElementById('cta-sub').textContent = cs;
-  const btn = document.getElementById('cta-btn');
-  btn.textContent = cb;
-  btn.onclick = () => window.open('mailto:anne.chauvin@8twelve.mortgage','_blank');
+
+  const assumptionRows = [
+    ['Purchase price', 'PropertyPuchasePrice', '$'],
+  ];
+  for (let i = 1; i <= units3; i++) assumptionRows.push([`Unit ${i} rent/mo`, 'AsIsRent'+i, '$']);
+  assumptionRows.push(
+    ['Other income/mo', 'OtherMonthlyIncome', '$'],
+    ['Vacancy', 'VacancyRate', '%'],
+    ['Property tax/yr', 'PropertyTax', '$'],
+    ['Insurance/yr', 'Insurance', '$'],
+    ['Water/yr', 'Utilities_Water', '$'],
+    ['Electricity/yr', 'Utilities_Electricity', '$'],
+    ['Heat/yr', 'Utilities_Heat', '$'],
+    ['Rentals/yr', 'Rentals_WaterTanks_HeatPumps', '$'],
+    ['Repairs & maint', 'RepairsAndMaintenanceRate', '%'],
+    ['Prop. mgmt', 'PropertyManagementRate', '%'],
+    ['Lawn & snow/yr', 'LawnAndSnowMaintenance', '$'],
+    ['Pest control/yr', 'PestControl', '$'],
+    ['Other expenses/yr', 'OtherExpenses', '$'],
+    ['Down payment', 'DownpaymentPercentage', '%'],
+    ['Interest rate', 'InterestRate', '%'],
+    ['Amortization', 'AmortizationPeriod', 'yr'],
+    ['Closing costs', 'ClosingCostsRate', '%'],
+    ['Renovation budget', 'RenovationEstimate', '$'],
+  );
+
+  const showL2Col = !!l2;
+  const showR3Col = !!r3;
+  const tableTitle = 'Overall assumptions' + (showL2Col || showR3Col
+    ? ' — As-Is' + (showL2Col ? ' / Post-Reno' : '') + (showR3Col ? ' / Post-Refi' : '')
+    : ' — As-Is');
+  const assumptionsTableHtml = '<div class="hint"><div class="hint-t">' + tableTitle + '</div>'
+      + '<table class="yr-table" style="margin-top:10px;margin-bottom:0">'
+      + `<tr><th>Assumption</th><th>As-Is</th>${showL2Col?'<th>Post-Reno</th>':''}${showR3Col?'<th>Post-Refi</th>':''}</tr>`
+      + assumptionRows.map(([label, key, kind]) => {
+          const asIsVal = fmtField(asIs[key], kind);
+          const l2Val = showL2Col ? fmtField(l2[key], kind) : '';
+          const r3Val = showR3Col ? fmtField(r3[key], kind) : '';
+          return `<tr><td>${label}</td><td>${asIsVal}</td>${showL2Col?`<td>${l2Val}</td>`:''}${showR3Col?`<td>${r3Val}</td>`:''}</tr>`;
+        }).join('')
+      + '</table></div>';
+
+  el.innerHTML = '<div class="an-topbar-t" style="margin-bottom:16px">Your Assumptions</div>'
+    + strategyHtml
+    + assumptionsTableHtml
+    + '<div class="hint"><div class="hint-t">Confirming your assumptions & strategy</div>Before you can move forward on this property, every assumption needs solid data behind it — and different people can confirm different pieces: your realtor for the property and market data, your contractor for renovation costs, your mortgage agent for financing terms. VERA sorts out who to ask about what below.</div>'
+    + '<div class="an-hdr" style="margin-top:20px;margin-bottom:10px"><div class="an-hdr-ic">📧</div><div class="an-hdr-t">Email to your realtor</div></div>'
+    + '<div style="font-size:12px;color:rgba(14,14,12,0.5);margin-bottom:14px">' + summary + '</div>'
+    + '<div style="display:flex;gap:10px;margin-bottom:14px"><button class="mbtn mbtn-dark" id="copy-request-btn" onclick="copyRequestEmail()">Copy</button><button class="mbtn mbtn-out" onclick="openRequestEmail()">Open in email</button></div>'
+    + '<div style="background:white;border:1px solid var(--border);border-radius:10px;padding:16px;font-size:12px;line-height:1.7;white-space:pre-wrap">' + t.body.replace(/</g,'&lt;') + '</div>'
+    + '<div style="font-size:11px;color:rgba(14,14,12,0.35);margin-top:10px;margin-bottom:20px">Bracketed items are your details — fill those in before sending.</div>'
+    + contractorHtml
+    + mortgageHtml;
+}
+function copyRequestEmail() {
+  if (!window._requestTmpl) return;
+  navigator.clipboard.writeText(window._requestTmpl.body).then(function() {
+    const btn = document.getElementById('copy-request-btn');
+    if (!btn) return;
+    const orig = btn.textContent; btn.textContent = 'Copied!';
+    setTimeout(function(){ btn.textContent = orig; }, 1500);
+  });
+}
+function openRequestEmail() {
+  if (!window._requestTmpl) return;
+  const t = window._requestTmpl;
+  window.location.href = 'mailto:?subject=' + encodeURIComponent(t.subject) + '&body=' + encodeURIComponent(t.body);
 }
 
 // Store editable assumptions
@@ -1454,19 +3260,57 @@ function togglePayload() {
     btn.textContent = '▼ Hide payload';
   } else {
     box.style.display = 'none';
-    btn.textContent = '▶ Show full payload sent to Google Sheet';
+    btn.textContent = '▶ Show full data sent for analysis';
   }
 }
 
 function resetAll() {
   editedAssumptions = {};
   extractedData = null;
+  veraQuestions = [];
+  window._level2Values = null;
+  window._level2LastResult = null;
+  window._level2FinalPayload = null;
+  window._level2Insight = null;
+  window._level2MeetsTurnkey = null;
+  window._refiArv = null;
+  window._refi3Values = null;
+  window._refi3FinalPayload = null;
+  window._refi3Insight = null;
   document.getElementById('paste-area').value = '';
   document.getElementById('step-confirm').style.display = 'none';
+  document.getElementById('level1-results-wrap').style.display = 'none';
+  document.getElementById('property-summary').style.display = 'none';
   document.getElementById('err-area').style.display = 'none';
   document.getElementById('load-area').style.display = 'none';
+  document.getElementById('run-load-area').style.display = 'none';
+  document.getElementById('run-err-area').style.display = 'none';
   document.getElementById('step-paste').style.display = 'block';
   document.getElementById('ttab-analysis').disabled = true;
+  document.getElementById('ttab-level2').disabled = true;
+  document.getElementById('ttab-refi').disabled = true;
+  document.getElementById('ttab-postrefi').disabled = true;
+  document.getElementById('ttab-request').disabled = true;
+  const insightsEl = document.getElementById('listing-vera-insights');
+  if (insightsEl) insightsEl.innerHTML = '';
+  const requestEl = document.getElementById('request-content');
+  if (requestEl) requestEl.innerHTML = '';
+  const refiFormEl = document.getElementById('refi-form');
+  if (refiFormEl) refiFormEl.innerHTML = '';
+  const refiResultsEl = document.getElementById('refi-results');
+  if (refiResultsEl) refiResultsEl.innerHTML = '';
+  const refiPostrefiCta = document.getElementById('refi-postrefi-cta');
+  if (refiPostrefiCta) refiPostrefiCta.style.display = 'none';
+  const refi3Section = document.getElementById('refi3-section');
+  if (refi3Section) refi3Section.style.display = 'none';
+  const refi3FormEl = document.getElementById('refi3-form');
+  if (refi3FormEl) refi3FormEl.innerHTML = '';
+  const refi3ResultsWrap = document.getElementById('refi3-results-wrap');
+  if (refi3ResultsWrap) refi3ResultsWrap.style.display = 'none';
+  const level2FormEl = document.getElementById('level2-form');
+  if (level2FormEl) level2FormEl.innerHTML = '';
+  const level2ResultsWrap = document.getElementById('level2-results-wrap');
+  if (level2ResultsWrap) level2ResultsWrap.style.display = 'none';
   showToolTab('input');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1532,7 +3376,7 @@ function renderCards(){
           <span class="vbadge ${vc}">${vl}</span>
           <div><div class="ac-addr">${a.addr}</div><div class="ac-meta">${a.type} · ${a.units} units · ${fmt$(a.asking)} · ${a.date}</div></div>
         </div>
-        <button class="btn-sm btn-dark" onclick="document.getElementById('nav-analyse').click()">↩ Re-analyse</button>
+        <button class="btn-sm btn-dark" onclick="openPreApproval(${JSON.stringify(a).replace(/"/g,"'")})">✅ Get Pre-Approved</button>
       </div>
       <div class="ac-stats">
         <div class="ac-stat"><div class="asl">Cap rate</div><div class="asv ${a.capRate>=5?'g':a.capRate>=3?'a':'r'}">${a.capRate.toFixed(2)}%</div></div>
@@ -1580,50 +3424,279 @@ document.getElementById('copy-btn').onclick=function(){
   this.textContent='Copied!';setTimeout(()=>this.textContent='Copy email',2000);
 };
 
+// ── KYC / Get Pre-Approved form — matches 8Twelve's KYC & Suitability Form ──
+function kycField(id, label, value, type) {
+  const pf = value ? ' prefilled' : '';
+  const note = value ? '<div class="kyc-prefill-note">✓ Pre-filled from your account</div>' : '';
+  return '<div class="kyc-field"><label>' + label + '</label><input type="' + (type||'text') + '" id="' + id + '" class="' + pf.trim() + '" value="' + (value!=null?value:'') + '">' + note + '</div>';
+}
+function kycTextarea(id, label) {
+  return '<div class="kyc-field"><label>' + label + '</label><textarea id="' + id + '" rows="2"></textarea></div>';
+}
+function kycOpts(name, options) {
+  return '<div class="kyc-opts">' + options.map(function(o){ return '<label class="kyc-opt"><input type="radio" name="' + name + '" value="' + o + '"> ' + o + '</label>'; }).join('') + '</div>';
+}
+function kycLikert(name, question) {
+  const scale = ['Strongly Agree','Agree','Neutral','Disagree','Strongly Disagree'];
+  return '<div class="kyc-likert"><div class="kyc-likert-q">' + question + '</div><div class="kyc-likert-opts">'
+    + scale.map(function(s){ return '<label><input type="radio" name="' + name + '" value="' + s + '"> ' + s + '</label>'; }).join('')
+    + '</div></div>';
+}
+
+// Exact same categories, from the Pre-Qualification Worksheet, as Set a Budget.
+const ASSET_CATEGORIES = ['Cash & Cash Equivalents','Investments','Primary Residence Value','Other Real Estate','Vehicles','Personal Property','Business Ownership','Other Assets'];
+const LIABILITY_CATEGORIES = ['Mortgage on Primary Residence','Other Mortgages','Student Loans','Auto Loans','Credit Card Debt','Personal Loans','Other Liabilities'];
+
+let kycStepData = {};
+try { kycStepData = JSON.parse(localStorage.getItem('vera_step_data') || '{}'); } catch(e) {}
+let assetRows = (kycStepData.assetRows && kycStepData.assetRows.length) ? kycStepData.assetRows.slice() : [{ category:'', amount:'' }];
+let liabilityRows = (kycStepData.liabilityRows && kycStepData.liabilityRows.length) ? kycStepData.liabilityRows.slice() : [{ category:'', amount:'' }];
+
+function syncAssetRowsFromDom() {
+  document.querySelectorAll('.asset-row-cat').forEach(function(el) {
+    const i = Number(el.dataset.idx);
+    if (assetRows[i]) assetRows[i].category = el.value;
+  });
+  document.querySelectorAll('.asset-row-amt').forEach(function(el) {
+    const i = Number(el.dataset.idx);
+    if (assetRows[i]) assetRows[i].amount = el.value;
+  });
+}
+function syncLiabilityRowsFromDom() {
+  document.querySelectorAll('.liability-row-cat').forEach(function(el) {
+    const i = Number(el.dataset.idx);
+    if (liabilityRows[i]) liabilityRows[i].category = el.value;
+  });
+  document.querySelectorAll('.liability-row-amt').forEach(function(el) {
+    const i = Number(el.dataset.idx);
+    if (liabilityRows[i]) liabilityRows[i].amount = el.value;
+  });
+}
+function addAssetRow() { syncAssetRowsFromDom(); assetRows.push({ category:'', amount:'' }); renderKycForm(); }
+function removeAssetRow(i) { syncAssetRowsFromDom(); assetRows.splice(i,1); if (!assetRows.length) assetRows.push({category:'',amount:''}); renderKycForm(); }
+function addLiabilityRow() { syncLiabilityRowsFromDom(); liabilityRows.push({ category:'', amount:'' }); renderKycForm(); }
+function removeLiabilityRow(i) { syncLiabilityRowsFromDom(); liabilityRows.splice(i,1); if (!liabilityRows.length) liabilityRows.push({category:'',amount:''}); renderKycForm(); }
+
+function kycAssetLiabilitySection(sectionNum, title, isAsset, categories, rows) {
+  const rowClass = isAsset ? 'asset-row' : 'liability-row';
+  let html = '<div class="kyc-sec"><div class="kyc-sec-t">Section ' + sectionNum + ' — ' + title + '</div>';
+  html += '<div style="margin-bottom:10px">' + rows.map(function(row, i) {
+    return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px" data-idx="' + i + '">'
+      + '<select class="' + rowClass + '-cat" data-idx="' + i + '" style="flex:1;padding:8px 10px;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:13px">'
+      + '<option value="">— Select —</option>'
+      + categories.map(function(c){ return '<option value="' + c + '"' + (row.category===c?' selected':'') + '>' + c + '</option>'; }).join('')
+      + '</select>'
+      + '<div style="display:flex;align-items:center;gap:4px"><span style="font-size:12px;color:rgba(14,14,12,0.4)">$</span><input type="number" class="' + rowClass + '-amt" data-idx="' + i + '" value="' + (row.amount||'') + '" placeholder="0" style="width:110px;padding:8px 10px;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:13px;text-align:right"></div>'
+      + (rows.length > 1 ? '<button type="button" onclick="remove' + (isAsset?'Asset':'Liability') + 'Row(' + i + ')" style="background:none;border:none;color:rgba(14,14,12,0.3);cursor:pointer;font-size:18px;padding:0 4px">×</button>' : '<span style="width:26px;display:inline-block"></span>')
+      + '</div>';
+  }).join('') + '</div>';
+  html += '<button type="button" style="background:white;border:1px solid var(--border);border-radius:7px;padding:8px 14px;color:rgba(14,14,12,0.6);font-size:12.5px;cursor:pointer;font-family:inherit" onclick="add' + (isAsset?'Asset':'Liability') + 'Row()">+ Add ' + (isAsset?'asset':'liability') + '</button>';
+  html += '</div>';
+  return html;
+}
+
+function renderKycForm() {
+  const myName = localStorage.getItem('vera_user_name') || '';
+  const myEmail = getEmail() || '';
+  let stepData = {};
+  try { stepData = JSON.parse(localStorage.getItem('vera_step_data') || '{}'); } catch(e) {}
+  const annualIncome = stepData.income ? stepData.income.value : null;
+
+  let html = '<div class="coach-note" style="background:var(--gold-bg);border:1px solid var(--gold-bd);border-radius:9px;padding:14px 16px;margin-bottom:16px;font-size:12.5px;color:rgba(14,14,12,0.7);line-height:1.65">This gets Anne the bulk of your financial picture ahead of your call, so the call itself is faster. Fields already on file with VERA are pre-filled — everything else needs your input. ID verification, formal declarations, and consent happen separately, in Anne\'s secure portal.</div>';
+
+  html += '<div class="kyc-sec"><div class="kyc-sec-t">Section 1 — Personal Information</div>'
+    + kycField('kyc-fullname','Full Name', myName)
+    + '<div class="kyc-row2">' + kycField('kyc-dob','Date of Birth','','date') + kycField('kyc-nationality','Nationality') + '</div>'
+    + '<div class="kyc-field"><label>Gender</label>' + kycOpts('kyc-gender',['Male','Female','Other']) + '</div>'
+    + '<div class="kyc-field"><label>Marital Status</label>' + kycOpts('kyc-marital',['Single','Married','Divorced','Widowed']) + '</div>'
+    + kycField('kyc-dependents','Number of Dependents','','number')
+    + '<div class="kyc-row2">' + kycField('kyc-homephone','Home Phone') + kycField('kyc-mobile','Mobile Phone') + '</div>'
+    + kycField('kyc-email','Email Address', myEmail)
+    + kycField('kyc-street','Residential Street Address')
+    + '<div class="kyc-row3">' + kycField('kyc-city','City') + kycField('kyc-province','State/Province') + kycField('kyc-postal','Postal Code') + '</div>'
+    + kycField('kyc-country','Country')
+    + '<div class="kyc-field"><label>Length of Time at Current Address</label>' + kycOpts('kyc-addrlen',['Less than 1 year','1-3 years','3-5 years','More than 5 years']) + '</div>'
+    + '</div>';
+
+  html += '<div class="kyc-sec"><div class="kyc-sec-t">Section 2 — Employment Information</div>'
+    + '<div class="kyc-row2">' + kycField('kyc-employer','Current Employer') + kycField('kyc-position','Position/Job Title') + '</div>'
+    + '<div class="kyc-field"><label>Employment Status</label>' + kycOpts('kyc-empstatus',['Full-time','Part-time','Self-employed','Unemployed','Retired','Student']) + '</div>'
+    + kycField('kyc-grossincome','Annual Gross Income', annualIncome, 'number')
+    + '<div class="kyc-field"><label>Length of Employment</label>' + kycOpts('kyc-emplen',['Less than 1 year','1-3 years','3-5 years','More than 5 years']) + '</div>'
+    + '</div>';
+
+  html += kycAssetLiabilitySection(3, 'Your Assets', true, ASSET_CATEGORIES, assetRows);
+  html += kycAssetLiabilitySection(4, 'Your Debts', false, LIABILITY_CATEGORIES, liabilityRows);
+
+  html += '<div class="kyc-sec"><div class="kyc-sec-t">Section 5 — Property Information (for mortgage)</div>'
+    + kycField('kyc-propaddr','Property Address')
+    + '<div class="kyc-field"><label>Property Type</label>' + kycOpts('kyc-proptype',['Single Family Home','Multi-family Home','Condo','Other']) + '</div>'
+    + '<div class="kyc-row2">' + kycField('kyc-propvalue','Property Value (appraised/estimated)','','number') + kycField('kyc-loanamt','Loan Amount Requested','','number') + '</div>'
+    + '<div class="kyc-field"><label>Purpose of Loan</label>' + kycOpts('kyc-purpose',['Purchase','Refinance','Home Improvement','Other']) + '</div>'
+    + '<div class="kyc-field"><label>Preferred Mortgage Type</label>' + kycOpts('kyc-mortgagetype',['Fixed-rate','Variable-rate','Hybrid']) + '</div>'
+    + '</div>';
+
+  const riskQs = [
+    'I am concerned about an unexpected expense affecting my ability to pay a mortgage.',
+    'I am concerned about job loss and being able to pay a mortgage.',
+    'I have confidence in my long term financial health.',
+    'It is important that I have stability in my monthly payment.',
+    'I have concerns about the impact of future interest rate movements.',
+    'I intend to pay off my mortgage faster than the amortization period.',
+    'I intend to increase my monthly payments to pay down my principal faster.',
+    'I intend to make a lump sum payment on my mortgage once per year.',
+    'I am not comfortable with fluctuations in the value of my home.',
+    'I am prepared to make significant changes to my discretionary spending habits in order to afford a mortgage.',
+    'I am comfortable with interest rate fluctuations (for variable-rate mortgages).'
+  ];
+  html += '<div class="kyc-sec"><div class="kyc-sec-t">Section 6 — Risk Profile Questions</div>'
+    + riskQs.map(function(q,i){ return kycLikert('kyc-risk'+i, (i+1)+'. '+q); }).join('')
+    + '</div>';
+
+  document.getElementById('kyc-form').innerHTML = html
+    + '<div class="kyc-submit-bar"><button class="mbtn mbtn-dark" onclick="downloadKycForm()">Download</button><span style="font-size:11px;color:rgba(14,14,12,0.4)">This gets Anne the bulk of your picture ahead of your call — ID, declarations, and formal consent happen securely in her portal.</span></div>';
+}
+
+function renderPreapprovalTab() {
+  const el = document.getElementById('preapproval-content');
+  if (!el) return;
+  const myName = localStorage.getItem('vera_user_name') || '';
+  const myEmail = getEmail() || '';
+  let stepData = {};
+  try { stepData = JSON.parse(localStorage.getItem('vera_step_data') || '{}'); } catch(e) {}
+  const annualIncome = stepData.income ? stepData.income.value : null;
+  const propAddress = (extractedData && extractedData.PropertyAddress) || '';
+
+  let html = '<div class="coach-note" style="background:var(--gold-bg);border:1px solid var(--gold-bd);border-radius:9px;padding:14px 16px;margin-bottom:16px;font-size:12.5px;color:rgba(14,14,12,0.7);line-height:1.65">This gets Anne the bulk of your financial picture ahead of your call, so the call itself is faster. Fields already on file with VERA — including this property\'s address — are pre-filled. ID verification, formal declarations, and consent happen separately, in Anne\'s secure portal.</div>';
+
+  html += '<div class="kyc-sec"><div class="kyc-sec-t">Section 1 — Personal Information</div>'
+    + kycField('pa-fullname','Full Name', myName)
+    + '<div class="kyc-row2">' + kycField('pa-dob','Date of Birth','','date') + kycField('pa-nationality','Nationality') + '</div>'
+    + '<div class="kyc-field"><label>Gender</label>' + kycOpts('pa-gender',['Male','Female','Other']) + '</div>'
+    + '<div class="kyc-field"><label>Marital Status</label>' + kycOpts('pa-marital',['Single','Married','Divorced','Widowed']) + '</div>'
+    + kycField('pa-dependents','Number of Dependents','','number')
+    + '<div class="kyc-row2">' + kycField('pa-homephone','Home Phone') + kycField('pa-mobile','Mobile Phone') + '</div>'
+    + kycField('pa-email','Email Address', myEmail)
+    + kycField('pa-street','Residential Street Address')
+    + '<div class="kyc-row3">' + kycField('pa-city','City') + kycField('pa-province','State/Province') + kycField('pa-postal','Postal Code') + '</div>'
+    + kycField('pa-country','Country')
+    + '<div class="kyc-field"><label>Length of Time at Current Address</label>' + kycOpts('pa-addrlen',['Less than 1 year','1-3 years','3-5 years','More than 5 years']) + '</div>'
+    + '</div>';
+
+  html += '<div class="kyc-sec"><div class="kyc-sec-t">Section 2 — Employment Information</div>'
+    + '<div class="kyc-row2">' + kycField('pa-employer','Current Employer') + kycField('pa-position','Position/Job Title') + '</div>'
+    + '<div class="kyc-field"><label>Employment Status</label>' + kycOpts('pa-empstatus',['Full-time','Part-time','Self-employed','Unemployed','Retired','Student']) + '</div>'
+    + kycField('pa-grossincome','Annual Gross Income', annualIncome, 'number')
+    + '<div class="kyc-field"><label>Length of Employment</label>' + kycOpts('pa-emplen',['Less than 1 year','1-3 years','3-5 years','More than 5 years']) + '</div>'
+    + '</div>';
+
+  html += kycAssetLiabilitySection(3, 'Your Assets', true, ASSET_CATEGORIES, assetRows);
+  html += kycAssetLiabilitySection(4, 'Your Debts', false, LIABILITY_CATEGORIES, liabilityRows);
+
+  html += '<div class="kyc-sec"><div class="kyc-sec-t">Section 5 — Property Information (for mortgage)</div>'
+    + kycField('pa-propaddr','Property Address', propAddress)
+    + '<div class="kyc-field"><label>Property Type</label>' + kycOpts('pa-proptype',['Single Family Home','Multi-family Home','Condo','Other']) + '</div>'
+    + '<div class="kyc-row2">' + kycField('pa-propvalue','Property Value (appraised/estimated)', (extractedData && extractedData.PropertyAskingPrice) || '', 'number') + kycField('pa-loanamt','Loan Amount Requested','','number') + '</div>'
+    + '<div class="kyc-field"><label>Purpose of Loan</label>' + kycOpts('pa-purpose',['Purchase','Refinance','Home Improvement','Other']) + '</div>'
+    + '<div class="kyc-field"><label>Preferred Mortgage Type</label>' + kycOpts('pa-mortgagetype',['Fixed-rate','Variable-rate','Hybrid']) + '</div>'
+    + '</div>';
+
+  const riskQs = [
+    'I am concerned about an unexpected expense affecting my ability to pay a mortgage.',
+    'I am concerned about job loss and being able to pay a mortgage.',
+    'I have confidence in my long term financial health.',
+    'It is important that I have stability in my monthly payment.',
+    'I have concerns about the impact of future interest rate movements.',
+    'I intend to pay off my mortgage faster than the amortization period.',
+    'I intend to increase my monthly payments to pay down my principal faster.',
+    'I intend to make a lump sum payment on my mortgage once per year.',
+    'I am not comfortable with fluctuations in the value of my home.',
+    'I am prepared to make significant changes to my discretionary spending habits in order to afford a mortgage.',
+    'I am comfortable with interest rate fluctuations (for variable-rate mortgages).'
+  ];
+  html += '<div class="kyc-sec"><div class="kyc-sec-t">Section 6 — Risk Profile Questions</div>'
+    + riskQs.map(function(q,i){ return kycLikert('pa-risk'+i, (i+1)+'. '+q); }).join('')
+    + '</div>';
+
+  el.innerHTML = html
+    + '<div class="kyc-submit-bar"><button class="mbtn mbtn-dark" onclick="downloadPreapprovalForm()">Download</button><span style="font-size:11px;color:rgba(14,14,12,0.4)">This gets Anne the bulk of your picture ahead of your call — ID, declarations, and formal consent happen securely in her portal.</span></div>';
+}
+
+function collectPreapprovalAnswers() {
+  const lines = [];
+  document.querySelectorAll('#preapproval-content input[type=text], #preapproval-content input[type=date], #preapproval-content input[type=number]').forEach(function(el) {
+    const label = el.closest('.kyc-field').querySelector('label').textContent;
+    lines.push(label + ': ' + (el.value || '—'));
+  });
+  const radioGroups = {};
+  document.querySelectorAll('#preapproval-content input[type=radio]:checked').forEach(function(el) { radioGroups[el.name] = el.value; });
+  document.querySelectorAll('#preapproval-content .kyc-field, #preapproval-content .kyc-likert').forEach(function(block) {
+    const radio = block.querySelector('input[type=radio]');
+    if (!radio) return;
+    const label = block.querySelector('label, .kyc-likert-q');
+    if (label) lines.push(label.textContent + ': ' + (radioGroups[radio.name] || '—'));
+  });
+  syncAssetRowsFromDom();
+  syncLiabilityRowsFromDom();
+  lines.push('');
+  lines.push('Assets:');
+  assetRows.filter(function(r){ return r.category; }).forEach(function(r) { lines.push('  ' + r.category + ': ' + (r.amount ? '$'+r.amount : '—')); });
+  lines.push('Liabilities:');
+  liabilityRows.filter(function(r){ return r.category; }).forEach(function(r) { lines.push('  ' + r.category + ': ' + (r.amount ? '$'+r.amount : '—')); });
+  return lines.join('\n');
+}
+
+function downloadPreapprovalForm() {
+  const text = '8TWELVE KYC & SUITABILITY FORM — completed via VERA\n' + new Date().toLocaleDateString() + '\n\n' + collectPreapprovalAnswers();
+  const blob = new Blob([text], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'KYC-form-' + Date.now() + '.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function collectKycAnswers() {
+  const lines = [];
+  document.querySelectorAll('#kyc-form input[type=text], #kyc-form input[type=date], #kyc-form input[type=number]').forEach(function(el) {
+    const label = el.closest('.kyc-field').querySelector('label').textContent;
+    lines.push(label + ': ' + (el.value || '—'));
+  });
+  document.querySelectorAll('#kyc-form textarea').forEach(function(el) {
+    const label = el.closest('.kyc-field').querySelector('label').textContent;
+    lines.push(label + ': ' + (el.value || '—'));
+  });
+  const radioGroups = {};
+  document.querySelectorAll('#kyc-form input[type=radio]:checked').forEach(function(el) { radioGroups[el.name] = el.value; });
+  document.querySelectorAll('#kyc-form .kyc-field, #kyc-form .kyc-likert').forEach(function(block) {
+    const radio = block.querySelector('input[type=radio]');
+    if (!radio) return;
+    const label = block.querySelector('label, .kyc-likert-q');
+    if (label) lines.push(label.textContent + ': ' + (radioGroups[radio.name] || '—'));
+  });
+  syncAssetRowsFromDom();
+  syncLiabilityRowsFromDom();
+  lines.push('');
+  lines.push('Assets:');
+  assetRows.filter(function(r){ return r.category; }).forEach(function(r) { lines.push('  ' + r.category + ': ' + (r.amount ? '$'+r.amount : '—')); });
+  lines.push('Liabilities:');
+  liabilityRows.filter(function(r){ return r.category; }).forEach(function(r) { lines.push('  ' + r.category + ': ' + (r.amount ? '$'+r.amount : '—')); });
+  return lines.join('\n');
+}
+
+function downloadKycForm() {
+  const text = '8TWELVE KYC & SUITABILITY FORM — completed via VERA\n' + new Date().toLocaleDateString() + '\n\n' + collectKycAnswers();
+  const blob = new Blob([text], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'KYC-form-' + Date.now() + '.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 // Init
 showToolTab('input');
 window._lastResult = null;
-
-async function saveToMyAnalyses() {
-  const btn = document.querySelector('[onclick="saveToMyAnalyses()"]');
-  if (!window._lastResult) { alert('No analysis to save yet.'); return; }
-  if (btn) { btn.textContent = 'Saving...'; btn.disabled = true; }
-  try {
-    const d = withAssumptions;
-    const r = window._lastResult;
-    const income = (Number(d.AsIsRent1)||0)+(Number(d.AsIsRent2)||0)+(Number(d.AsIsRent3)||0)+(Number(d.AsIsRent4)||0);
-    const payload = {
-      action: 'saveAnalysis',
-      email: getEmail()||'',
-      addr: d.PropertyAddress||'',
-      neighbourhood: d.PropertyNeighborhood||'',
-      units: d.NumberofUnits||0,
-      asking: d.PropertyAskingPrice||0,
-      downAmt: r.cashRequired?.downpaymentAmount||0,
-      propertyTax: d.PropertyTax||0,
-      monthlyIncome: income,
-      cashflow: r.monthlyCashflow||0,
-      dscr: (r.financing?.monthlyMortgageAmount||0)>0 ? Math.round((r.noi/12)/(r.financing.monthlyMortgageAmount)*100)/100 : 0,
-      capRate: r.capRate||0,
-      totalROI: r.roi?.totalROI||0,
-      cashToClose: r.cashRequired?.totalCashRequired||0,
-    };
-    const resp = await fetch(PROXY_URL, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(payload)
-    });
-    if (!resp.ok) throw new Error('Server error ' + resp.status);
-    const data = await resp.json();
-    if (data.error) throw new Error(data.error);
-    if (btn) { btn.textContent = '✓ Saved!'; btn.style.background='#2D6A4F'; btn.style.color='white'; }
-    setTimeout(()=>{ if(btn){btn.textContent='💾 Save analysis';btn.style.background='var(--gold)';btn.style.color='var(--ink)';btn.disabled=false;}}, 2500);
-  } catch(err) {
-    console.error('Save error:', err);
-    if (btn) { btn.textContent = '✗ ' + err.message.slice(0,30); btn.disabled = false; }
-    setTimeout(()=>{ if(btn) btn.textContent='💾 Save analysis'; }, 3000);
-  }
-}
-
 
 function toggleVeraChat() {
   var panel = document.getElementById('vera-chat-panel');
@@ -1706,11 +3779,12 @@ async function veraChat() {
     });
     var t = document.getElementById('vera-typing');
     if (t) t.remove();
-    if (!resp.ok) throw new Error('Error ' + resp.status);
+    if (!resp.ok) { var errBody = await resp.text(); throw new Error('Error ' + resp.status + ': ' + errBody.slice(0,300)); }
     var data = await resp.json();
     var answer = data.answer || data.text || 'I could not generate a response. Please try again.';
     veraAppendMsg('vera', answer);
   } catch(err) {
+    console.error('VERA chat error:', err.message);
     var t2 = document.getElementById('vera-typing');
     if (t2) t2.remove();
     veraAppendMsg('vera', 'Sorry, I had trouble connecting. Please try again.');

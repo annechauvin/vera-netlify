@@ -225,12 +225,13 @@ async function researchProvinces() {
     + '}\n\n'
     + 'STRICT RULES:\n'
     + '- Use EXACTLY the 7 criteria above — no cap rate, no price-to-rent ratio, nothing extra\n'
-    + '- Every single field must have a real src citation — never leave src empty\n'
-    + '- For landlord laws: cite the exact act name and year (e.g. "Ontario Residential Tenancies Act 2006 + Rent Increase Guideline 2024")\n'
+    + '- Every single field must have a real src citation, but keep each src to ONE short source name only — never combine multiple sources or add parenthetical citations, to keep the response concise\n'
+    + '- For landlord laws: cite the exact act name and year (e.g. "Ontario Residential Tenancies Act 2006")\n'
     + '- For employers: cite Statistics Canada or local economic development source\n'
     + '- grade: A=strong buy, B=good, C=marginal, D=avoid\n'
     + '- class: go=A, caution=B/C, skip=D\n'
-    + '- If data unavailable, write "data unavailable — [source consulted]"\n'
+    + '- If data unavailable, write "data unavailable"\n'
+    + '- "sources" at the end should list only the 5-6 most important sources overall, one line each — not an exhaustive list\n'
     + '- Only include the requested provinces — nothing else';
 
   try {
@@ -340,9 +341,26 @@ function researchCities(province) {
 // Salvage partial JSON if a response got cut off mid-object (e.g. token-limit truncation).
 // Trims back to the last fully-closed object in an array and re-closes any open brackets/braces.
 function repairTruncatedJSON(str) {
-  var lastGoodEntry = str.lastIndexOf('},');
+  // If truncated mid-string (odd number of quotes), close the open string first —
+  // otherwise none of the boundary patterns below will find a valid stopping point.
+  var quoteCount = (str.match(/"/g) || []).length;
+  var working = quoteCount % 2 !== 0 ? str + '"' : str;
+
+  // Try each safe truncation boundary and keep whichever preserves the most content —
+  // end of an object in an array ('},'), end of a nested array ('],'), or end of any
+  // complete "key": "value" string pair ('",'). This matters because a truncated
+  // trailing field (e.g. a long "sources" string cut off after the real data —
+  // cities, recommendation, reason — is already complete) needs the '",' boundary to
+  // recover everything; only trying '},' would throw away good data unnecessarily.
+  var boundaries = ['},', '],', '",'];
+  var lastGoodEntry = -1;
+  boundaries.forEach(function(b) {
+    var idx = working.lastIndexOf(b);
+    if (idx > lastGoodEntry) lastGoodEntry = idx;
+  });
   if (lastGoodEntry === -1) return null;
-  var trimmed = str.substring(0, lastGoodEntry + 1); // keep up through "},"
+
+  var trimmed = working.substring(0, lastGoodEntry + 1);
   var openBraces = (trimmed.match(/{/g) || []).length - (trimmed.match(/}/g) || []).length;
   var openBrackets = (trimmed.match(/\[/g) || []).length - (trimmed.match(/\]/g) || []).length;
   var closer = '';
@@ -366,7 +384,12 @@ function parseCityResponse(raw2) {
     var candidate = ans.substring(s, e + 1);
     try { return JSON.parse(candidate); } catch(e2) {}
 
-    var repaired = repairTruncatedJSON(candidate);
+    // If that failed, the response is likely truncated with NO final closing brace —
+    // meaning `e` (lastIndexOf('}')) found some small inner field's brace instead of
+    // the real end, and `candidate` above already lost everything after it. Repair
+    // needs the FULL remaining text (first brace to the actual end of the string),
+    // not the over-truncated candidate, so it can find the true best boundary.
+    var repaired = repairTruncatedJSON(ans.substring(s));
     if (repaired) {
       try { return JSON.parse(repaired); } catch(e3) {
         console.error('VERA city JSON repair failed:', e3, ans);
@@ -436,7 +459,8 @@ function buildCityPrompt(province) {
     + 'RULES:\n'
     + '- grade: A=strong buy, B=good, C=marginal, D=avoid\n'
     + '- List the top 5 to 6 cities in ' + province + ' ranked by investment potential\n'
-    + '- Every val must have a real src citation\n'
+    + '- Every val must have a real src citation, but keep each src to ONE short source name only (e.g. "CMHC Rental Market Report 2024") — never combine multiple sources or add parenthetical citations, to keep the response concise\n'
+    + '- "sources" at the end should list only the 5-6 most important sources overall, one line each — not an exhaustive list\n'
     + '- If data unavailable write "data unavailable"';
 }
 
@@ -526,10 +550,36 @@ async function researchCitiesInProvince(province) {
     if (data.sources) html += '<div class="src-note">Sources: ' + data.sources + '</div>';
     addMsg('vera', html);
 
+    // Cache city-level data (price/unit, grade) to localStorage so vera-account.html
+    // can pull real price-per-unit benchmarks when analyzing a specific property in
+    // one of these cities, instead of having no market data to compare against.
+    try {
+      var cityCache = JSON.parse(localStorage.getItem('vera_market_cities') || '{}');
+      cities.forEach(function(city) {
+        if (!city.name) return;
+        cityCache[city.name.toLowerCase().trim()] = {
+          name: city.name,
+          province: province,
+          grade: city.grade || null,
+          avgPricePerUnit: (city.avg_price && city.avg_price.val) || null,
+          avgPricePerUnitSrc: (city.avg_price && city.avg_price.src) || null,
+          updatedAt: Date.now()
+        };
+      });
+      localStorage.setItem('vera_market_cities', JSON.stringify(cityCache));
+    } catch(e) { console.warn('VERA: could not cache city market data', e); }
+
     // Ask about neighbourhoods
     if (data.recommended_city) {
       window._lastRecommendedCity = data.recommended_city;
       window._lastProvince = province;
+      // Also persist to localStorage (not just this window) so the Find a Realtor
+      // tab — a separate sibling iframe — can pick up this market as its default.
+      try {
+        localStorage.setItem('vera_last_market', JSON.stringify({
+          city: data.recommended_city, province: province, updatedAt: Date.now()
+        }));
+      } catch(e) {}
       setTimeout(function() {
         var nextHtml = 'Would you like me to grade the neighbourhoods in ' + data.recommended_city + '?'
           + '<div class="chips" style="margin-top:10px">'
@@ -618,7 +668,7 @@ async function researchNeighbourhoods(city, province) {
       var saveHtml = 'Your market is selected: <strong>' + (data.best_neighbourhood ? data.best_neighbourhood + ', ' : '') + city + ', ' + province + '</strong>.'
         + '<div class="chips" style="margin-top:10px">'
         + '<button class="chip" onclick="saveMarket(\'' + city + '\',\'' + province + '\',\'' + (data.best_neighbourhood||'') + '\',\'B\')" style="background:var(--gold);color:var(--bg);border-color:var(--gold);font-weight:600">💾 Save this market</button>'
-        + '<button class="chip" onclick="window.parent && window.parent.showPanel && window.parent.showPanel(\'realtor\', document.getElementById(\'nav-realtor\'))">🏡 Find a realtor in this market →</button>'
+        + '<button class="chip" onclick="goToRealtorWithMarket(\'' + city + '\',\'' + province + '\')">🏡 Find a realtor in this market →</button>'
         + '</div>';
       addMsg('vera', saveHtml);
     }, 400);
@@ -680,6 +730,17 @@ async function loadKnowledge() {
 loadKnowledge();
 addMsg('vera', 'Hi! I\'ll help you find the right Canadian market for multifamily investing. I\'ll compare provinces, research cities, and grade neighbourhoods — so you know exactly where to buy.', true);
 setTimeout(showProvincePicker, 400);
+
+function goToRealtorWithMarket(city, province) {
+  // Flag consumed once by vera-realtor.html's onload, so it auto-selects
+  // this market immediately instead of just offering it as a chip to click.
+  try { localStorage.setItem('vera_auto_realtor_market', JSON.stringify({ city: city, province: province })); } catch(e) {}
+  try {
+    if (window.parent && window.parent.showPanel) {
+      window.parent.showPanel('search', window.parent.document.getElementById('nav-search'));
+    }
+  } catch(e) {}
+}
 
 async function saveMarket(city, province, neighbourhood, cls) {
   try {

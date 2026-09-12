@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VERA — Documents</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0E0E0C;--paper:#F6F3EE;
+  --gold:#B8872A;--gold-bg:rgba(184,135,42,0.08);--gold-bd:rgba(184,135,42,0.25);
+  --green:#2D7A4F;--green-bg:rgba(45,122,79,0.08);--green-bd:rgba(45,122,79,0.25);
+  --amber:#C4972A;--amber-bg:rgba(196,151,42,0.08);
+  --red:#E05252;--red-bg:rgba(224,82,82,0.08);
+  --border:rgba(14,14,12,0.08);
+}
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+.hdr{padding:14px 20px;border-bottom:1px solid var(--border);background:white;flex-shrink:0}
+.hdr-top{display:flex;align-items:center;justify-content:space-between}
+.hdr-title{font-size:14px;font-weight:600}
+.hdr-sub{font-size:11px;color:rgba(14,14,12,0.4);margin-top:1px}
+
+.main{flex:1;overflow-y:auto;padding:24px}
+.wrap{max-width:640px;margin:0 auto}
+
+.empty-card{background:white;border:1px dashed var(--border);border-radius:10px;padding:32px 24px;text-align:center;font-size:12.5px;color:rgba(14,14,12,0.5);line-height:1.7}
+.empty-card button{margin-top:12px;padding:9px 18px;border:none;border-radius:8px;background:var(--gold);color:white;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit}
+.err{background:var(--red-bg);border:1px solid rgba(224,82,82,0.2);border-radius:9px;padding:12px 14px;font-size:12px;color:rgba(14,14,12,0.6);margin-bottom:14px}
+
+.drive-status{display:flex;align-items:center;gap:12px;background:white;border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+.drive-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.drive-icon.connected{background:var(--green-bg)}
+.drive-icon.disconnected{background:rgba(14,14,12,0.05)}
+.drive-status-t{font-size:13px;font-weight:700}
+.drive-status-s{font-size:11.5px;color:rgba(14,14,12,0.5);margin-top:2px}
+.drive-btn{padding:9px 18px;border:none;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;margin-left:auto}
+.drive-btn.connect{background:var(--gold);color:white}
+.drive-btn.disconnect{background:white;border:1px solid var(--border);color:rgba(14,14,12,0.5)}
+.checklist{background:white;border:1px solid var(--border);border-radius:10px;padding:16px 18px}
+.checklist-t{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(14,14,12,0.4);margin-bottom:10px}
+.checklist ul{list-style:none;font-size:12.5px;color:rgba(14,14,12,0.65);line-height:2}
+.checklist li::before{content:"— ";color:var(--gold)}
+
+.doc-row{display:flex;align-items:center;gap:12px;background:white;border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:8px}
+.doc-icon{width:32px;height:32px;border-radius:8px;background:var(--gold-bg);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.doc-name{font-size:12.5px;font-weight:600}
+.doc-type{font-size:11px;color:rgba(14,14,12,0.45);margin-top:2px}
+.step-context-note{font-size:11.5px;color:rgba(14,14,12,0.45);line-height:1.6;margin-top:10px}
+
+.load{display:flex;align-items:center;gap:8px;justify-content:center;padding:24px 0}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:bob .9s infinite}
+.dot:nth-child(2){animation-delay:.15s}.dot:nth-child(3){animation-delay:.3s}
+@keyframes bob{0%,60%,100%{transform:translateY(0);opacity:.3}30%{transform:translateY(-5px);opacity:1}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-top">
+    <div>
+      <div class="hdr-title">📁 Documents</div>
+      <div class="hdr-sub">Connect Google Drive once — every VERA tool reads from here</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="wrap">
+
+    <div class="drive-status" id="drive-status-row">
+      <div class="drive-icon disconnected" id="drive-icon">🔌</div>
+      <div>
+        <div class="drive-status-t" id="drive-status-t">Not connected</div>
+        <div class="drive-status-s" id="drive-status-s">Connect your Google Drive so VERA can read your documents</div>
+      </div>
+      <button class="drive-btn connect" id="drive-btn" onclick="connectDrive()">Connect Google Drive</button>
+    </div>
+
+    <div id="banner"></div>
+
+    <div class="checklist" style="margin-bottom:12px;border-color:var(--gold-bd);background:var(--gold-bg)">
+      <div class="checklist-t" style="color:var(--gold)">Before you connect</div>
+      <div style="font-size:12.5px;color:rgba(14,14,12,0.7);line-height:1.7">Create a folder in your Google Drive named exactly <b>"VERA Financials"</b>, then create these subfolders inside it and upload the matching documents into each. VERA reads each step's documents from its own subfolder — nothing else in your Drive is visible to it.</div>
+    </div>
+    <div class="checklist">
+      <div class="checklist-t">Recommended folder structure</div>
+      <ul>
+        <li>2. 3 recent pay stubs</li>
+        <li>6. Equifax or TransUnion credit report</li>
+        <li>7. 90-day bank statement — full transaction detail, not just a balance (used for assets and debts)</li>
+        <li>9. Assets (investment/RRSP statements)</li>
+        <li>10. Loan and credit statements (for debts)</li>
+        <li>11. Budget app category summary — export or screenshot from your budget app's expense breakdown</li>
+      </ul>
+      <div style="font-size:11px;color:rgba(14,14,12,0.4);margin-top:10px;line-height:1.6">Not needed yet: ID, T4, T1 General, NOA, and employment letter — these are collected later, at pre-approval.</div>
+    </div>
+    <div class="checklist" style="margin-top:12px">
+      <div class="checklist-t">For later — pre-approval documents</div>
+      <ul>
+        <li>1. 2 pieces of ID</li>
+        <li>3. 2-years T4 slips</li>
+        <li>4. 2-years T1 General (if self-employed)</li>
+        <li>5. 2-years NOA</li>
+        <li>8. Employment letter</li>
+      </ul>
+    </div>
+
+    <div style="margin-top:16px" id="docs-content"></div>
+
+  </div>
+</div>
+
+<script>
+const CLIENT_ID = '268645094838-ahos0o5e9aiqbk15j8sfivuj3gn78862.apps.googleusercontent.com';
+const DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.readonly';
+const VERA_FOLDER_NAME = 'VERA Financials';
+let tokenClient = null;
+let accessToken = null;
+let driveFiles = [];
+let veraSubfolders = [];
+let subfolderFilesCache = {};
+
+// ── Google OAuth (client-side, no server secret needed) — token stored in
+// localStorage, shared across all VERA tool pages on this same origin. ──
+window.onload = function() {
+  const savedToken = localStorage.getItem('vera_drive_token');
+  const savedExpiry = localStorage.getItem('vera_drive_token_expiry');
+  if (savedToken && savedExpiry && Date.now() < Number(savedExpiry)) {
+    accessToken = savedToken;
+    onDriveConnected(false);
+  } else {
+    localStorage.removeItem('vera_drive_token');
+    localStorage.removeItem('vera_drive_token_expiry');
+    renderDocsEmpty();
+  }
+
+  const initGis = setInterval(function() {
+    if (window.google && google.accounts && google.accounts.oauth2) {
+      clearInterval(initGis);
+      tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: DRIVE_SCOPE,
+        callback: function(resp) {
+          if (resp.error) { alert('Google sign-in failed: ' + resp.error); return; }
+          accessToken = resp.access_token;
+          const expiryMs = Date.now() + (Number(resp.expires_in || 3600) * 1000) - 60000;
+          localStorage.setItem('vera_drive_token', accessToken);
+          localStorage.setItem('vera_drive_token_expiry', String(expiryMs));
+          onDriveConnected(true);
+        }
+      });
+    }
+  }, 200);
+};
+
+function connectDrive() {
+  if (!tokenClient) { alert('Still loading Google sign-in — try again in a moment.'); return; }
+  tokenClient.requestAccessToken();
+}
+
+function disconnectDrive() {
+  if (accessToken && window.google && google.accounts.oauth2.revoke) {
+    google.accounts.oauth2.revoke(accessToken, function() {});
+  }
+  accessToken = null;
+  localStorage.removeItem('vera_drive_token');
+  localStorage.removeItem('vera_drive_token_expiry');
+  updateDriveStatusUI(false);
+  driveFiles = [];
+  veraSubfolders = [];
+  subfolderFilesCache = {};
+  setBanner('');
+  renderDocsEmpty();
+}
+
+function onDriveConnected(freshlyConnected) {
+  updateDriveStatusUI(true);
+  loadDriveFiles();
+}
+
+function updateDriveStatusUI(connected) {
+  document.getElementById('drive-icon').className = 'drive-icon ' + (connected ? 'connected' : 'disconnected');
+  document.getElementById('drive-icon').textContent = connected ? '✓' : '🔌';
+  document.getElementById('drive-status-t').textContent = connected ? 'Connected' : 'Not connected';
+  document.getElementById('drive-status-s').textContent = connected ? 'VERA can read your documents' : 'Connect your Google Drive so VERA can read your documents';
+  const btn = document.getElementById('drive-btn');
+  if (connected) {
+    btn.textContent = 'Disconnect';
+    btn.className = 'drive-btn disconnect';
+    btn.onclick = disconnectDrive;
+  } else {
+    btn.textContent = 'Connect Google Drive';
+    btn.className = 'drive-btn connect';
+    btn.onclick = connectDrive;
+  }
+}
+
+function setBanner(html) { document.getElementById('banner').innerHTML = html; }
+
+async function loadDriveFiles() {
+  setBanner('<div class="load"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>');
+  try {
+    const folderQuery = "name='" + VERA_FOLDER_NAME + "' and mimeType='application/vnd.google-apps.folder' and trashed=false";
+    const folderRes = await fetch('https://www.googleapis.com/drive/v3/files?fields=files(id,name)&q=' + encodeURIComponent(folderQuery), {
+      headers: { Authorization: 'Bearer ' + accessToken }
+    });
+    if (!folderRes.ok) throw new Error('Drive API error ' + folderRes.status);
+    const folderData = await folderRes.json();
+    const folders = folderData.files || [];
+
+    if (!folders.length) {
+      renderNoFolderFound();
+      return;
+    }
+
+    const folderId = folders[0].id;
+    const topQuery = "'" + folderId + "' in parents and trashed=false";
+    const res = await fetch('https://www.googleapis.com/drive/v3/files?pageSize=50&fields=files(id,name,mimeType,modifiedTime)&orderBy=name&q=' + encodeURIComponent(topQuery), {
+      headers: { Authorization: 'Bearer ' + accessToken }
+    });
+    if (!res.ok) throw new Error('Drive API error ' + res.status);
+    const data = await res.json();
+    const topItems = data.files || [];
+    const topFiles = topItems.filter(function(f){ return f.mimeType !== 'application/vnd.google-apps.folder'; });
+    veraSubfolders = topItems.filter(function(f){ return f.mimeType === 'application/vnd.google-apps.folder'; });
+
+    subfolderFilesCache = {};
+    for (const sf of veraSubfolders) {
+      const sfQuery = "'" + sf.id + "' in parents and mimeType!='application/vnd.google-apps.folder' and trashed=false";
+      const sfRes = await fetch('https://www.googleapis.com/drive/v3/files?pageSize=50&fields=files(id,name,mimeType,modifiedTime)&orderBy=modifiedTime desc&q=' + encodeURIComponent(sfQuery), {
+        headers: { Authorization: 'Bearer ' + accessToken }
+      });
+      if (sfRes.ok) {
+        const sfData = await sfRes.json();
+        subfolderFilesCache[sf.id] = sfData.files || [];
+      } else {
+        subfolderFilesCache[sf.id] = [];
+      }
+    }
+
+    driveFiles = topFiles.concat(Object.values(subfolderFilesCache).flat());
+
+    if (!driveFiles.length) {
+      setBanner('<div class="empty-card">Found your "' + VERA_FOLDER_NAME + '" folder, but no files yet — in it directly, or in any of its subfolders. Upload your documents, then <button onclick="loadDriveFiles()" style="display:inline;margin:0;padding:6px 12px;font-size:11.5px">↻ Refresh</button></div>');
+      renderDocsList();
+      return;
+    }
+    setBanner('');
+    renderDocsList();
+  } catch(err) {
+    setBanner('<div class="err">Could not load Drive files: ' + err.message + '</div>');
+  }
+}
+
+function renderDocsEmpty() {
+  document.getElementById('docs-content').innerHTML = '<div class="empty-card">Connect Google Drive above — VERA will look for a "' + VERA_FOLDER_NAME + '" folder and list what\'s inside it here.</div>';
+}
+
+function renderDocsList() {
+  if (!driveFiles.length) {
+    document.getElementById('docs-content').innerHTML = '<div class="empty-card">No files found yet. Upload your documents into the "' + VERA_FOLDER_NAME + '" folder, then refresh.</div>';
+    return;
+  }
+  document.getElementById('docs-content').innerHTML = driveFiles.map(function(f) {
+    const icon = f.mimeType === 'application/pdf' ? '📄' : (f.mimeType.indexOf('image/') === 0 ? '🖼' : '📁');
+    return '<div class="doc-row"><div class="doc-icon">' + icon + '</div>'
+      + '<div><div class="doc-name">' + f.name + '</div><div class="doc-type">' + new Date(f.modifiedTime).toLocaleDateString() + '</div></div></div>';
+  }).join('') + '<div class="step-context-note">This is a reference list of everything VERA can see — Set a Budget and Get Pre-Approved read from these same documents.</div>';
+}
+
+function renderNoFolderFound() {
+  setBanner('<div class="empty-card">VERA looks for a folder named exactly <b>"' + VERA_FOLDER_NAME + '"</b> in your Drive, and only reads files inside it — your other Drive files stay private.<br><br>Create that folder, upload your documents into it, then refresh.<div><button onclick="loadDriveFiles()">↻ Refresh</button></div></div>');
+}
+</script>
+</body>
+</html>

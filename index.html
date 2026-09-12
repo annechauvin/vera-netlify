@@ -621,6 +621,12 @@ function submitLogin(e){
     return;
   }
   errEl.style.display = 'none';
+  // Record this signup so it's visible even if the user never completes
+  // an analysis — fire-and-forget, doesn't block the redirect below.
+  fetch('https://vera-proxy.onrender.com/record-signup', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email })
+  }).catch(function(){}); // silent — a failed log shouldn't block login
   // Pass email via URL param too (not just localStorage) — this way login still
   // works even if vera-account.html ends up hosted on a different subdomain,
   // where localStorage wouldn't carry over on its own.

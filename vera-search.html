@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VERA — Find Properties</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0E0E0C;--paper:#F6F3EE;
+  --gold:#B8872A;--gold-bg:rgba(184,135,42,0.08);--gold-bd:rgba(184,135,42,0.25);
+  --green:#2D7A4F;--red:#E05252;
+  --border:rgba(14,14,12,0.08);
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);font-size:13px;display:flex;flex-direction:column}
+
+.hdr{padding:14px 20px;border-bottom:1px solid var(--border);background:white;flex-shrink:0}
+.hdr-title{font-size:14px;font-weight:600}
+.hdr-sub{font-size:11px;color:rgba(14,14,12,0.4);margin-top:1px}
+
+.layout{flex:1;display:flex;overflow:hidden}
+.sidebar{width:300px;flex-shrink:0;background:white;border-right:1px solid var(--border);overflow-y:auto;padding:18px}
+.main{flex:1;overflow-y:auto;padding:22px}
+.main-inner{max-width:720px}
+
+.field{margin-bottom:14px}
+.field label{display:block;font-size:11px;font-weight:600;color:rgba(14,14,12,0.55);margin-bottom:5px}
+.field input[type=text],.field input[type=number],.field select{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:12.5px;color:var(--ink);background:white}
+.field input:focus,.field select:focus{outline:none;border-color:var(--gold)}
+.checks label{display:flex;align-items:center;gap:6px;font-size:12.5px;margin-bottom:4px;font-weight:400;color:var(--ink)}
+.checks input{width:auto}
+.price-row{display:flex;gap:8px}
+
+.search-btn{width:100%;padding:11px;background:var(--gold);border:none;border-radius:8px;color:white;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:6px}
+.search-btn:disabled{opacity:.5;cursor:not-allowed}
+.saved-badge{font-size:10.5px;color:var(--green);margin-top:6px;display:none}
+
+.empty-state{text-align:center;padding:60px 20px;color:rgba(14,14,12,0.4)}
+.empty-state-ic{font-size:32px;margin-bottom:10px}
+
+.load{display:flex;align-items:center;gap:8px;padding:24px 0}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:bob .9s infinite}
+.dot:nth-child(2){animation-delay:.15s}.dot:nth-child(3){animation-delay:.3s}
+@keyframes bob{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-6px);opacity:1}}
+
+.err{background:rgba(224,82,82,0.08);border:1px solid rgba(224,82,82,0.2);border-radius:9px;padding:12px 14px;font-size:12px;color:var(--ink);margin-bottom:14px}
+
+.search-summary{font-size:11.5px;color:rgba(14,14,12,0.5);margin-bottom:14px}
+.listing-card{background:white;border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:12px}
+.listing-top{display:flex;justify-content:space-between;align-items:start;gap:10px}
+.listing-addr{font-weight:700;font-size:13.5px}
+.listing-price{font-weight:700;color:var(--gold);white-space:nowrap;font-size:13.5px}
+.listing-type{font-size:11px;color:rgba(14,14,12,0.45);margin-top:2px}
+.listing-desc{font-size:12.5px;color:rgba(14,14,12,0.7);margin-top:8px;line-height:1.55}
+.listing-actions{margin-top:12px;display:flex;gap:10px;align-items:center}
+.listing-link{font-size:11.5px;color:var(--gold);font-weight:600;text-decoration:none}
+.listing-analyse{font-size:11.5px;color:white;background:var(--ink);padding:6px 12px;border-radius:6px;border:none;cursor:pointer;font-family:inherit;font-weight:600}
+
+/* VERA CHAT — matches vera-account.html exactly */
+#vera-chat-btn{position:fixed;bottom:24px;right:24px;width:52px;height:52px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;font-size:22px;box-shadow:0 4px 16px rgba(184,135,42,0.35);z-index:500;transition:transform .15s}
+#vera-chat-btn:hover{transform:scale(1.08)}
+#vera-chat-panel{position:fixed;top:0;right:-360px;width:340px;height:100vh;background:var(--paper);border-left:1px solid rgba(14,14,12,0.1);box-shadow:-4px 0 16px rgba(14,14,12,0.08);z-index:499;display:flex;flex-direction:column;transition:right .25s ease;color:var(--ink)}
+#vera-chat-panel.open{right:0}
+.chat-hdr{padding:14px 16px;border-bottom:1px solid rgba(14,14,12,0.08);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.chat-title{font-size:13px;font-weight:600;color:var(--ink);margin-left:8px}
+.chat-close{width:28px;height:28px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-size:16px;color:rgba(14,14,12,0.4)}
+.chat-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.cmsg{display:flex;gap:8px;align-items:flex-start}
+.cmsg.user{flex-direction:row-reverse}
+.cbubble{max-width:82%;padding:9px 12px;border-radius:12px;font-size:12px;line-height:1.7;color:var(--ink)}
+.cmsg.vera .cbubble{background:white;border:1px solid rgba(14,14,12,0.08);border-radius:0 12px 12px 12px}
+.cmsg.user .cbubble{background:var(--gold);border-radius:12px 0 12px 12px;color:white}
+.chat-input-area{padding:12px;border-top:1px solid rgba(14,14,12,0.08);display:flex;gap:8px;align-items:flex-end;flex-shrink:0}
+.chat-input{flex:1;padding:9px 12px;border:1px solid rgba(14,14,12,0.12);border-radius:10px;font-family:'Inter',sans-serif;font-size:12px;resize:none;outline:none;max-height:80px;min-height:38px;color:var(--ink);background:white}
+.chat-input:focus{border-color:var(--gold)}
+.chat-send{width:36px;height:36px;border:none;border-radius:8px;background:var(--gold);color:var(--ink);cursor:pointer;font-size:14px;flex-shrink:0}
+.chat-send:disabled{opacity:.4;cursor:not-allowed}
+.chat-messages .dot{width:6px;height:6px;background:rgba(14,14,12,0.25);animation:vbounce .8s infinite}
+@keyframes vbounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-title">🔍 Find Properties</div>
+  <div class="hdr-sub">Set your criteria, search real listings, and send anything promising to Analyse a Property</div>
+</div>
+
+<div class="layout">
+  <div class="sidebar">
+    <div class="field">
+      <label>City</label>
+      <input type="text" id="crit-city" placeholder="e.g. Saint John" onchange="saveCriteria()">
+    </div>
+    <div class="field">
+      <label>Property type</label>
+      <div class="checks">
+        <label><input type="checkbox" class="crit-ptype-cb" value="Duplex" onchange="saveCriteria()"> Duplex</label>
+        <label><input type="checkbox" class="crit-ptype-cb" value="Triplex" onchange="saveCriteria()"> Triplex</label>
+        <label><input type="checkbox" class="crit-ptype-cb" value="Fourplex" onchange="saveCriteria()"> Fourplex</label>
+      </div>
+    </div>
+    <div class="field">
+      <label>Condition</label>
+      <select id="crit-condition" onchange="saveCriteria()">
+        <option value="valueadd">Value-add — needs updates</option>
+        <option value="turnkey">Turnkey — move-in ready</option>
+        <option value="either">Either — open to both</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Price range</label>
+      <div class="price-row">
+        <input type="number" id="crit-priceMin" placeholder="Min $" onchange="saveCriteria()">
+        <input type="number" id="crit-priceMax" placeholder="Max $" onchange="saveCriteria()">
+      </div>
+    </div>
+
+    <button class="search-btn" id="search-run-btn" onclick="searchProperties()">🔍 Search now</button>
+    <div class="saved-badge" id="criteria-saved">✓ Criteria saved</div>
+  </div>
+
+  <div class="main">
+    <div class="main-inner" id="results-wrap">
+      <div class="empty-state" id="empty-state">
+        <div class="empty-state-ic">🏘</div>
+        Set your criteria on the left, then search — real listings will show up here.
+      </div>
+      <div id="search-load-area" style="display:none">
+        <div class="load"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span style="font-size:12px;color:rgba(14,14,12,0.5)">Searching for listings…</span></div>
+      </div>
+      <div id="search-err-area" style="display:none"></div>
+      <div id="search-results-area"></div>
+    </div>
+  </div>
+</div>
+
+<button id="vera-chat-btn" onclick="toggleVeraChat()" title="Talk to VERA">💡</button>
+<div id="vera-chat-panel">
+  <div class="chat-hdr">
+    <div style="display:flex;align-items:center">
+      <span style="font-size:18px">💡</span>
+      <span class="chat-title">VERA</span>
+    </div>
+    <button class="chat-close" onclick="toggleVeraChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chat-messages">
+    <div class="cmsg vera">
+      <div class="cbubble">Hi! I'm VERA. Ask me about your search criteria, a specific listing you found, or what to look for in this market.</div>
+    </div>
+  </div>
+  <div class="chat-input-area">
+    <textarea class="chat-input" id="vera-chat-input" placeholder="Ask VERA..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();veraChat()}"></textarea>
+    <button class="chat-send" id="vera-chat-send" onclick="veraChat()">&#8593;</button>
+  </div>
+</div>
+
+<script>
+// ── Criteria: same shape/keys as vera-find-properties.html, so
+// switching between them (if both exist) reads the same saved data ──
+function getSelectedPropertyTypes() {
+  return Array.from(document.querySelectorAll('.crit-ptype-cb:checked')).map(function(cb){ return cb.value; });
+}
+function getCriteria() {
+  try { return JSON.parse(localStorage.getItem('vera_property_criteria') || '{}'); } catch(e) { return {}; }
+}
+function saveCriteria() {
+  const c = {
+    city: document.getElementById('crit-city').value,
+    propertyType: getSelectedPropertyTypes().join(', '),
+    condition: document.getElementById('crit-condition').value,
+    priceMin: document.getElementById('crit-priceMin').value,
+    priceMax: document.getElementById('crit-priceMax').value
+  };
+  localStorage.setItem('vera_property_criteria', JSON.stringify(c));
+  const badge = document.getElementById('criteria-saved');
+  badge.style.display = 'block';
+  setTimeout(function(){ badge.style.display = 'none'; }, 1800);
+}
+function loadCriteriaIntoForm() {
+  const c = getCriteria();
+  if (c.city) document.getElementById('crit-city').value = c.city;
+  if (c.condition) document.getElementById('crit-condition').value = c.condition;
+  if (c.priceMin) document.getElementById('crit-priceMin').value = c.priceMin;
+  if (c.priceMax) document.getElementById('crit-priceMax').value = c.priceMax;
+  if (c.propertyType) {
+    const types = c.propertyType.split(',').map(function(s){ return s.trim(); });
+    document.querySelectorAll('.crit-ptype-cb').forEach(function(cb) { cb.checked = types.indexOf(cb.value) > -1; });
+  }
+}
+window.addEventListener('DOMContentLoaded', loadCriteriaIntoForm);
+
+// ── Search ──
+window._lastListings = [];
+
+async function searchProperties() {
+  const c = getCriteria();
+  if (!c.city) { alert('Set at least a city first.'); return; }
+
+  const CONDITION_SENTENCES = {
+    valueadd: 'Prefer properties that need some updates or value-add potential (not turnkey) for strategic renovations.',
+    turnkey: 'Prefer move-in ready, turnkey properties requiring minimal work.',
+    either: 'Open to either turnkey or value-add properties.'
+  };
+  const conditionKey = c.condition || 'either';
+
+  const btn = document.getElementById('search-run-btn');
+  const emptyState = document.getElementById('empty-state');
+  const loadArea = document.getElementById('search-load-area');
+  const errArea = document.getElementById('search-err-area');
+  const resultsArea = document.getElementById('search-results-area');
+  btn.disabled = true;
+  emptyState.style.display = 'none';
+  loadArea.style.display = 'block';
+  errArea.style.display = 'none';
+  resultsArea.innerHTML = '';
+
+  try {
+    const res = await fetch('https://vera-proxy.onrender.com/search-properties', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        city: c.city, propertyType: c.propertyType,
+        condition: CONDITION_SENTENCES[conditionKey], conditionKey: conditionKey,
+        priceMin: c.priceMin, priceMax: c.priceMax
+      })
+    });
+    if (!res.ok) { const t = await res.text(); throw new Error('Server error ' + res.status + ': ' + t.slice(0,200)); }
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    // Defensive filter — the backend is instructed to exclude sold/pending
+    // listings, but if one slips through anyway, drop it here rather than show it.
+    window._lastListings = (data.listings || []).filter(function(l) {
+      return !l.status || l.status === 'Active' || l.status === 'Unknown';
+    });
+
+    if (!window._lastListings.length) {
+      resultsArea.innerHTML = '<div class="empty-state"><div class="empty-state-ic">🔍</div>No matching listings found.<br>' + (data.searchSummary || 'Try widening your price range or neighbourhoods.') + '</div>';
+    } else {
+      const BUCKET_LABELS = {
+        'BRRRR Potential': '🔨 BRRRR Potential',
+        'Turnkey Potential': '✅ Turnkey Potential'
+      };
+      // Only show the bucket(s) matching what the user actually selected in
+      // the Condition dropdown — no point showing Turnkey results to someone
+      // who explicitly asked for value-add only, or vice versa.
+      const bucketsToShow = conditionKey === 'valueadd' ? ['BRRRR Potential']
+        : conditionKey === 'turnkey' ? ['Turnkey Potential']
+        : ['BRRRR Potential', 'Turnkey Potential'];
+
+      function renderCard(l, i) {
+        const priceHtml = l.price
+          ? '<div class="listing-price">$' + Number(l.price).toLocaleString() + '</div>'
+          : '<div class="listing-price" style="color:rgba(14,14,12,0.35);font-weight:600">Price not listed</div>';
+        return '<div class="listing-card">'
+          + '<div class="listing-top">'
+          + '<div class="listing-addr">' + (l.address || 'Location not disclosed') + '</div>'
+          + priceHtml
+          + '</div>'
+          + (l.propertyType ? '<div class="listing-type">' + l.propertyType + '</div>' : '')
+          + (l.description ? '<div class="listing-desc">' + l.description + '</div>' : '')
+          + '<div class="listing-actions">'
+          + (l.sourceUrl ? '<a href="' + l.sourceUrl + '" target="_blank" class="listing-link">View listing' + (l.sourceName ? ' on ' + l.sourceName : '') + ' ↗</a>' : '')
+          + '<button class="listing-analyse" onclick="sendToAnalyse(' + i + ')">Analyse this →</button>'
+          + '</div>'
+          + '</div>';
+      }
+
+      let html = '<div class="search-summary">' + (data.searchSummary || '') + '</div>';
+
+      const grouped = {};
+      window._lastListings.forEach(function(l, i) {
+        const key = bucketsToShow.indexOf(l.strategyBucket) > -1 ? l.strategyBucket : null;
+        if (!key) return; // doesn't match what the user asked for — leave it out
+        if (!grouped[key]) grouped[key] = [];
+        grouped[key].push({ l: l, i: i });
+      });
+
+      const orderedKeys = bucketsToShow.filter(function(k){ return grouped[k]; });
+      if (!orderedKeys.length) {
+        resultsArea.innerHTML = '<div class="empty-state"><div class="empty-state-ic">🔍</div>No matching listings found for your selected condition.<br>Try "Either — open to both" for a wider set of results.</div>';
+        return;
+      }
+      orderedKeys.forEach(function(key) {
+        html += '<div style="font-size:12.5px;font-weight:700;color:rgba(14,14,12,0.6);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.03em">' + (BUCKET_LABELS[key] || key) + '</div>';
+        html += grouped[key].map(function(entry){ return renderCard(entry.l, entry.i); }).join('');
+      });
+
+      resultsArea.innerHTML = html;
+    }
+  } catch (err) {
+    errArea.innerHTML = '<div class="err">Could not complete the search: ' + err.message + '</div>';
+    errArea.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    loadArea.style.display = 'none';
+  }
+}
+
+// Sends a found listing over to Analyse a Property's paste-a-listing flow —
+// reuses the exact handoff vera-account.html already has for this.
+function sendToAnalyse(index) {
+  const l = window._lastListings[index];
+  if (!l) return;
+  const text = (l.address || '') + '\n' + (l.propertyType ? l.propertyType + '\n' : '') + (l.price ? 'Asking price: $' + Number(l.price).toLocaleString() + '\n' : '') + (l.description || '') + (l.sourceUrl ? '\nSource: ' + l.sourceUrl : '');
+  try {
+    if (window.parent && window.parent.loadListingFromSearch) {
+      window.parent.loadListingFromSearch(text);
+    }
+  } catch(e) {}
+}
+
+// ── VERA chat — same pattern as vera-account.html, scoped to search context ──
+function toggleVeraChat() {
+  document.getElementById('vera-chat-panel').classList.toggle('open');
+}
+function veraAppendMsg(role, text) {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'cmsg ' + role;
+  const bubble = document.createElement('div');
+  bubble.className = 'cbubble';
+  bubble.innerHTML = text.replace(/\n/g, '<br>');
+  div.appendChild(bubble);
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+async function veraChat() {
+  const input = document.getElementById('vera-chat-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  veraAppendMsg('user', msg);
+  input.value = '';
+
+  const send = document.getElementById('vera-chat-send');
+  send.disabled = true;
+
+  const typing = document.createElement('div');
+  typing.className = 'cmsg vera';
+  typing.id = 'vera-typing';
+  typing.innerHTML = '<div class="cbubble"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>';
+  document.getElementById('chat-messages').appendChild(typing);
+  document.getElementById('chat-messages').scrollTop = 9999;
+
+  const c = getCriteria();
+  let ctx = '\n\nCURRENT SEARCH CRITERIA:\n';
+  ctx += 'City: ' + (c.city || 'not set') + '\n';
+  if (c.propertyType) ctx += 'Property type: ' + c.propertyType + '\n';
+  if (c.priceMin || c.priceMax) ctx += 'Price range: ' + (c.priceMin ? '$'+c.priceMin : 'no min') + ' to ' + (c.priceMax ? '$'+c.priceMax : 'no max') + '\n';
+  if (window._lastListings && window._lastListings.length) {
+    ctx += '\nCURRENT SEARCH RESULTS (' + window._lastListings.length + ' found):\n';
+    window._lastListings.forEach(function(l) {
+      ctx += '- ' + (l.address||'Undisclosed') + (l.price ? ' — $'+Number(l.price).toLocaleString() : '') + (l.propertyType ? ' (' + l.propertyType + ')' : '') + '\n';
+    });
+  }
+
+  const prompt = 'You are VERA, a real estate investment assistant trained by Anne Chauvin, licensed mortgage agent specializing in Canadian multifamily properties.' + ctx + ' Answer this question in plain conversational text: ' + msg;
+
+  try {
+    const resp = await fetch('https://vera-proxy.onrender.com/insights', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: prompt, category: 'Find properties', mode: 'chat' })
+    });
+    const t = document.getElementById('vera-typing');
+    if (t) t.remove();
+    if (!resp.ok) throw new Error('Error ' + resp.status);
+    const data = await resp.json();
+    const answer = data.answer || data.text || 'I could not generate a response. Please try again.';
+    veraAppendMsg('vera', answer);
+  } catch(err) {
+    const t2 = document.getElementById('vera-typing');
+    if (t2) t2.remove();
+    veraAppendMsg('vera', 'Sorry, I had trouble connecting. Please try again.');
+  }
+  send.disabled = false;
+}
+</script>
+</body>
+</html>
